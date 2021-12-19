@@ -1,0 +1,110 @@
+﻿@using WebApplication2.Models.Orders;
+@model WebApplication2.Models.PaginatedList<OrderView>
+@{
+    ViewData["Title"] = "ReviewList";
+    var counter = 1;
+}
+
+
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">صفحه اصلی </a></li>
+            <li class="breadcrumb-item" active" aria-current="page">لیست برندها</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+<div class="card text-right border-primary">
+    <form class="order-form" method="post" asp-action="Save" asp-controller="Order" asp-area="Admin">
+        <div class="card-body">
+            <table class="table caption-top">
+                @*<p>@message</p>*@
+                <thead>
+                    <tr class="bg-light">
+                        <th scope="col">#</th>
+                        <th scope="col" style="width:20%">
+                            شناسه
+                        </th>
+                        <th scope="col" style="width:20%">
+                            نام خریدار
+                        </th>
+                        <th scope="col" style="width:10%">تاریخ</th>
+                        <th scope="col" style="width:10%">شماره فیش</th>
+                        <th scope="col" style="width:20%">مجموع قیمت</th>
+                        <th scope="col" style="width:20%">تایید</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@counter</th>
+                            <td>
+                                <strong class="h5"><a asp-action="Index" asp-controller="Brand" asp-area="Admin" asp-route-id="@item.id"> </a></strong><br />
+                                <span></span><br />
+                                <span class="text-muted">شناسه: @item.id</span>
+                            </td>
+                            <td>
+                                @item.customer
+                                <br />
+                                <span class="text-muted">شناسه: @item.customerid</span>
+                            </td>
+
+                            <td>@item.orderdate</td>
+                            <td>
+                                @item.fishnumber
+                            </td>
+                            <td>@item.totalprice</td>
+                            <td class="align-middle ">
+                                <input type="checkbox" class="order-form-radio__input" name="Id" value="@item.id" />
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+
+                </tbody>
+            </table>
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+            <nav aria-label="..." dir="ltr">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item ">
+                        <a asp-action="List"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="page-link btn btn-default @prevDisabled">
+                            صفحه قبلی
+                        </a>
+
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a asp-action="List"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="page-link btn btn-default @nextDisabled">
+                            صفحه بعدی
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4 ">
+                <button type="submit" class="btn btn-primary col-md-2">
+                    ثبت
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,72 @@
+﻿@using WebApplication2.Models.ViewModels.Products
+@model List<SpecialView>
+@{
+    ViewData["Title"] = "Index";
+    int count = 1;
+}
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?/Admin">صفحه اصلی </a></li>
+            <li class="breadcrumb-item" active" aria-current="page">محصولات</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+
+<div class="card text-right border-primary">
+    <div class="card-body">
+        <table class="table caption-top">
+            <thead>
+                <tr class="bg-light">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width:20%">نام کالا</th>
+                    <th scope="col" style="width:10%">برند </th>
+                    <th scope="col" style="width:10%">قیمت</th>
+                    <th scope="col" style="width:20%">تخفیف</th>
+                    <th scope="col" style="width:20%">زمان مانده</th>
+                    <th class="text-left" scope="col">تنظیمات</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>
+                        <strong class="h5"><a href="#">@item.title</a></strong><br />
+                        <span class="text-muted">@item.id</span>
+                    </td>
+                    <td>@item.brand</td>
+                    <td>@item.price</td>
+                    <td>
+                        @item.discount
+                    </td>
+                    <td>@item.date</td>
+
+                    <td>@item.date</td>
+                </tr>
+
+                    { count++; }
+                }
+
+            </tbody>
+        </table>
+        <nav aria-label="..." dir="ltr">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">2</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+

@@ -1,0 +1,280 @@
+﻿@using WebApplication2.Models
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Repository.EF
+@using WebApplication2.Models.Products.Groups
+@using WebApplication2.Models.Products.Carts
+@inject IGroupRepository grouprepo
+@{
+    var lstgroup = await grouprepo.SearchAsync(null, null, null);
+}
+@inject SignInManager<Operator> sim
+@inject UserManager<Operator> um
+@{
+    Operator customer = null;
+    string name = "";
+    if (User.Identity.IsAuthenticated)
+    {
+         customer = await um.FindByNameAsync(User.Identity.Name);
+        name = customer.name + " " + customer.lastname;
+    }
+
+}
+@inject ICartRepository cartrepo
+@{ 
+    int Quantitycount = 0;
+    if (customer != null)
+    {
+        var cart = await cartrepo.Find(customer.Id);
+        if (cart != null)
+        {
+            Quantitycount = cart.cartitem.Count;
+        }
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/materialdesignicons.css" rel="stylesheet" />
+    <link href="~/css/Shared/Layout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+
+    <div id="wrapper">
+        <header id="header">
+            <div class="header-container wide-wrap">
+                <div class="header-tbl" cellpadding="0" cellspacing="0">
+                    <div class="header-tbl-row">
+                        <div class="header-tbl-cell header-logo">
+                            <a href="/" class="header-logo-btn"><img class="header-logo-img" src="~/Images/logo-1x.png" srcset="~/Images/logo-1x.png 1x,~/Images/logo-2x.png 2x"></a>
+                        </div>
+                        <div class="header-tbl-cell header-search">
+                            <form class="header-search-box-wrap" action="/Product/List">
+                                <input type="submit" class="header-search-box-submit-btn" id="headerSearchBoxSubmitBtn">
+                                <abbr title="جستجو" class="abbr">
+                                    <label for="headerSearchBoxSubmitBtn" class="header-search-box-label mdi mdi-magnify"></label>
+                                </abbr>
+                                <span class="header-search-box-input-wrap">
+                                    <input class="header-search-box-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…" name="keyword" autocomplete="off">
+                                </span>
+                            </form>
+                        </div>
+                        <div class="header-tbl-cell header-actions">
+                            <span class="header-actions-item">
+                                @if (Quantitycount > 0)
+                                {
+                                    <a href="/Cart" class="header-actions-btn mdi mdi-cart-outline mdi-24px cart"><span class="header-actions-btn-text">(@Quantitycount) سبد خرید</span></a>
+                                }
+                                else
+                                {
+                                    <a href="/Cart" class="header-actions-btn mdi mdi-cart-outline mdi-24px cart"><span class="header-actions-btn-text">سبد خرید</span></a>
+                                }
+
+                            </span>
+
+                            <span class="header-actions-item">
+                                @if (string.IsNullOrEmpty(name))
+                                {
+                                    <span class="header-actions-menu">
+                                        <input class="header-actions-menu__checkbox" type="checkbox" id="chk__menu" />
+                                        <label for="chk__menu" class="header-actions-btn mdi mdi-chevron-down mdi-24px profile"><span class="header-actions-btn-text">ورود، ثبت نام</span></label>
+                                        <span class="header-actions-menu__content">
+                                            <a href="/Acount/SignIn" class="header-actions-menu__items">ورود به سایت</a>
+                                            <a href="/Acount/SignUp" class="header-actions-menu__items">ثبت نام</a>
+                                        </span>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="header-actions-menu">
+                                        <input class="header-actions-menu__checkbox" type="checkbox" id="chk__menu" />
+                                        <label for="chk__menu" class="header-actions-btn mdi mdi-chevron-down mdi-24px profile"><span class="header-actions-btn-text">@name</span></label>
+                                        <span class="header-actions-menu__content">
+                                            <a href="/Profile/Index" class="header-actions-menu__items">@name</a>
+                                            <a href="/Profile/OrderHistory" class="header-actions-menu__items">تاریخچه سفارشات</a>
+                                            <a href="/Acount/SignOut" class="header-actions-menu__items">خروج</a>
+                                            <span class="header-actions-menu__seperator"></span>
+                                        </span>
+                                    </span>
+                                }
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav id="nav">
+                <ul class="nav-bar clearfix wide-wrap">
+                    <li class="nav-item other">
+                        <a href="#" class="nav-button">فروش ویژه</a>
+                    </li>
+                    <li class="nav-item other">
+                        <a href="#" class="nav-button">شگفت انگیز ها</a>
+                    </li>
+                    @*<li class="nav-item type-1">
+                            <a href="#" class="nav-button">کالای دیجیتال</a>
+                            <div class="nav-subMenu-wrap">
+                               <span style="display: inline-block;width: 25%;height: 150px;background-color: green"></span><span style="display: inline-block;width: 25%;height: 150px;background-color: yellow"></span><span style="display: inline-block;width: 25%;height: 150px;background-color: orange"></span><span style="display: inline-block;width: 25%;height: 150px;background-color: orangered"></span>
+                           </div>
+                        </li>  <li class="nav-item type-2">
+                            <a href="#" class="nav-button">وسایل نقلیه، ابزار و اداری</a>
+                            <div class="nav-subMenu-wrap">
+                                <ul class="nav-subMenu">
+                                    <li class="nav-subMenu-item">
+                                        <a class="nav-subMenu-button" title="لوازم جانبی گوشی موبایل و تبلت و لپتاپ">لوازم جانبی گوشی موبایل و تبلت و لپتاپ</a>
+                                    </li>
+                                    <li class="nav-subMenu-item">
+                                        <a class="nav-subMenu-button">گوشی موبایل</a>
+                                    </li>
+                                    <li class="nav-subMenu-item">
+                                        <a class="nav-subMenu-button">واقعیت مجازی</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    *@
+                    @foreach (var item in lstgroup.Take(8))
+                    {
+                        <li class="nav-item">
+                            <a asp-action="ProductListByGroup" asp-controller="Product" asp-route-gid="@item.id" class="nav-button">@item.title</a>
+                        </li>
+                    }
+
+
+                </ul>
+            </nav>
+        </header>
+        <main id="content" class="clearfix">
+            <div id="container">
+                <div>
+                    @RenderBody()
+                </div>
+                @RenderSection("Styles", required: false)
+            </div>
+        </main>
+        <footer id="footer">
+            <div class="footer-detail-wrap">
+                <div class="footer-badge-container">
+                    <div class="wide-wrap">
+                        <ul class="footer-badge-wrap clearfix">
+                            <li class="footer-badge-item">
+                                <a class="footer-badge-link">
+                                    <span class="footer-badge-icon mdi mdi-truck"></span>
+                                    <span class="footer-badge-title">سرویس تحویل سریع</span>
+                                    <span class="footer-badge-desc">تحویل سفارشات در کمتر از 24 ساعت</span>
+                                </a>
+                            </li>
+                            <li class="footer-badge-item">
+                                <a class="footer-badge-link">
+                                    <span class="footer-badge-icon mdi mdi-credit-card"></span>
+                                    <span class="footer-badge-title">پرداخت در محل</span>
+                                    <span class="footer-badge-desc">مبلغ سفارش را پس از تحویل پرداخت کنید</span>
+                                </a>
+                            </li>
+                            <li class="footer-badge-item">
+                                <a class="footer-badge-link">
+                                    <span class="footer-badge-icon mdi mdi-restore-clock"></span>
+                                    <span class="footer-badge-title">ضمانت بازگشت کالا</span>
+                                    <span class="footer-badge-desc">امکان مرجوع کردن کالا تا 7 روز پس از خرید</span>
+                                </a>
+                            </li>
+                            <li class="footer-badge-item">
+                                <a class="footer-badge-link">
+                                    <span class="footer-badge-icon mdi mdi-clipboard-check"></span>
+                                    <span class="footer-badge-title">تضمین اصالت کالا</span>
+                                    <span class="footer-badge-desc">پلازا اصل بودن کالا را ضمانت می کند</span>
+                                </a>
+                            </li>
+                            <li class="footer-badge-item">
+                                <a class="footer-badge-link">
+                                    <span class="footer-badge-icon mdi mdi-currency-usd"></span>
+                                    <span class="footer-badge-title">تضمین پایین ترین قیمت</span>
+                                    <span class="footer-badge-desc">تضمین قیمت تا 2 روز پس از خرید</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="wide-wrap">
+                    <div class="footer-detail-tbl">
+                        <div class="footer-detail-tbl-tr">
+                            <div class="footer-detail-tbl-td">
+                                <h6 class="footer-detail-tbl-title">راهنمای خرید</h6>
+                                <div class="footer-detail-tbl-content">
+                                    <a href="#" class="footer-detail-tbl-link">سوالات متداول</a><br>
+                                    <a href="#" class="footer-detail-tbl-link">شیوه خرید و ثبت سفارش</a><br>
+                                    <a href="#" class="footer-detail-tbl-link">شیوه های پرداخت</a><br>
+                                    <a href="#" class="footer-detail-tbl-link">شرایط استفاده از پلازا بن</a>
+                                </div>
+                            </div>
+                            <div class="footer-detail-tbl-td">
+                                <h6 class="footer-detail-tbl-title">مشتریان</h6>
+                                <div class="footer-detail-tbl-content">
+                                    <a href="#" class="footer-detail-tbl-link">شرایط ارسال و تحویل کالا</a><br>
+                                    <a href="#" class="footer-detail-tbl-link">خدمات گارانتی و مرجوع کردن کالا</a><br>
+                                    <a href="#" class="footer-detail-tbl-link">پیگیری سفارشات</a>
+                                </div>
+                            </div>
+                            <div class="footer-detail-tbl-td">
+                                <h6 class="footer-detail-tbl-title">با فروشگاه</h6>
+                                <div class="footer-detail-tbl-content">
+                                    <a href="#" class="footer-detail-tbl-link">همکاری با سازمان‌ها</a><br>
+                                    <a href="#" class="footer-detail-tbl-link">فرصت‌های شغلی</a>
+                                </div>
+                            </div>
+                            <div class="footer-detail-tbl-td about">
+                                <h6 class="footer-detail-tbl-title">پشتیبانی پلازا همیشه آماده پاسخگویی به شماست</h6>
+                                <div class="footer-detail-tbl-content">
+                                    <div class="footer-detail-tbl-text-wrap">
+                                        <span class="footer-detail-tbl-text-icon mdi mdi-phone mdi-18px"></span>
+                                        <p class="footer-detail-tbl-text">021-66171204</p>
+                                    </div>
+                                    <div class="footer-detail-tbl-text-wrap">
+                                        <span class="footer-detail-tbl-text-icon mdi mdi-email mdi-18px"></span>
+                                        <p class="footer-detail-tbl-text email">info@plaza.ir</p>
+                                    </div>
+                                    <div class="footer-detail-tbl-text-wrap">
+                                        <span class="footer-detail-tbl-text-icon mdi mdi-map-marker mdi-18px"></span>
+                                        <p class="footer-detail-tbl-text">تهران - خیابان جمهوری - پاساژ چارسو - طبقه دوم - پلاک D-52</p>
+                                    </div>
+                                    <div class="footer-detail-tbl-actions">
+                                        <a class="button"><span class="button-text">تماس با ما</span></a><a class="button"><span class="button-text">درباره ما</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copy-right-wrap">
+                <div class="wide-wrap">
+                    <p class="footer-copy-right-text">استفاده از مطالب فروشگاه اینترنتی فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت می‌باشد.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript">
+        const buttons = document.querySelectorAll('.button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                let x = e.clientX - e.target.offsetLeft;
+                let y = e.clientY - e.target.offsetTop;
+                let ripples = document.createElement('span');
+                ripples.style.left = x + 'px';
+                ripples.style.top = y + 'px';
+                this.appendChild(ripples);
+                setTimeout(() => {
+                    ripples.remove()
+                }, 1000);
+
+
+            })
+        }
+    </script>
+</body>
+</html>

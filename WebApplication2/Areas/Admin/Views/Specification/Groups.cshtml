@@ -1,0 +1,186 @@
+﻿@using WebApplication2.Models.ViewModels.Specifications
+@model List<SpecificationGroupsView>
+@{
+    var title = ViewBag.title;
+    var massage = TempData["massage"];
+    ViewData["Title"] = "لیست مشخصات فنی";
+    int gid = ViewBag.gid;
+    int count = 1;
+}
+
+
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/Admin">صفحه اصلی </a></li>
+                            <li class="breadcrumb-item"  ><a asp-area="Admin" asp-controller="Group" asp-action="List">لیست گروه ها</a></li>
+                            <li class="breadcrumb-item" ><a> لیست مشخصات فنی </a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+                        </ol>
+    </nav> }
+
+<div class="card text-right border-primary">
+    <div class="card-header d-flex align-items-center justify-content-between ">
+        <h3> لیست مشخصات فنی @title </h3>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
+                جست و جوی
+                پیشرفته
+            </a>
+            <a href="@Url.Action("Addgroup", new { gid=gid})" class="btn btn-outline-success btn-sm">افزودن لیست مشخصات فنی</a>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-around">
+            <div class="col-md-6">
+                <div class="collapse" id="collapseExample">
+                    <div class="card mb-3 border-warning">
+                        <div class="card-header" id="collapseExample">فیلتر</div>
+                        <div class="card-body">
+                            <form class="form-horizontal" method="post" action="">
+                                <input type="hidden" name="gid" value="@gid">
+                                <div class="mb-3 form-group ">
+                                    <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
+                                    <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
+
+
+                                </div>
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
+                                            <option selected>انتخاب کنید...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">فیلتر</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <nav aria-label="..." dir="ltr">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">2</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+        <p>@massage</p>
+        <table class="table caption-top">
+            <thead>
+                <tr class="bg-light">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width:20%">نام کالا</th>
+                    <th scope="col" style="width:10%">وضعیت</th>
+                    <th scope="col" style="width:20%">ایجاد کننده</th>
+                    <th scope="col" style="width:20%">آخرین تغییرات</th>
+                    <th class="text-left" scope="col">تنظیمات</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@count</th>
+                        <td>
+                            <strong class="h5">@item.title</strong><br />
+
+                            <span class="text-muted">@item.id</span>
+                        </td>
+                        @if (item.state == WebApplication2.Models.Products.States.Enabled)
+                        {
+                            <td>فعال</td>
+                        }
+                        else
+                        {
+                            <td>غیر فعال</td>
+                        }
+                        <td>
+                            @item.creator
+                            <br />
+                            <span class="text-muted">تاریخ: @item.createdate </span>
+                        </td>
+                        @if (!string.IsNullOrEmpty(item.lastmodifydate))
+                        {
+                            <td>@item.lastmodifier<br /><span class="text-muted">تاریخ : @item.lastmodifydate</span></td>
+
+                        }
+                        else
+                        {
+                            <td>---</td>
+
+                        }
+                        <td class="align-middle">
+
+                            @*<div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
+                        <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin"> ویرایش</a></li>
+                       <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Positive*@ @*id=1,type =KeyPointsTypes.negative})"> مدیریت نقاط منفی  </a></li>*@
+                    @*<li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Negative*@ @*id=2,type =KeyPointsTypes.positive})"> مدیریت نقاط مثبت  </a></li>*@
+                    @*<li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin"> حذف</a></li>
+                </ul>
+            </div>*@
+                    <div class="dropdown1">
+                        <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                        <ul id="myDropdown" class=" dropdown1-content text-right">
+
+                            <li><a class="dropdown-item"  asp-action="Editgroup" asp-controller="Specification" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                            <li><a class="dropdown-item text-danger" asp-action="Deletegroup" asp-controller="Specification" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                            <li><a class="dropdown-item " asp-action="List" asp-controller="Specification" asp-area="Admin" asp-route-id="@item.id"> لیست زیرشاخه ها</a></li>
+                        </ul>
+                    </div>
+
+                </td>
+            </tr>
+            { count++; }
+        }
+            </tbody>
+            </table>
+            <nav aria-label="..." dir="ltr">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+        </script>
+    }
+
+
+

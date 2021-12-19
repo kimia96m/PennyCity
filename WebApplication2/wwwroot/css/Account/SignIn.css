@@ -1,0 +1,57 @@
+﻿.frm-control__group{
+    margin-top:2rem;
+
+}
+.frm-control__group:first-child{
+    margin-top:0;
+}
+.frm-control__label{
+    display:inline-block;
+    font-size:1.6rem;
+    color:#555;
+    line-height:1.8;
+    margin-left:2rem;
+    padding-right:.5rem;
+    
+}
+.frm-control__input {
+    display: inline-block;
+    font-size: 1.4rem;
+    color: #555;
+    line-height: 3.4rem;
+    display:block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: .5rem 1rem;
+    height: 3.5rem;
+    border: 1px solid #ddd;
+    border-radius:.5rem;
+    margin-top:.5rem;
+}
+.frm-control__checkbox{
+    display:flex;
+    font-size:1.4rem;
+    line-height:1.8;
+    align-items:center;
+    color:#333;
+    
+    padding-right:.5rem;
+}
+.frm-control__checkbox-input{
+    margin-right:.5rem;
+    margin-left:.5rem;
+
+}
+.frm-control__actions{
+    margin-top:2rem;
+    display:flex;
+    align-items:center;
+
+}
+.frm-control__actions .button{
+    margin-right:2rem;
+    
+}
+    .frm-control__actions .button:first-child{
+        margin-right:0;
+    }

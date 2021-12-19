@@ -1,0 +1,164 @@
+﻿@model WebApplication2.Models.PaginatedList<BannerGroupsView>
+@{
+    ViewData["Title"] = "لیست بنر گروه ها";
+    var massage = TempData["massage"];
+    int count = 1;
+}
+
+
+
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">صفحه اصلی </a></li>
+            <li class="breadcrumb-item" active" aria-current="page">لیست بنر گروه ها</li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+<div class="card text-right border-primary">
+    <div class="card-header d-flex align-items-center justify-content-between ">
+        <h3>لیست گروه ها</h3>
+       <div>
+            @*<a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
+                جست و جوی
+                پیشرفته
+            </a>*@
+           <a asp-action="AddBanner" asp-controller="Group" asp-area="Admin" class="btn btn-outline-success btn-sm">افزودن بنر گروه</a>
+        </div>
+
+    </div>
+    <div class="card-body border-primary">
+        @*<div class="row justify-content-around">
+            <div class="col-md-6">
+                <div class="collapse" id="collapseExample">
+                    <div class="card mb-3 border-warning">
+                        <div class="card-header" id="collapseExample">فیلتر</div>
+                        <div class="card-body">
+                            <form class="form-horizontal" method="post" action="">
+                                <div class="mb-3 form-group ">
+                                    <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
+                                    <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
+
+
+                                </div>
+                                <div class="mb-3 form-group ">
+
+                                    <label for="exampleInputPassword1" class="form-label col-md-8 " name="id">شناسه</label>
+                                    <div class="col-md-8"><input class="form-control" id="exampleInputPassword1" autocomplete="off"></div>
+
+                                </div>
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
+                                            <option selected>انتخاب کنید...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">فیلتر</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+
+        <p>@massage</p>
+        <table class="table caption-top">
+            <thead>
+                <tr class="bg-light">
+                    <th scope="col">#</th>
+                    <th class="text-md-center  align-middle" scope="col" style="width:20%">نام گروه</th>
+                    <th class="text-md-center  align-middle" scope="col" style="width:10%">تصویر</th>
+                    <th class="text-md-center  align-middle" scope="col" style="width:20%">ایجاد کننده</th>
+                    <th class="text-md-center  align-middle" scope="col" style="width:20%">آخرین تغییرات</th>
+                    <th class="text-md-center  align-middle" scope="col">تنظیمات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model)
+                {
+                <tr>
+                    <th scope="row">@count</th>
+                    <td class="text-md-center align-middle">
+                        <strong class="h5"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> @group.title </a></strong><br />
+                        <span></span><br />
+                        <span class="text-muted">شناسه: @group.id</span>
+                        <span class="text-muted">شناسه گروه: @group.groupnumber</span>
+                    </td>
+                    <td class="text-md-center align-middle">
+                        <img src="~/Images/Groups/@group.imgurl" style="max-height:150px;max-width:150px;" />
+                    </td>
+                    <td class="text-md-center align-middle">
+                        @group.creator
+                        <br />
+                        <span class="text-muted">@group.createdatetime</span>
+                    </td>
+                    @if (!string.IsNullOrEmpty(group.lastmodifydate))
+                    {
+                        <td class="text-md-center align-middle">
+                            @group.lastmodifier
+                            <br />
+                            <span class="text-muted">@group.lastmodifydate</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-md-center align-middle"> --- </td>}
+
+                    <td class="align-middle text-md-center ">
+                        <div class="dropdown1">
+                            <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                            <ul id="myDropdown" class=" dropdown1-content text-right">
+                                <li class=" dropdown1-content"><a asp-action="EditBanner" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> ویرایش</a></li>
+                                <li class=" dropdown1-content"><a class=" text-danger" asp-action="DeleteBanner" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> حذف</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                    count++;
+                }
+            </tbody>
+        </table>
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <nav aria-label="..." dir="ltr">
+            <ul class="pagination justify-content-center">
+                <li class="page-item ">
+                    <a asp-action="ListBanner"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link btn btn-default @prevDisabled">
+                        صفحه قبلی
+                    </a>
+
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">2</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a asp-action="ListBanner"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link btn btn-default @nextDisabled">
+                        صفحه بعدی
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+

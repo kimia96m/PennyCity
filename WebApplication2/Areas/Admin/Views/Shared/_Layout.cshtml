@@ -1,0 +1,186 @@
+﻿@using WebApplication2.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Operator> signInManager
+@inject UserManager<Operator> userManager
+@{ 
+    string name = "";
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+    name = user.name + " " + user.lastname;
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/Admin/Shared/Layout.css" rel="stylesheet" />
+</head>
+<body dir="rtl" class="darkmode-bgcolor">
+    <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light darkmode-bgcolor">
+
+        <a class="navbar-brand" href="/Admin/Home">صفحه اصلی</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/Admin/Home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        محصولات
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("List","Product")">لیست محصولات</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Add","Product")">افزودن کالا</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        برند
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("List","Brand")">لیست برند ها</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Add","Brand")">افزودن برند</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        گروه
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("List","Group")">لیست گروه ها</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Add","Group")">افزودن گروه</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("ListBanner","Group")">لیست گروه ها</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("AddBanner","Group")">افزودن گروه</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        برچسب
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("List","Tag")">لیست برچسب ها</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Add","Tag")">افزودن برچسب ها</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        بنر
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("List","Banner")">لیست بنرها</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Add","Banner")">افزودن بنرها</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        شگفت انگیزها
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Choose","SpecialProduct")">انتخاب محصولات</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Aproove","SpecialProduct")">تایید نهایی</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Index","SpecialProduct")">لیست محصولات ویژه</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       فروشندگان
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Add","Seller")">افزودن فروشنده</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("List","Seller")">لیست فروشندگان</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("Index","Seller")">جزییات</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       سفارشات
+                    </a>
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                        <li><a class="dropdown-item text-right" href="@Url.Action("ReviewList","Order")">در انتظار تایید</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("ConfirmedList","Order")">تایید شده ها</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex nav-item dropdown mt-3">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <span class=" dropdown mr-5 align-items-center mb-2">
+                <label class="darkmode">
+                    <input type="checkbox" class="drkmodeinput"> <br />
+                    <span class="checkdrkmode"></span>
+                </label>
+            </span>
+            <span class="navbar-text d-inline-flex align-items-center">
+                <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn "> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
+
+            </span>
+        </div>
+
+        
+    </nav>
+    <div class="container-fluid darkmode-bgcolor">
+        @RenderSection("Breadcrump", required: false)
+        @RenderBody()
+    </div>
+     <script>
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+            window.onclick = function (event) {
+                if
+                    (!event.target.matches('.dropdown1')) {
+                    var dropdown = document.getElementsByClassName("dropdown1-content");
+                    var i;
+                    for (i = 0; i < dropdown.length; i++) {
+                        var openDropdown = dropdown[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+
+            }
+        </script>
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/lib/popper/popper.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+        </script>
+
+        @*<script>
+                var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+                var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+                    return new bootstrap.Dropdown(dropdownToggleEl)
+                })
+            </script>*@
+        @RenderSection("Scripts", required: false)
+</body>
+</html>

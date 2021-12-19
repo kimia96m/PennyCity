@@ -1,0 +1,238 @@
+﻿@model HomeView
+@{
+    //int[] count = new int[Model.banners.Count];
+    int y = 0;
+}
+@section Styles{
+    <link href="~/css/Home/Index.css" rel="stylesheet" />
+    <script src="~/JavaScript/Shared/JavaScript.js"></script>
+}
+<div id="home" class="wide-wrap">
+    @foreach (var item in Model.banners)
+    {
+        if (item.ispecial == true)
+        {
+            <section class="home-section home-top-banner home-rounded-section home-section-shadow"></section>
+        }
+    }
+    <section class="home-section clearfix">
+        <div class="home-section-content">
+            <div class="home-section">
+                <div class="home-gallery-wrap home-rounded-section home-section-shadow">
+                    <div class="home-gallery-content">
+                        @foreach (var item in Model.banners)
+                        {
+                            if (item.ispecial == false || item.ispecial == null)
+                            {
+                                y++;
+
+                                var img = $"{item.id}.jpg";
+                                <a class="home-gallery-item selected slide_@y" href="@item.link" style="background-image: url('Images/banners/@item.imgagesrc')" for="slide_@y"></a>
+                            }
+                            //count[y] = item.id;
+                        }
+                        @*<a class="home-gallery-item" style="background-image: url('images/slide-2.jpg')">
+        </a>*@
+                    </div>
+                    <div class="home-gallery-pager">
+                        @*<a class="home-gallery-pager-btn selected"></a>*@
+                        @*foreach (var item in count)*@
+                        @for (int i = 0; i < y; i++)
+                        {
+                            <a class="home-gallery-pager-btn" id="slide_@i" onclick="currentSlide(slide_@i)"></a>
+                        }
+                    </div>
+                    <a class="home-gallery-btn mdi mdi-chevron-right right" onclick="plusSlides(1)"></a>
+                    <a class="home-gallery-btn mdi mdi-chevron-left left" onclick="plusSlides(-1)"></a>
+                </div>
+            </div>
+            <div class="home-section">
+                <div class="home-spec-offer-wrap clearfix home-section-shadow home-rounded-section">
+                    <div class="home-spec-offer-side-col">
+                        <ul class="home-spec-offer-side-item-list">
+                            @foreach (var item in Model.specialproduct)
+                            {
+                                <li class="home-spec-offer-side-item">
+                                    <a class="home-spec-offer-side-button" asp-controller="Product" asp-action="Index" asp-route-id="@item.productnumb" title="@item.title">@item.title</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <a class="home-spec-offer-show-all-btn button type-1 mdi mdi-arrow-left"><span class="button-text">مشاهده همه شگفت‌انگیزها</span></a>
+                    <div class="home-spec-offer-content-col">
+                        <ul class="home-spec-offer-item-list">
+                            <li class="home-spec-offer-item clearfix selected">
+                                <span class="home-spec-offer-item-badge"><span class="home-spec-offer-item-badge-text">پیشنهاد شگفت انگیز</span></span>
+                                <div class="home-spec-offer-item-photo-wrap">
+                                    <img class="home-spec-offer-item-photo" src="resources/products/3436137.jpg" alt="سرویس پخت و پز 10 پارچه نالینو">
+                                </div>
+                                <div class="home-spec-offer-item-content">
+                                    <div class="home-spec-offer-item-price-container">
+                                        <span class="home-spec-offer-item-price-wrap">
+                                            <del class="home-spec-offer-item-price-base"><span class="number">35,000</span> تومان</del>
+                                            <strong class="home-spec-offer-item-price-final"><span class="number">20,000</span> تومان</strong>
+                                        </span>
+                                        <span class="home-spec-offer-item-price-discount"><span class="number">20%</span> درصد</span>
+                                    </div>
+                                    <strong class="home-spec-offer-item-title">سرویس پخت و پز 10 پارچه نالینو</strong>
+                                    <ul class="home-spec-offer-item-feature-list">
+                                        <li class="home-spec-offer-item-feature-item">تکنولوژی پخت : بخار</li>
+                                        <li class="home-spec-offer-item-feature-item">اندازه گیری شاخص سلامتی : خیر</li>
+                                    </ul>
+                                    <div class="home-spec-offer-item-footer">
+                                        <div class="home-spec-offer-item-counter number"><span>05</span> : <span>32</span> : <span>32</span></div>
+                                        <span class="home-spec-offer-item-footer-text">زمان باقی مانده تا پایان سفارش</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="home-spec-offer-item-link"></a>
+                            </li>
+                            <li class="home-spec-offer-item clearfix">
+                                <span class="home-spec-offer-item-badge"><span class="home-spec-offer-item-badge-text">پیشنهاد شگفت انگیز</span></span>
+                                <div class="home-spec-offer-item-photo-wrap">
+                                    <img class="home-spec-offer-item-photo" src="resources/products/3669277.jpg" alt="دوربین دیجیتال کانن">
+                                </div>
+                                <div class="home-spec-offer-item-content">
+                                    <div class="home-spec-offer-item-price-container">
+                                        <span class="home-spec-offer-item-price-wrap">
+                                            <del class="home-spec-offer-item-price-base">79,000 تومان</del>
+                                            <strong class="home-spec-offer-item-price-final">65,000 تومان</strong>
+                                        </span>
+                                        <span class="home-spec-offer-item-price-discount">15% درصد</span>
+                                    </div>
+                                    <strong class="home-spec-offer-item-title">دوربین دیجیتال کانن</strong>
+                                    <ul class="home-spec-offer-item-feature-list">
+                                        <li class="home-spec-offer-item-feature-item">تکنولوژی پخت : بخار</li>
+                                        <li class="home-spec-offer-item-feature-item">اندازه گیری شاخص سلامتی : خیر</li>
+                                    </ul>
+                                    <div class="home-spec-offer-item-footer">
+                                        <div class="home-spec-offer-item-counter"><span>12</span> : <span>24</span> : <span>33</span></div>
+                                        <span class="home-spec-offer-item-footer-text">زمان باقی مانده تا پایان سفارش</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="home-spec-offer-item-link" title="دوربین دیجیتال کانن"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="home-section">
+                <div class="home-promo-wrap clearfix">
+                    <div class="home-promo-item">
+                        <div class="home-promo-item-con">
+                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
+                                <span class="home-promo-item-text-wrap">
+                                    <span class="home-promo-item-text">هدفون و هدست</span>
+                                    <span class="home-promo-item-text-icon mdi mdi-animation"></span>
+                                </span>
+                                <span class="home-promo-item-img" style="background-image: url(resources/banners/01.jpg)"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="home-promo-item">
+                        <div class="home-promo-item-con">
+                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
+                                <span class="home-promo-item-img" style="background-image: url(resources/banners/02.jpg)"></span>
+                                <span class="home-promo-item-hover">عنوان 1</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="home-promo-item">
+                        <div class="home-promo-item-con">
+                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
+                                <span class="home-promo-item-img" style="background-image: url(resources/banners/03.jpg)"></span>
+                                <span class="home-promo-item-hover">عنوان 2</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="home-promo-item">
+                        <div class="home-promo-item-con">
+                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
+                                <span class="home-promo-item-img" style="background-image: url(resources/banners/04.jpg)"></span>
+                                <span class="home-promo-item-hover">عنوان 3</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-showcase-wrap home-section home-section-shadow home-rounded-section">
+                <div class="home-showcase-header">
+                    <div class="home-showcase-header-text-wrap">
+                        <h3 class="home-showcase-header-text">تجهیزات نظم دهنده داخل خودرو</h3>
+                    </div>
+                </div>
+                <div class="home-showcase-content">
+                    <div class="home-showcase-gallery">
+                        <a class="home-showcase-gallery-button mdi mdi-chevron-right right-btn disabled"></a>
+                        <a class="home-showcase-gallery-button mdi mdi-chevron-left left-btn"></a>
+                        <div class="home-showcase-gallery-layout">
+                            <div class="home-showcase-gallery-content">
+                                <a class="home-showcase-gallery-item">
+                                    <span class="home-showcase-gallery-item-inner">
+                                        <span class="home-showcase-gallery-item-img-cont">
+                                            <span class="home-showcase-gallery-item-img-lay">
+                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                            </span>
+                                        </span>
+                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
+                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
+                                    </span>
+                                </a><a class="home-showcase-gallery-item">
+                                    <span class="home-showcase-gallery-item-inner">
+                                        <span class="home-showcase-gallery-item-img-cont">
+                                            <span class="home-showcase-gallery-item-img-lay">
+                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                            </span>
+                                        </span>
+                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
+                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
+                                    </span>
+                                </a><a class="home-showcase-gallery-item">
+                                    <span class="home-showcase-gallery-item-inner">
+                                        <span class="home-showcase-gallery-item-img-cont">
+                                            <span class="home-showcase-gallery-item-img-lay">
+                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                            </span>
+                                        </span>
+                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
+                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
+                                    </span>
+                                </a><a class="home-showcase-gallery-item">
+                                    <span class="home-showcase-gallery-item-inner">
+                                        <span class="home-showcase-gallery-item-img-cont">
+                                            <span class="home-showcase-gallery-item-img-lay">
+                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                            </span>
+                                        </span>
+                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
+                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
+                                    </span>
+                                </a><a class="home-showcase-gallery-item">
+                                    <span class="home-showcase-gallery-item-inner">
+                                        <span class="home-showcase-gallery-item-img-cont">
+                                            <span class="home-showcase-gallery-item-img-lay">
+                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                            </span>
+                                        </span>
+                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
+                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
+                                    </span>
+                                </a><a class="home-showcase-gallery-item">
+                                    <span class="home-showcase-gallery-item-inner">
+                                        <span class="home-showcase-gallery-item-img-cont">
+                                            <span class="home-showcase-gallery-item-img-lay">
+                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                            </span>
+                                        </span>
+                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
+                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="height: 200px"></div>
+</div>

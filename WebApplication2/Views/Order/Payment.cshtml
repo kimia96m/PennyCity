@@ -1,0 +1,138 @@
+﻿@using WebApplication2.Models.Orders
+@model Order
+@{
+    ViewData["Title"] = "جزییات سفارش";
+    int counter = 1;
+    double totalprice = 0;
+    double sumprice = 0;
+    var address = TempData["address"];
+
+    //int y;
+}
+@section Styles{
+    <link href="~/css/Order/Payment.css" rel="stylesheet" />
+}
+<link href="~/css/Order/Payment.css" rel="stylesheet" />
+<div class="panel wide-wrap">
+    <h1 class="panel__title">جزییات سفارش</h1>
+    <div class="panel__content">
+        @if (Model.state == OrderState.unpaid)
+        {
+            <div class="order-state"> وضعیت سفارش: پرداخت نشده</div>
+            <form class="order-form" action="/Order/SavePayment" method="post">
+                <h1 class="order-form__header">
+                    ثبت اطلاعات پرداخت
+                </h1>
+                <div class="order-form-content">
+                    <div class="order-form__group order-form__group--middle">
+                        <label class="order-form__label" for="txtSerial">شماره ارجاع :</label>
+                        <div class="order-form__field">
+                            <input class="order-form__input" id="txtSerial" name="serial" />
+                            <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">درج استان الزامیست</span>
+                        </div>
+                    </div>
+                    <div class="order-form__group order-form__group--middle">
+                        <label class="order-form__label" for="txtDate">تاریخ :</label>
+                        <div class="order-form__field">
+                            <input class="order-form__input" id="txtDate" name="date" />
+                            <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">درج استان الزامیست</span>
+                        </div>
+                    </div>
+                    <div class="order-form__group">
+                        <span class="order-form__label"></span>
+                        <div class="order-form-field">
+                            <label class="order-form-radio">
+                                <button type="submit" class="button ">
+                                    <span class="button-text">
+                                        ثبت سفارش
+                                    </span>
+                                </button>
+
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <input type="hidden" name="id" value="@Model.id" />
+            </form>
+        }
+        else if (Model.state == OrderState.reviewing)
+        {
+            <div class="order-state"> وضعیت سفارش: درحال بررسی</div>
+        }
+        else
+        {
+            <div class="order-state"> وضعیت سفارش: پرداخت شده</div>
+        }
+
+        <div class="panel-table">
+            <div class="cart-table__head">
+                <div class="cart-table__td--row cart-table__td"></div>
+                <div class="cart-table__td--product cart-table__td">کالا</div>
+                <div class="cart-table__td--count cart-table__td">تعداد</div>
+                <div class="cart-table__td--price cart-table__td">قیمت </div>
+                <div class="cart-table__td--total cart-table__td">مجموع</div>
+            </div>
+            @foreach (var item in Model.orderitems)
+            {
+                string imgurl = $"{item.productitem.product.Id}.jpg";
+                totalprice = item.quantity * item.price;
+                sumprice += totalprice;
+                <div class="cart-table__row">
+                    <div class="cart-table__td--row cart-table__td">@counter</div>
+                    <div class="cart-table__td--product cart-table__td">
+                        <div class="cart-product">
+                            <a href="#" class="cart-product__photo-link">
+                                <img src="~/Images/Products/@imgurl" class="cart-product__photo" alt="@item.productitem.product.SecondaryTitle" />
+                            </a>
+                            <div class="cart-product__titles">
+                                <a class="cart-product__primary-title">@item.productitem.product.PrimaryTitle</a>
+                                <br />
+                                <a class="cart-product__secondary-title">@item.productitem.product.SecondaryTitle</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-table__td--count cart-table__td">@item.quantity</div>
+                    <div class="cart-table__td--price cart-table__td">@item.price.ToString("N0") </div>
+                    <div class="cart-table__td--total cart-table__td">@totalprice</div>
+
+                </div>
+                counter++;
+            }
+        </div>
+        <div class="cart__footer">
+
+            <div class="cart__total">
+                <p class="cart__totalprice">مجموع : @totalprice.ToString("N0") ریال</p>
+                @switch (Model.shippingtypes)
+                {
+                    case ShippingType.Post:
+
+                        <p class="cart__shippingprice"> هزینه ارسال 8000  تومان با پست پیشتاز</p>
+                        break;
+                    case ShippingType.Tipax:
+
+                        <p class="cart__shippingprice"> هزینه ارسال 15000  تومان با پست پیشتاز</p>
+
+                        break;
+                }
+                <p class=" card__totalpayment"> @Model.totalprice.ToString("N0")</p>
+
+
+            </div>
+            <div class="order-detail">
+                <div class="order-detail__row"><p class="order-detail__col">آدرس</p></div>
+                @*<a class="order-detail__row">استان: <strong class="order-detail__row--bold"> @Model.customer.address.Select(c => c.province).FirstOrDefault() </strong></a><br />
+                <a class="order-detail__row">شهر: <strong class="order-detail__row--bold"> @Model.customer.address.Select(c => c.city).First()  </strong></a><br />
+                <a class="order-detail__row">خیابان: <strong class="order-detail__row--bold"> @Model.customer.address.Select(c => c.location).First()  </strong></a><br />
+                <a class="order-detail__row">شماره تماس: <strong class="order-detail__row--bold"> @Model.customer.address.Select(c => c.tel).First()  </strong></a>*@
+                <a class="order-detail__row"><strong class="order-detail__row--bold"> @Model.address </strong></a>
+
+                @*<textarea class="order-form__input order-form__input--multiple" id="txtAddress" cols="30" rows="1" name="address" disabled="disabled">@address</textarea>*@
+
+            </div>
+        </div>
+
+    </div>
+</div> 
+

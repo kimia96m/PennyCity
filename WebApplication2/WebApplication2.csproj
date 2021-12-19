@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>f09a5821-c514-4985-b8e1-7e1b20eda467</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\SqlServer\" />
+    <Folder Include="wwwroot\Images\Brands\" />
+    <Folder Include="wwwroot\Images\Groups\" />
+    <Folder Include="wwwroot\Images\Products\" />
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <!--<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />-->
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.172" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameWorkCore.Tools.Dotnet" Version="1.0.0" />
+  <PackageReference Include="Microsoft.EntityFrameWorkCore.Tools.Dotnet" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\Home\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>

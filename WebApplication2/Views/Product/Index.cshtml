@@ -1,0 +1,300 @@
+﻿@using WebApplication2.Models.Products
+@model Product
+@{
+    ViewData["Title"] = "جزییات محصول";
+    string imgurl = $"{Model.Id}.jpg";
+    int quantity = Model.productitem.FirstOrDefault().quantity;
+}
+
+@section Styles{
+
+    <link href="~/css/Product/Index.css" rel="stylesheet" />
+    <script src="~/JavaScript/Products/Index.js"></script>
+}
+@if (Model != null && Model.specificationvalues != null)
+{
+    <div id="product" class="product wide-wrap">
+        <div class="product__header">
+            <div class="product__gallary">
+                <div class="product-gallary">
+                    <div class="product-gallary__photo-wrap">
+                        <img class="product-gallary__photo" alt="@Model.SecondaryTitle" src="~/Images/Products/@imgurl" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="product__detail">
+
+                <section class="product__titles">
+                    <h1 class="product__primary-title">@Model.PrimaryTitle</h1>
+                    <h2 class="product__secondary-title">@Model.SecondaryTitle</h2>
+                    <ul class="product__info">
+                        <li class="product__info-item">
+                            گروه :
+                            <span class="product__info-value">@Model.Groups.title</span>
+                        </li>
+                        <li class="product__info-item">
+                            برند :
+                            <span class="product__info-value"> @Model.Brands.title</span>
+                        </li>
+
+                    </ul>
+                </section>
+                <form class="product-detail" asp-action="Index" asp-controller="Cart" method="post" asp-route-productitemId="@Model.Id">
+                    @*<p class="product-detail__empty">کالا  یافت نشد</p>*@
+                    <span class="product-detail__title"> کالای مورد نظر خود را انتخاب کنید</span>
+                    <ul class="product-detail__items">
+                        @*با جاوا اسکریپت بنویس*@
+                        @foreach (var item in Model.productitem)
+                        {
+                            string tags = "";
+                            int counter = 0;
+                            if (item.itemtagvalue != null)
+                            {
+                                foreach (var x in item.itemtagvalue)
+                                {
+                                    @if (counter == 0)
+                                    {
+                                        tags += $"{x.tagvalues.tags.title} : {x.tagvalues.title}";
+                                        counter++;
+
+                                    }
+                                    else
+                                    {
+                                        tags += $"-{x.tagvalues.tags.title} : {x.tagvalues.title}";
+                                    }
+                                }
+                            }
+                            <li class="product-detail__items">
+                                <label class="product-detail__label">
+                                    <input class="product-detail__input" type="radio" name="productitemId" value="@item.id" checked />
+                                    <span class="product-detail__text">@tags</span>
+                                    <span class=" product-detail__price"> @item.price.ToString("N0") </span>
+
+                                </label>
+                            </li>
+
+                        }
+                    </ul>
+                    <section class="product-detail__rating">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <p class="product-detail__rating-title">امتیاز محصول</p>
+                    </section>
+                    <div class="product-detail__actions">
+                        <div class="product-detail__actions-count">
+                            <span class="product-detail__actions-text">تعداد</span>
+                            <select class="product-detail__actions-select" name="count">
+                                @for (int i = 1; i <= quantity; i++)
+                                {
+                                    <option value="@i">@i</option>
+
+                                }
+                            </select>
+                        </div>
+                        <label title="افزودن به سبد خرید" class="button mdi mdi-card-plus product-detail__actions-buttun">
+                            <span class="button-text">افزودن به سبد خرید</span>
+                            <input class="product-detail__actions-buttun-select" type="submit" />
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <section class="product-summary">
+            <div class="product-description">
+                <span class="product-description__icon mdi mdi-information mdi-24px"></span>
+                <p class="product-description__text">
+                    @Model.Description
+                </p>
+            </div>
+            <div class="product-keypoint">
+                <div class="product-keypoint__col">
+                    <div class="product-keypoint__title">نقاط مثبت</div>
+                    <ul class="product-keypoint__list">
+                        @foreach (var item in Model.Keypoints)
+                        {
+                            if (item.types == WebApplication2.Models.Products.KeyPoints.KeyPointsTypes.positive)
+                            {
+                                <li class="product-keypoint__item">@item.title</li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <div class="product-keypoint__col">
+                    <div class="product-keypoint__title">نقاط منفی</div>
+                    <ul class="product-keypoint__list">
+                        @foreach (var item in Model.Keypoints)
+                        {
+                            if (item.types == WebApplication2.Models.Products.KeyPoints.KeyPointsTypes.negative)
+                            {
+                                <li class="product-keypoint__item">@item.title</li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="product-tab">
+            <input class="product-tab__radio" name="tabradio" type="radio" id="rdo_tab_1" checked />
+            <input class="product-tab__radio" name="tabradio" type="radio" id="rdo_tab_2" />
+            <div class="product-tab__header">
+                <label class="product-tab__button" for="rdo_tab_1" data-tab="1">مشخصات فنی</label>
+                <label class="product-tab__button" for="rdo_tab_2" data-tab="2">نظرات خریداران</label>
+            </div>
+            <div class="product-tab__content" data-tab="1">
+                <ul class="product-specs">
+                    <li class="product-specs__group">
+                        <h4 class="product-specs__title">
+                            مشخصات کلی
+                        </h4>
+                        <ul class="product-specs__list">
+                            <li class="product-specs__item">
+                                <span class="product-specs__caption">حافظه داخلی</span>
+                                <strong class="product-specs__value">شش گیگابایت</strong>
+                            </li>
+                            <li class="product-specs__item">
+                                <span class="product-specs__caption">حافظه </span>
+                                <strong class="product-specs__value">55 گیگابایت</strong>
+                            </li>
+                        </ul>
+                    </li>
+
+                    @foreach (var item in Model.Groups.specificationgroups)
+                    {
+                        <li class="product-specs__group">
+                            <h4 class="product-specs__title">
+                                @item.title
+                            </h4>
+                            <ul class="product-specs__list">
+                                @foreach (var x in item.specification)
+                                {
+                                    if (item.id == x.specificationgroups.id)
+                                    {
+                                        <li class="product-specs__item">
+                                            <span class="product-specs__caption">@x.title</span>
+                                            <strong class="product-specs__value">@Model.specificationvalues.FirstOrDefault(v => (v.product.Id == Model.Id)@*&& (v.specification.id == x.id)*@).valuetitle</strong>
+                                        </li>
+                                    }
+
+                                }
+
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="product-tab__content" data-tab="2">
+                <div class="product-comments">
+                    <div class="product-comments__actions">
+                        @*<div class="product-comments__massage-wrap">
+                                <p class="product-comments__massage">
+                                    برای ارسال نظر ابتدا وارد حساب کاربری خود شوید
+                                </p>
+                                <a href="#" class="button"> <span class="button-text"> ورود به سایت</span></a>
+
+                            </div>*@
+                        <form class=" product-comments-form" action="/Product/SendComment" method="post">
+                            <input type="hidden" value="@Model.Id" name="pid" />
+                            <textarea placeholder="متن مورد نظر خود را تایپ کن" type="text" rows="5" cols="100" class="product-comments-form_textarea" name="comment"></textarea>
+                            <button type="submit" class="button">
+                                <span class="button-text">ارسال نظر</span>
+                            </button>
+
+                        </form>
+                    </div>
+                    <div class="product-comments__actions">
+                        <form class=" product-comments-form" action="/Product/SendRating" onsubmit="return VerifyRating()" method="post">
+                            <input type="hidden" value="@Model.Id" name="pid" />
+                            <input type="hidden" id="lblRating" value="0" name="rate" />
+                            <section class="product-detail__rating" onmouseout="CRateSelect()">
+                                <span onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star" id="span5"></span>
+                                <span onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star" id="span4"></span>
+                                <span onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star" id="span3"></span>
+                                <span onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star" id="span2"></span>
+                                <span onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star" id="span1"></span>
+                                <br />
+                                <button type="submit" class="button">
+                                    <span class="button-text">ارسال رای</span>
+                                </button>
+                            </section>
+                        </form>
+                    </div>
+                    <div class="product-actions">
+                        <div class="product-actions__info">
+                            <select class="product-actions__pagesize">
+                                <option value="20">20</option>
+                                <option value="40">40</option>
+                                <option value="80">60</option>
+                            </select>
+                            <span class="product-actions__total">230 product</span>
+                        </div>
+
+                        <div class="product-actions__pager">
+                            <a class="product-actions__pager-button">1</a>
+                            <span class="product-actions__pager-seperator">...</span>
+                            <a class="product-actions__pager-button">7</a>
+                            <a class="product-actions__pager-button product-actions__pager-button--selected">8</a>
+                            <a class="product-actions__pager-button">9</a>
+                            <span class="product-actions__pager-seperator">...</span>
+                            <a class="product-actions__pager-button">20</a>
+                        </div>
+                    </div>
+
+                    <ul class="product-comments__list">
+                        <li class="product-comments__item">
+                            <div class="product-comments__header">
+                                <span class="product-comments__sender">من</span>
+                                <span class="product-comments__date">1379/07/08 سه شنبه</span>
+                            </div>
+                            <p class="product-comments__text">
+                                kjfisodjfisofj ifjosifjisd iojs dfisjfios sijsois sh uih fhfhuisdh ihudf fdshufi  fhusihfsuhsuifhfuish uifhushfushdfusih uh sdfuhsuihdfs ihihdsu
+                            </p>
+                        </li>
+                        <li class="product-comments__item">
+                            <div class="product-comments__header">
+                                <span class="product-comments__sender">من و تو</span>
+                                <span class="product-comments__date">1379/07/19 سه شنبه</span>
+                            </div>
+                            <p class="product-comments__text">
+                                kjfisodjfisofj ifjosifjisd iojs dfisjfios sijsois sh uihkjنتسینتست تنبعیسها تا ابهسع ابعسیهاب سعهابعهسیاب ب اعبیا fhfhuisdh ihudf fdshufi  fhusihfsuhsuifhfuish uifhushfushdfusih uh sdfuhsuihdfs ihihdsu
+                            </p>
+                        </li>
+                    </ul>
+                    <div class="product-actions">
+                        <div class="product-actions__info">
+                            <select class="product-actions__pagesize">
+                                <option value="20">20</option>
+                                <option value="40">40</option>
+                                <option value="80">60</option>
+                            </select>
+                            <span class="product-actions__total">230 product</span>
+                        </div>
+
+                        <div class="product-actions__pager">
+                            <a class="product-actions__pager-button">1</a>
+                            <span class="product-actions__pager-seperator">...</span>
+                            <a class="product-actions__pager-button">7</a>
+                            <a class="product-actions__pager-button product-actions__pager-button--selected">8</a>
+                            <a class="product-actions__pager-button">9</a>
+                            <span class="product-actions__pager-seperator">...</span>
+                            <a class="product-actions__pager-button">20</a>
+                        </div>
+                    </div>
+
+                    @*<p class="emptylist-message">هیچ موردی یافت نشد  </p>*@
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+}
+else
+{ <h2> ایتم نداره</h2>}
+
+

@@ -1,0 +1,82 @@
+﻿@model List<BannerView>
+@{
+    ViewData["Title"] = "لیست بنرها";
+    var count = 1;
+
+}
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">صفحه اصلی </a></li>
+            <li class="breadcrumb-item" active" aria-current="page"> بنرها </li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+
+<table class="table caption-top">
+    <thead>
+        <tr class="bg-light">
+            <th scope="col" style="width:10%">#</th>
+            <th scope="col" style="width:30%">
+               شناسه بنر
+            </th>
+            <th scope="col" style="width:30%">تصویر</th>
+            <th scope="col" style="width:30%">نوع</th>
+            
+            <th  scope="col" style="width:30%">تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var banner in Model)
+        {
+        <tr>
+            <td scope="row">@count</td>
+            <td>
+                <strong class="h5"><a asp-action="List" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> @banner.link </a></strong><br />
+                <span></span><br />
+                <span class="text-muted">شناسه: @banner.id</span>
+            </td>
+            <td>
+                @if (banner.isspesial == "True")
+                {
+                    <img src="~/Images/banners/top-banner.png" style="max-height:150px;max-width:150px;" alt="@banner.link" />
+                }
+                else
+                {
+                    <img src="~/Images/banners/@banner.Imagename" style="max-height:150px;max-width:150px;" alt="@banner.link" />
+
+                }
+            </td>
+            @if (banner.isspesial == "True")
+            {
+                <td scope="row">بنر تاپ</td>
+            }
+            else
+            {
+                <td scope="row">بنر اسلایدی</td>
+            }
+            <td class="align-middle ">
+                <div class="dropdown1 text-left">
+                    <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                    <ul id="myDropdown" class=" dropdown1-content text-right">
+                        <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id">جزییات</a></li>
+                        <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> حذف</a></li>
+                    </ul>
+                </div>
+            </td>
+            <td class="align-middle">
+                <div class="btn-group">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"></button>
+                    <ul id="myDropdown" class="dropdown1-content text-right">
+                        <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id">جزییات</a></li>
+                        <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> حذف</a></li>
+                    </ul>
+                </div>
+            </td>
+            
+        </tr>
+            count++;
+        }
+
+
+    </tbody>
+</table>

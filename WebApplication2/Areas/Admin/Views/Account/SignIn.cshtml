@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = null;
+    
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/materialdesignicons.css" rel="stylesheet" />
+    <link href="~/css/Shared/Layout.css" rel="stylesheet" />
+    <link href="~/css/Account/SignIn.css" rel="stylesheet" />
+    <link href="~/css/Admin/Shared/Layout.css" rel="stylesheet" />
+    <script src="~/JavaScript/Admins/Shared/JavaScript.js"></script>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="user-panel">
+            <div class="user-panel__header">
+                ورود به سایت
+            </div>
+            <main class="user-panel__content">
+                <form asp-action="SignIn" asp-area="Admin" asp-controller="Account" asp-route-ReturnUrl="@ViewBag.returnurl"  method="post" class="frm-control" novalidate>
+                    <div class="frm-control__group">
+                        <label class="frm-control__label" for="txtEmail">نام کاربری</label>
+                        <input class="frm-control__input" type="email" name="username" id="txtEmail" />
+                        <span class="frm-control_validation frm-control_validation--show mdi mdi-alert-circle-outline">درج ایمیل الزامیست</span>
+                    </div>
+                    <div class="frm-control__group password-container">
+                        <label class="frm-control__label" for="txtPassword">رمز عبور</label>
+                        <input class="frm-control__input" type="password" name="password" id="txtPassword" />
+                        <span> <i class="mdi mdi-18px mdi-eye-outline eye-icon-pass" id="font" onclick="togglePW()" aria-hidden="true" ></i></span>
+                        <span class="frm-control_validation frm-control_validation--show mdi mdi-alert-circle-outline">درج پسورد الزامیست</span>
+                    </div>
+                    <div class="frm-control__group">
+                        <label class="frm-control__checkbox">
+                            <input type="checkbox" class="frm-control__checkbox-input" value="True" name="rememberme" /> مرا به خاطر بسپار
+                        </label>
+                    </div>
+                    <div class="frm-control__actions">
+                        <button class="button" type="submit">
+                            <span class="button-text">ورود</span>
+                        </button>
+                        <a href="/" class="button">
+                            <span class="button-text">بازگشت</span>
+                        </a>
+
+                    </div>
+                </form>
+                @if (ViewBag.error != null)
+                {
+                    <div class="text-danger">@ViewBag.error</div>
+                }
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+</svg>

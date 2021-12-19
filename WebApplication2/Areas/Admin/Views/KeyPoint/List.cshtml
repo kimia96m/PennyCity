@@ -1,0 +1,118 @@
+﻿@using WebApplication2.Models.Products.KeyPoints
+@using WebApplication2.Models.ViewModels.KeyPoints
+@model IEnumerable<KeyPointView>
+@{
+    var productid = (int)ViewBag.productid;
+    var type = (KeyPointsTypes)ViewBag.type;
+    var title = "ویژگی های   " + (type == KeyPointsTypes.positive ? "مثبت" : "منفی");
+    ViewData["Title"] = title;
+    int count = 1;
+}
+
+
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Admin"></a></li>
+            <li class="breadcrumb-item" active" aria-current="page"><a asp-action="List" asp-controller="Product" asp-area="Admin">محصولات</a></li>
+            <li class="breadcrumb-item" active" aria-current="page"><a>@title</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+
+<div class="card text-right border-primary">
+    <div class="card-header d-flex align-items-center justify-content-between ">
+        <h3>لیست @title</h3>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
+                جست و جوی
+                پیشرفته
+            </a>
+            <a href="@Url.Action("Add",new { productid=productid, type=type})" class="btn btn-outline-success btn-sm">افزودن @title </a>
+        </div>
+
+    </div>
+    <div class="card-body">
+
+        <table class="table caption-top">
+            <thead>
+                <tr class="bg-light">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width:20%">عنوان </th>
+                    <th scope="col" style="width:20%">وضعیت</th>
+                    <th scope="col" style="width:20%">ایجاد کننده</th>
+                    <th scope="col" style="width:20%">آخرین تغییرات</th>
+                    <th @*class="text-left"*@ scope="col">تنظیمات</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>
+                        <strong class="h5">@item.title</strong><br />
+
+                        <span class="text-muted">@item.id</span>
+                    </td>
+                    @if (item.state == WebApplication2.Models.Products.States.Enabled)
+                    {
+                        <td>فعال</td>
+                    }
+                    else
+                    {
+                        <td>غیر فعال</td>
+                    }
+                    <td>
+                        @item.creator
+                        <br />
+                        <span class="text-muted">تاریخ: @item.createDate </span>
+                    </td>
+                    @if (!string.IsNullOrEmpty(item.lastModifyDate))
+                    {
+                        <td>@item.lastModifier<br /><span class="text-muted">تاریخ : @item.lastModifyDate</span></td>
+
+                    }
+                    else
+                    {
+                        <td>---</td>
+
+                    }
+                    <td class="align-middle">
+
+                        @*<div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+            <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
+                <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin"> ویرایش</a></li>
+               <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Positive*@ @*id=1,type =KeyPointsTypes.negative})"> مدیریت نقاط منفی  </a></li>*@
+                @*<li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Negative*@ @*id=2,type =KeyPointsTypes.positive})"> مدیریت نقاط مثبت  </a></li>*@
+                @*<li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin"> حذف</a></li>
+        </ul>
+    </div>*@
+                <div class="dropdown1">
+                    <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                    <ul id="myDropdown" class=" dropdown1-content text-right">
+
+                        <li><a class="dropdown-item" @*href="@Url.Action("Edit",new { productid=productid, type=type})"*@ asp-action="Edit" asp-controller="KeyPoint" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                        <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="KeyPoint" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                    </ul>
+                </div>
+
+                </td>
+                </tr>
+                    { count++; }
+                }
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+        </script>
+    }
+

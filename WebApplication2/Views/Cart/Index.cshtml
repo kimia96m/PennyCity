@@ -1,0 +1,67 @@
+﻿@using WebApplication2.Models.Products.Carts
+@model Cart
+@{
+    ViewData["Title"] = "سبد خرید";
+    var counter = 1;
+    double totalprice = 0;
+    string imgurl = "";
+    double finalprice = 0;
+
+}
+@section Styles{
+    <link href="~/css/Cart/Index.css" rel="stylesheet" />
+    }
+<div id="Cart" class="panel wide-wrap">
+    <h1 class="panel__title">سبد خرید</h1>
+    @if (Model != null)
+    {
+        <div class="cart__content">
+            <div class="panel-table">
+                <div class="cart-table__head">
+                    <div class="cart-table__td--row cart-table__td"></div>
+                    <div class="cart-table__td--product cart-table__td">کالا</div>
+                    <div class="cart-table__td--count cart-table__td">تعداد</div>
+                    <div class="cart-table__td--price cart-table__td">قیمت </div>
+                    <div class="cart-table__td--total cart-table__td">مجموع</div>
+                    <div class="cart-table__td--action cart-table__td"></div>
+
+                </div>
+                @foreach (var item in Model.cartitem)
+                {
+                    totalprice = item.quantity * item.productitem.price;
+                    imgurl = $"{item.productitem.product.Id}.jpg";
+                    finalprice += totalprice;
+
+                    <div class="cart-table__row">
+                        <div class="cart-table__td--row cart-table__td">@counter</div>
+                        <div class="cart-table__td--product cart-table__td">
+                            <div class="cart-product">
+                                <a href="#" class="cart-product__photo-link">
+                                    <img src="~/Images/Products/@imgurl" class="cart-product__photo" alt="@item.productitem.product.SecondaryTitle" />
+                                </a>
+
+                                <div class="cart-product__titles">
+                                    <a class="cart-product__primary-title">@item.productitem.product.PrimaryTitle</a>
+                                    <br />
+                                    <a class="cart-product__secondary-title">@item.productitem.product.SecondaryTitle</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-table__td--count cart-table__td">@item.quantity</div>
+                        <div class="cart-table__td--price cart-table__td">@item.productitem.price.ToString("N0") rial </div>
+                        <div class="cart-table__td--total cart-table__td">@totalprice.ToString("N0") ریال</div>
+                        <div class="cart-table__td--action cart-table__td"><a asp-action="Remove" asp-controller="Cart" asp-route-id="@item.id" id="button" class="button"><span class="button-text">حذف</span></a></div>
+                    </div>
+                    counter++;
+                }
+
+                
+            </div>
+            <div class="cart__footer">
+                <div class="cart__totalprice">@finalprice.ToString("N0")</div>
+                <a href="/Order" class="button"><span class="button-text">تکمیل سبد خرید</span></a>
+            </div>
+        </div>
+    }
+
+</div>

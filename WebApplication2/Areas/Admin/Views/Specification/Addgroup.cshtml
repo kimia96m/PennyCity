@@ -1,0 +1,131 @@
+﻿@using WebApplication2.Models.Products.Specification
+@model SpecificationGroups
+@{
+    var id = (int?)ViewBag.id;
+    var gid = (int)ViewBag.gid;
+    var title = (id != null ? " ویرایش" : "افزودن ") + "مشخصات فنی " + Model?.title;
+    ViewData["Title"] = title ;
+}
+
+
+
+
+
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">صفحه اصلی </a></li>
+            <li class="breadcrumb-item"><a asp-action="List" asp-controller="Group" asp-area="Admin">لیست گروه</a></li>
+            <li class="breadcrumb-item" ><a>مشخصات فنی</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+
+
+<div class="card text-right border-primary">
+    <div class="card-header d-flex align-items-center justify-content-between ">
+        <h3> @title </h3>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
+                جست و جوی
+                پیشرفته
+            </a>
+            <a href="@Url.Action("List", new { id = gid})" class="btn btn-outline-success btn-sm">  مشخصات فنی </a>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <form class="form-horizontal frmproduct" method="post" action="@Url.Action("Savegroup")" novalidate>
+            @{
+                if (id != null)
+                {
+                    <input type="hidden" name="id" value="@id" />
+                    <input type="hidden" name="gid" value="@gid" />
+                }
+                else
+                { <input type="hidden" name="gid" value="@gid" />
+                    @*<input type="hidden" name="id" value="@id" />*@
+                }
+            }
+            <div class="mb-3 form-group row">
+                <label class=" col-md-2 " for="Title">نام </label>
+                <div class="col-md-4">
+                    @if (Model != null)
+                    {
+                        <input class="form-control" id="txtTitle" name="Title" value="@Model.title" maxlength="50" required>
+                    }
+                    else
+                    {
+                        <input class="form-control" id="txtTitle" name="Title" maxlength="50" required>
+                    }
+
+                    <div class="invalid-feedback ">
+                        یه اسم درست بذار
+                    </div>
+                    <div class="valid-feedback ">
+                        خوبه
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label for="dllState" class="col-md-2">وضعیت</label>
+                <div class=" col-md-4">
+                    <select class="form-control" id="dllState" name="state" >
+                       <option selected value="">انتخاب کنید...</option>
+                       @if (Model != null && Model.state == WebApplication2.Models.Products.States.Enabled)
+                        {
+                            <option value="1" selected="selected">فعال</option>
+                            <option value="2">غیرفعال</option>
+                        }
+                        else
+                        {
+                            <option value="1">فعال</option>
+                            <option value="2" selected="selected">غیرفعال</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback ">
+                        یه اسم درست بذار
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4 ">
+                    <button type="submit" class="btn btn-primary col-md-2">
+                        ثبت
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('frmproduct');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}
+
+
+

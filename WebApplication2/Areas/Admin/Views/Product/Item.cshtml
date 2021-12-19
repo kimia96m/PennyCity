@@ -1,0 +1,188 @@
+﻿@using WebApplication2.Models.ViewModels.ProductItems
+@model List<ProductItemView>
+@{
+    ViewData["Title"] = "لیست اقلام ";
+    var id = (int?)ViewBag.id;
+    int? pid = ViewBag.pid;
+    var counter = 1;
+}
+
+
+@section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Admin">صفحه اصلی </a></li>
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Product" asp-action="List">لیست کالا</a></li>
+            <li class="breadcrumb-item"><a> لیست اقلام </a></li>
+            <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
+        </ol>
+    </nav> }
+
+<div class="card text-right border-primary">
+    <div class="card-header d-flex align-items-center justify-content-between ">
+        <h3>لیست اقلام @ViewBag.product  </h3>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
+                جست و جوی
+                پیشرفته
+            </a>
+            <a href="@Url.Action("Additem", new { pid=pid})" class="btn btn-outline-success btn-sm"> افزودن اقلام</a>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-around">
+            <div class="col-md-6">
+                <div class="collapse" id="collapseExample">
+                    <div class="card mb-3 border-warning">
+                        <div class="card-header" id="collapseExample">فیلتر</div>
+                        <div class="card-body">
+                            <form class="form-horizontal" method="post" action="">
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
+                                    <div class="mb-3">
+                                        <input type="hidden" name="tagids" value="1" />
+                                        <select class="form-select form-select-lg mb-3" id="exampleInputPassword1" name="tagvalue" aria-label=".form-select-lg example">
+                                            <option selected>انتخاب کنید...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword4" class="form-label col-md-4 ">وضعیت</label>
+                                    <div class="mb-3">
+                                        <input type="hidden" name="tagids" value="4" />
+                                        <select class="form-select form-select-lg mb-3" id="exampleInputPassword4" name="tagvalue" aria-label=".form-select-lg example">
+                                            <option selected>انتخاب کنید...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword7" class="form-label col-md-4 ">وضعیت</label>
+                                    <div class="mb-3">
+                                        <input type="hidden" name="tagids" value="7" />
+                                        <select class="form-select form-select-lg mb-3" name="tagvalue" id="exampleInputPassword7" aria-label=".form-select-lg example">
+                                            <option selected>انتخاب کنید...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">فیلتر</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <table class="table caption-top">
+            <thead>
+                <tr class="bg-light">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width:10%">شناسه</th>
+                    <th scope="col" style="width:10%">وضعیت</th>
+                    <th scope="col" style="width:10%">تعداد</th>
+                    <th scope="col" style="width:12%">فروشنده</th>
+                    <th scope="col" style="width:25%">برچسبها</th>
+                    <th scope="col" style="width:10%"> قیمت</th>
+                    <th scope="col" style="width:10%"> تخفیف</th>
+                    <th class="text-left" scope="col">تنظیمات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@counter</th>
+                        <td>
+                            <strong class="h5"><a href="#"> @item.id</a></strong><br />
+                        </td>
+                        <td>@item.state</td>
+                        <td>@item.quantity</td>
+                        <td>@item.seller.title</td>
+                        <td>
+                            <span> شناسه</span> @item.id<br />
+                            @foreach (var x in item.itemtagvalue)
+                            {
+                                <span>@x.tagviews.title </span>@x.title <br />
+                             }
+
+                        </td>
+                        <td>
+                            @item.price
+                        </td>
+                        <td>
+                            @item.discount
+                        </td>
+                        <td class="align-middle text-left">
+
+                            @*<div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
+                        <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin"> ویرایش</a></li>
+                       <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Positive*@ @*id=1,type =KeyPointsTypes.negative})"> مدیریت نقاط منفی  </a></li>*@
+                    @*<li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Negative*@ @*id=2,type =KeyPointsTypes.positive})"> مدیریت نقاط مثبت  </a></li>*@
+                    @*<li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin"> حذف</a></li>
+                </ul>
+            </div>*@
+                    <div class="dropdown1 ">
+                        <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                        <ul id="myDropdown" class=" dropdown1-content text-right">
+                            <li><a class="dropdown-item" asp-action="Edititem" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                            <li><a class="dropdown-item text-danger" asp-action="Deleteitem" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                        </ul>
+                    </div>
+
+                </td>
+            </tr>
+                    counter++;
+                }
+
+
+            </tbody>
+            </table>
+            <nav aria-label="..." dir="ltr">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+        </script>
+    }
+
+
+
+
+

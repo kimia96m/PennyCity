@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "پروفایل";
+}
+@section Styles{
+    <link href="~/css/Order/Index.css" rel="stylesheet" />
+}
+<div class="panel wide-wrap">
+    <h1 class="panel__title">ثبت آدرس</h1>
+    <div class="panel-table">      
+        <form class="order-form" action="/Profile/Save" method="post">
+            <section class="order-form__section">
+                <h2 class="order-form__header">اطلاعات تماس</h2>
+                <div class="order-form__content">
+                    <div class="order-form__group">
+                        <label class="order-form__label" for="txtOstan">استان :</label>
+                        <div class="order-form__field">
+                            <input class="order-form__input" id="txtOstan" name="ostaan" />
+                            <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">درج استان الزامیست</span>
+                        </div>
+                    </div>
+                    <div class="order-form__group">
+                        <label class="order-form__label" for="txtCity">شهر :</label>
+                        <div class="order-form__field">
+                            <input class="order-form__input" id="txtCity" name="city" />
+                            <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">درج استان الزامیست</span>
+                        </div>
+                    </div>
+                    <div class="order-form__group">
+                        <label class="order-form__label" for="txtAddress">آدرس :</label>
+                        <div class="order-form__field">
+                            <textarea class="order-form__input order-form__input--multiple" id="txtAddress" cols="30" rows="5" name="address"></textarea> />
+                            <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">درج استان الزامیست</span>
+                        </div>
+                    </div>
+                    <div class="order-form__group">
+                        <label class="order-form__label" for="txtTel">شماره تماس :</label>
+                        <div class="order-form__field">
+                            <input type="tel" class="order-form__input" id="txtTel" name="tel" />
+                            <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">درج استان الزامیست</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="order-form__group">
+                <span class="order-form__label"></span>
+                <div class="order-form-field">
+                    <label class="order-form-radio">
+                        <button type="submit" class="button ">
+                            <span class="button-text">
+                                ثبت 
+                            </span>
+                        </button>
+
+                    </label>
+                </div>
+            </div>
+            
+
+        </form>
+    </div>
+</div>
+

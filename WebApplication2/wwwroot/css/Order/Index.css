@@ -1,0 +1,123 @@
+﻿.order-summary
+{
+    border:1px solid orangered;
+    background-color:#eee;
+    padding:2rem;
+    max-width:600px;
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+    align-items:center;
+    box-sizing:border-box;
+}
+.order-summary__text{
+    flex:1;
+    font-size:1.6rem;
+    line-height:1.8rem;
+    color:#333;
+    margin-left:2rem;
+}
+.order-form{
+
+}
+.order-form__section{
+margin-top:2rem;
+}
+.order-form__header{
+    font-size:1.6rem;
+    color:#555;
+    border-bottom:1px dashed #ddd;
+    padding:1rem;
+    line-height:1.8rem;
+    /*margin-bottom:1rem;*/
+}
+.order-form__content{
+    padding:1rem;
+}
+.order-form__group{
+    margin-top:2rem;
+    display:flex;
+    align-items:flex-start;
+    padding-right:2rem;
+
+}
+    .order-form__group:first-child {
+        margin-top: 0;
+    }
+.order-form__label{
+    font-size:1.4rem;
+    color:#555;
+    width:120px;
+    line-height:3rem;
+    
+}
+.order-form__field {
+    flex: 1;
+    
+}
+.order-form__input{
+    border:1px solid #d0d0d0;
+    font-size:1.4rem;
+    color:#333;
+    line-height:3rem;
+    padding:.5rem 1rem;
+    box-sizing:border-box;
+    height: 3rem;
+    max-width:500px;
+    width:100%;
+}
+.order-form__input--multiple{
+    height:15rem;
+}
+.order-form-radio{
+    width:100%;
+    display:flex;
+    max-width:500px;
+    padding:2rem;
+    /*border:1px solid #ddd;*/
+    box-sizing:border-box;
+    align-items:center;
+    
+}
+/*.order-form-radio:last-child{
+    border:none;
+}*/
+.order-form-radio__input {
+    margin-left: 2rem;
+}
+.order-form-radio__content{
+    flex:1;
+}
+.order-form-radio__title{
+    font-size:1.6rem;
+    line-height:1.8;
+    color:#333;
+    display:flex;
+    align-items:center;
+    display:block;
+}
+    .order-form-radio__title--highlight{
+        color:deeppink;
+    }
+    .order-form-radio__text {
+        font-size: 1.4rem;
+        line-height: 1.8;
+        color: #777;
+        display: block;
+    }
+.orderform_validation {
+    font-size: 1.4rem;
+    color: orangered;
+    line-height: 1.8;
+    display: block;
+    margin-top: .5rem;
+    align-items: center;
+    display: none;
+}
+    .orderform_validation--show{
+        display:flex;
+    }
+    .orderform_validation:before {
+        margin-left: .5rem;
+        line-height: 1;
+    }

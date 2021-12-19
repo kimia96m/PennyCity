@@ -1,0 +1,42 @@
+﻿@using WebApplication2.Models.Orders
+@model WebApplication2.Models.PaginatedList<OrderView>
+@{
+    ViewData["Title"] = "OrderHistory";
+    var count = 1;
+}
+
+@section Styles{
+    @*<link href="~/css/Product/List.css" rel="stylesheet" />*@
+    <link href="~/css/Profile/OrderHistory.css" rel="stylesheet" />
+}
+<div class="order-list__wrapper">
+    <table class="order-list">
+        <thead class="order-list-header">
+            <tr class="order-list-header__wrapper">
+                <th class="order-list-header__items">شماره</th>
+                <th class="order-list-header__items">تاریخ ثبت سفارش</th>
+                <th class="order-list-header__items"> مجموع قیمت</th>
+                <th class="order-list-header__items">وضعیت سفارش</th>
+                <th class="order-list-header__items"></th>
+            </tr>
+        </thead>
+        <tbody class="order-list-body">
+            @foreach (var item in Model)
+            {
+                <input type="hidden" value="@item.id"/>
+                <tr class="order-list-body__wrapper">
+                    <th class="order-list-body__items order-list-body__items-numbers"><a class="order-list-body__items-link" asp-controller="Order" asp-action="Payment" asp-route-id="@item.id">@count</a> </th>
+                    <td class="order-list-body__items">@item.orderdate</td>
+                    <td class="order-list-body__items">@item.totalprice</td>
+                    <td class="order-list-body__items">@item.state</td>
+                    <td class="order-list-body__items"></td>
+                </tr>
+                count++;
+            }
+        </tbody>
+
+
+    </table>
+</div>
+
+

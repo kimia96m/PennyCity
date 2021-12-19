@@ -1,0 +1,153 @@
+﻿@using WebApplication2.Models.Profiles
+@using WebApplication2.InfraStructure
+@using WebApplication2.Models.Orders
+@model IEnumerable<Address>
+@{
+    ViewData["Title"] = "ثبت سفارش";
+    var addres = ViewBag.address;
+}
+
+@section Styles{
+    <link href="~/css/Order/Index.css" rel="stylesheet" />
+}
+@if (Model != null)
+{
+    <div class="panel wide-wrap">
+        <h1 class="panel__title">ثبت سفارش</h1>
+        <div class="panel-table">
+            <div class="order-summary">
+                <p class="order-summary__text">مبلغ قابل پرداخت :65000 تومان</p>
+                <a href="/Cart" class="button"><span class="button-text">ثبت خرید</span></a>
+            </div>
+            <form class="order-form" asp-controller="Order" asp-action="Save" method="post">
+                <section class="order-form__section">
+                    <h2 class="order-form__header">اطلاعات تماس</h2>
+                    <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">برای اصلاح آدرس به پروفایل خود مراجعه کنید</span>
+
+                    <h2 class="order-form__header">آدرس :</h2>
+                    @foreach (var item in Model)
+                    {
+                        <div class="order-form-radio">
+                            <input type="radio" class="order-form-radio__input"  name="Address" value=" @item.province  @item.city @item.location @item.tel"  />
+                            <div class="order-form__group">
+
+                                <span class="order-form-radio__content">
+                                    <textarea type="text" class="order-form__input order-form__input--multiple" id="txtAddress" cols="30" rows="1" @*name="address"*@>
+                                        @item.province  @item.city @item.location @item.tel
+                                    </textarea>
+                                    @*<span class="order-form-radio__text"> @address</span>*@
+                                    @*<input class="order-form-radio__text" id="primaryTitle" name="Address" value=" @item.province  @item.city @item.location @item.tel" maxlength="50" required>*@
+                                </span>
+                            </div>
+                        </div>
+                    }
+
+                </section>
+                <section class="order-form__section">
+                    <h2 class="order-form__header">روش ارسال</h2>
+                    <div class="order-form__content">
+                        @foreach (var item in EnumDescription.GetDescriptions(typeof(ShippingType)))
+                        {<div class="order-form__group">
+                                <span class="order-form__label"></span>
+                                <div class="order-form-field">
+
+
+                                    <label class="order-form-radio">
+                                        @switch (item)
+                                        {
+                                            case "تیپاکس":
+                                                <input type="radio" class="order-form-radio__input " value="@ShippingType.Tipax" name="shipping" checked />
+                                                <span class="order-form-radio__content">
+                                                    <span class="order-form-radio__title">
+                                                        @item
+                                                        <span class="order-form-radio__title--highlight">8000 تومان</span>
+                                                    </span>
+                                                    <span class="order-form-radio__text"> حداقل تا 24 ساعت بعد به دستت میرسه</span>
+                                                </span>
+                                                break;
+                                            case "پست":
+                                                <input type="radio" class="order-form-radio__input " value="@ShippingType.Post" name="shipping" />
+                                                <span class="order-form-radio__content">
+                                                    <span class="order-form-radio__title">
+                                                        @item
+                                                        <span class="order-form-radio__title--highlight">8000 تومان</span>
+                                                    </span>
+                                                    <span class="order-form-radio__text"> حداقل تا 24 ساعت بعد به دستت میرسه</span>
+                                                </span>
+                                                break;
+
+                                        }
+
+                                    </label>
+                                </div>
+
+                            </div>
+
+                        }
+
+
+
+                    </div>
+                </section>
+                <section class="order-form__section">
+                    <h2 class="order-form__header">نحوه پرداخت</h2>
+                    <div class="order-form__content">
+                        @foreach (var item in EnumDescription.GetDescriptions(typeof(PaymentType)))
+                        {
+                            <div class="order-form__group">
+                                <span class="order-form__label"></span>
+                                <div class="order-form-field">
+                                    <label class="order-form-radio">
+
+                                        @switch (item)
+                                        {
+                                            case "کارت به کارت":
+
+                                                <input type="radio" class="order-form-radio__input " value="@PaymentType.carttocart" name="payment" checked="checked" />
+                                                <span class="order-form-radio__content">
+                                                    <span class="order-form-radio__title"> @item</span>
+                                                    <span class="order-form-radio__text"> شماره فیش و تاریخ واریز را  بفرستید</span>
+                                                </span>
+                                                break;
+                                            case "پرداخت آنلاین":
+
+                                                <input type="radio" class="order-form-radio__input " value="@PaymentType.online" name="payment" />
+                                                <span class="order-form-radio__content">
+                                                    <span class="order-form-radio__title"> @item</span>
+                                                    <span class="order-form-radio__text"> شماره فیش و تاریخ واریز را  بفرستید</span>
+                                                </span>
+                                                break;
+                                            case "واریز":
+
+                                                <input type="radio" class="order-form-radio__input " value="@PaymentType.variz" name="payment" />
+                                                <span class="order-form-radio__content">
+                                                    <span class="order-form-radio__title"> @item</span>
+                                                    <span class="order-form-radio__text"> شماره فیش و تاریخ واریز را  بفرستید</span>
+                                                </span>
+                                                break;
+                                        }
+
+
+
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                        <div class="order-form__group">
+                            <span class="order-form__label"></span>
+                            <div class="order-form-field">
+                                <button type="submit" class="button"><span class="button-text">ثبت سفارش</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p> برو آدرس بزن اینجا<a asp-action="SignIn" asp-controller="Acount">صفحه پروفایل</a></p>
+}
+
+

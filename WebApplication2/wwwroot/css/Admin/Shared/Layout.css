@@ -1,0 +1,110 @@
+﻿body{
+
+}
+
+.breadcrumb-item + .breadcrumb-item {
+    padding-left: 0;padding-right:.5rem
+}
+.breadcrumb-item + .breadcrumb-item::before{
+    padding-left:.5rem;padding-right:0
+}
+
+.dropbtn1{
+/*background-color:#d19898
+color:;
+padding:px;
+font-size: px;
+border:;*/
+cursor:pointer;
+}
+.dropbtn1:hover,
+.dropbtn1:focus{
+    background-color:#f2e5e5;
+}
+.dropdown1{
+    position:relative;
+    display:inline-block;
+}
+dropdown1-content li,ul{
+    /*color :;
+    padding:px px;*/
+    text-decoration:none;
+    display:block;
+}
+dropdown1-content:hover {
+    background-color:#f2e5e5;
+}
+.show{display:block;}
+
+
+.drkmodeinput {
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+}
+
+.checkdrkmode {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    background: #4800ff;
+    cursor: pointer;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: ease-in 0.5s;
+}
+
+.drkmodeinput:checked ~ .checkdrkmode {
+    background: #ffffff;
+    box-shadow: 0 0 0 1px #4800ff;
+
+}
+.drkmodeinput:checked ~ .darkmode-bgcolor {
+    background-color:cadetblue !important;
+}
+
+.checkdrkmode:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: #ffffff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.drkmodeinput:checked ~ .checkdrkmode:before {
+    transform: translateX(-50px);
+}
+
+.checkdrkmode:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: #4800ff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transform: translateX(50px);
+}
+
+.drkmodeinput:checked ~ .checkdrkmode:after {
+    transform: translateX(0px);
+}
+.password-container {
+    position: relative;
+
+}
+
+.eye-icon-pass {
+   
+    position: absolute;
+    right: 10px;
+    transform: translate(25%,0);
+    top: 43%;
+    right:95%;
+    cursor: pointer;
+}
