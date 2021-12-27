@@ -11,6 +11,7 @@ namespace WebApplication2.Models.Products.Comments
         Task Save();
         Task Delete(int id);
         Task<Comment> Find(int id);
+        Task<IEnumerable<Comment>> Searchbypid(int pid);
 
     }
 }

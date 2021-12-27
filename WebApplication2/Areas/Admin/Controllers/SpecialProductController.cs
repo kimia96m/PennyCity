@@ -58,8 +58,9 @@ namespace WebApplication2.Areas.Admin.Controllers
                         price = Convert.ToString(item.price),
                         prnumb = item.pnumb,
                         discount = Convert.ToString(item.discount),
-                        date = Convert.ToString(item.leftedtime)
-
+                        date = Convert.ToString(item.leftedtime),
+                        daydate =Convert.ToString(item.lefteddays)
+                        
                     });
                 }
                 return View(special);
@@ -140,6 +141,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                 {
                     var sproduct = await productitemrepo.FindAsync(id[i]);
                     var m = await specialrepo.Find(id[i]);
+                    //var t = await specialrepo.FindbyTitle(sproduct.product.PrimaryTitle);
                     if ((sproduct.state == States.Enabled) && (m == null))
                     {
                         var specialproduct = new SpecialProducts
@@ -202,7 +204,8 @@ namespace WebApplication2.Areas.Admin.Controllers
                     var specialproduct = new SpecialProducts
                     {
                         discount = discount[i],
-                        leftedtime = endhour[i] - endhour[i],
+                        lefteddays=Convert.ToString((endhour[i].Date - starthour[i].Date).TotalDays),
+                        leftedtime = endhour[i].TimeOfDay - starthour[i].TimeOfDay,
                         id = id[i]
                     };
                     specialrepo.Update(specialproduct);

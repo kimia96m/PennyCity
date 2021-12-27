@@ -22,6 +22,9 @@ namespace WebApplication2.Models
 
             this.AddRange(items);
         }
+        public PaginatedList()
+        {
+        }
 
         public bool HasPreviousPage
         {
@@ -46,7 +49,6 @@ namespace WebApplication2.Models
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
 
-    
     
     }
 }

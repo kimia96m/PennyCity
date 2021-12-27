@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication2.Models;
 
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211220160812_addallagain")]
+    partial class addallagain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -340,8 +342,6 @@ namespace WebApplication2.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("productid");
-
                     b.HasIndex("userId");
 
                     b.ToTable("comments");
@@ -563,8 +563,6 @@ namespace WebApplication2.Migrations
                     b.Property<int?>("brandid");
 
                     b.Property<int?>("discount");
-
-                    b.Property<string>("lefteddays");
 
                     b.Property<TimeSpan?>("leftedtime");
 
@@ -884,11 +882,6 @@ namespace WebApplication2.Migrations
 
             modelBuilder.Entity("WebApplication2.Models.Products.Comments.Comment", b =>
                 {
-                    b.HasOne("WebApplication2.Models.Products.Product")
-                        .WithMany("comments")
-                        .HasForeignKey("productid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WebApplication2.Models.Operator", "user")
                         .WithMany()
                         .HasForeignKey("userId");

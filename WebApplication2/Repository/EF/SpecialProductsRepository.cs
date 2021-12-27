@@ -28,9 +28,17 @@ namespace WebApplication2.Repository.EF
 
         public async Task<SpecialProducts> Find(int id)
         {
-            var special = await context.specialprodcut.Where(s => s.id == id)
+            var special = await context.specialprodcut.Where(s => s.pnumb == id)
                 .Include(b=>b.brand)
                 .ToAsyncEnumerable().SingleOrDefault();
+            return special;
+        }
+
+        public async Task<SpecialProducts> FindbyTitle(string title)
+        {
+            var special = await context.specialprodcut.Where(s => s.title==title)
+              .Include(b => b.brand)
+              .ToAsyncEnumerable().SingleOrDefault();
             return special;
         }
 

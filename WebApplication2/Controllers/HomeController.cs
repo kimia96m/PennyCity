@@ -40,7 +40,7 @@ namespace WebApplication2.Controllers
             foreach (var item in specials)
             {
                 var productitem = await productitemrepo.FindAsync(item.pnumb);
-                var tags = productitem.itemtagvalue.Select(c => c.tagvalues).Select(x => x.tags).Take(2);
+                var tags = productitem.itemtagvalue.Select(c => c.tagvalues).Select(x => x.tags).Take(5);
                 homeview.specialproduct.Add(new SpecialView
                 {
                     id = item.id,
@@ -52,8 +52,7 @@ namespace WebApplication2.Controllers
                     title = item.title,
                     imgurl = $"{productitem.product.Id}.jpg",
                     Tags=tags,
-                    productnumb=productitem.product.Id
-
+                    productnumb=productitem.product.Id,
                 });
             }
             return View(homeview);

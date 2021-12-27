@@ -160,7 +160,7 @@
                     <div class="dropdown1">
                         <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
                         <ul id="myDropdown" class=" dropdown1-content text-right">
-                            <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
+                            <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id">جزییات</a></li>
                             <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> ویرایش</a></li>
                             <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Item" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> مدیریت اقلام کالا</a></li>
                             <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Specifications" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> مدیریت مشخصات فنی</a></li>

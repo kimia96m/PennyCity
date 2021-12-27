@@ -199,15 +199,31 @@
                 {
                     <li class="products_item">
                         <div class="product_layout">
-                            <div class="products__photo-wrap">
-                                <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class=" product__photo-link">
-                                    <img src="~/Images/Products/@item.Imagename" class="product__photo" alt="@item.Secoundarytitle" />
-                                </a>
-                            </div>
-                            <div class="product__title-wrap">
-                                <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="product__primary-title">@item.Primarytitle</a><br />
-                                <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="product__secondary-title">@item.Secoundarytitle</a>
-                            </div>
+                            @if (item.Price == "0")
+                            {
+                                <div class="products__photo-wrap">
+                                    <a class=" product__photo-link">
+                                        <img src="~/Images/Products/@item.Imagename" class="product__photo" alt="@item.Secoundarytitle" />
+                                    </a>
+                                </div>
+                                <div class="product__title-wrap">
+                                    <a class="product__primary-title">@item.Primarytitle</a><br />
+                                    <a class="product__secondary-title">@item.Secoundarytitle</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="products__photo-wrap">
+                                    <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class=" product__photo-link">
+                                        <img src="~/Images/Products/@item.Imagename" class="product__photo" alt="@item.Secoundarytitle" />
+                                    </a>
+                                </div>
+                                <div class="product__title-wrap">
+                                    <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="product__primary-title">@item.Primarytitle</a><br />
+                                    <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="product__secondary-title">@item.Secoundarytitle</a>
+                                </div>
+                            }
+
                             @if (item.Price == "0")
                             {<div class="product__state">
                                     <span class="product__soledout">
@@ -219,7 +235,7 @@
                             else
                             { <div class="product__state">
                                     <span class="product__price">
-                                       @item.Price<span class="product__price-unit">تومان</span>
+                                        @item.Price<span class="product__price-unit">تومان</span>
                                     </span>
                                     <a title="افزودن به سبد خرید" asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" style="margin-left:1rem" class="button mdi mdi-cart-plus icon"></a>
                                 </div>}

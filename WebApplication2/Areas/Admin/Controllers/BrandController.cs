@@ -246,7 +246,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                 {
                     producttitles = producttitles + item.PrimaryTitle + " و ";
                 }
-                if (product != null)
+                if (product.Count()!=0)
                 {
                     TempData["message"] = $" ابتدا برند {producttitles} را تغییر دهید";
                 }

@@ -34,5 +34,11 @@ namespace WebApplication2.Repository.EF
         {
             await context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Comment>> Searchbypid(int pid)
+        {
+            var q = await context.comments.Where(p => p.productid == pid).ToAsyncEnumerable().ToList();
+            return q;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace WebApplication2.Models.Products.SpecialProduct
         public States? state { get; set; }
         public double price { get; set; }
         public TimeSpan? leftedtime { get; set; }
+        public String lefteddays { get; set; }
         public int? discount { get; set; }
     }
 }

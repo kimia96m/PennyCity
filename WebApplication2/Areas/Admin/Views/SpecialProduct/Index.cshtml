@@ -23,7 +23,6 @@
                     <th scope="col" style="width:10%">قیمت</th>
                     <th scope="col" style="width:20%">تخفیف</th>
                     <th scope="col" style="width:20%">زمان مانده</th>
-                    <th class="text-left" scope="col">تنظیمات</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,9 +40,7 @@
                     <td>
                         @item.discount
                     </td>
-                    <td>@item.date</td>
-
-                    <td>@item.date</td>
+                    <td>@item.date : @item.daydate</td>
                 </tr>
 
                     { count++; }

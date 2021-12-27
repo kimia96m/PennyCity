@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Repository\SqlServer\" />
     <Folder Include="wwwroot\Images\Brands\" />
     <Folder Include="wwwroot\Images\Groups\" />

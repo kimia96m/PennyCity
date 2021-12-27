@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "جزییات محصول";
     string imgurl = $"{Model.Id}.jpg";
-    int quantity = Model.productitem.FirstOrDefault().quantity;
+    double z = ViewBag.rate;
+    double c = z - 1;
+    int? quantity = Model.productitem.FirstOrDefault().quantity;
 }
 
 @section Styles{
@@ -21,10 +23,8 @@
                         <img class="product-gallary__photo" alt="@Model.SecondaryTitle" src="~/Images/Products/@imgurl" />
                     </div>
                 </div>
-
             </div>
             <div class="product__detail">
-
                 <section class="product__titles">
                     <h1 class="product__primary-title">@Model.PrimaryTitle</h1>
                     <h2 class="product__secondary-title">@Model.SecondaryTitle</h2>
@@ -77,11 +77,13 @@
                         }
                     </ul>
                     <section class="product-detail__rating">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        @for (int i = 5; i > z; i--)
+                        {<span class="fa fa-star"></span>
+                        }
+                        @for (int i = 1; i <= z; i++)
+                        {
+                            <span class="fa fa-star checked"></span>
+                        }
                         <p class="product-detail__rating-title">امتیاز محصول</p>
                     </section>
                     <div class="product-detail__actions">
@@ -91,7 +93,6 @@
                                 @for (int i = 1; i <= quantity; i++)
                                 {
                                     <option value="@i">@i</option>
-
                                 }
                             </select>
                         </div>
@@ -121,7 +122,6 @@
                                 <li class="product-keypoint__item">@item.title</li>
                             }
                         }
-
                     </ul>
                 </div>
                 <div class="product-keypoint__col">
@@ -180,9 +180,7 @@
                                             <strong class="product-specs__value">@Model.specificationvalues.FirstOrDefault(v => (v.product.Id == Model.Id)@*&& (v.specification.id == x.id)*@).valuetitle</strong>
                                         </li>
                                     }
-
                                 }
-
                             </ul>
                         </li>
                     }
@@ -190,107 +188,102 @@
             </div>
             <div class="product-tab__content" data-tab="2">
                 <div class="product-comments">
-                    <div class="product-comments__actions">
-                        @*<div class="product-comments__massage-wrap">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <div class="product-comments__actions">
+                            <div class="product-comments__massage-wrap">
                                 <p class="product-comments__massage">
                                     برای ارسال نظر ابتدا وارد حساب کاربری خود شوید
                                 </p>
-                                <a href="#" class="button"> <span class="button-text"> ورود به سایت</span></a>
-
-                            </div>*@
-                        <form class=" product-comments-form" action="/Product/SendComment" method="post">
-                            <input type="hidden" value="@Model.Id" name="pid" />
-                            <textarea placeholder="متن مورد نظر خود را تایپ کن" type="text" rows="5" cols="100" class="product-comments-form_textarea" name="comment"></textarea>
-                            <button type="submit" class="button">
-                                <span class="button-text">ارسال نظر</span>
-                            </button>
-
-                        </form>
-                    </div>
-                    <div class="product-comments__actions">
-                        <form class=" product-comments-form" action="/Product/SendRating" onsubmit="return VerifyRating()" method="post">
-                            <input type="hidden" value="@Model.Id" name="pid" />
-                            <input type="hidden" id="lblRating" value="0" name="rate" />
-                            <section class="product-detail__rating" onmouseout="CRateSelect()">
-                                <span onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star" id="span5"></span>
-                                <span onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star" id="span4"></span>
-                                <span onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star" id="span3"></span>
-                                <span onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star" id="span2"></span>
-                                <span onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star" id="span1"></span>
                                 <br />
+                                <a href="/Acount/SignIn" class="button"><span class="button-text"> ورود به سایت</span></a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product-comments__actions">
+                            <form class=" product-comments-form" action="/Product/SendComment" method="post">
+                                <input type="hidden" value="@Model.Id" name="pid" />
+                                <textarea placeholder="متن مورد نظر خود را تایپ کن" type="text" rows="5" cols="100" class="product-comments-form_textarea" name="comment"></textarea>
                                 <button type="submit" class="button">
-                                    <span class="button-text">ارسال رای</span>
+                                    <span class="button-text">ارسال نظر</span>
                                 </button>
-                            </section>
-                        </form>
-                    </div>
+
+                            </form>
+                        </div>
+                        <div class="product-comments__actions">
+                            <form class=" product-comments-form" asp-action="SendRating" asp-controller="Product" onsubmit="return VerifyRating()" method="post">
+                                <input type="hidden" value="@Model.Id" name="pid" />
+                                <input type="hidden" id="lblRating" value="0" name="rate" />
+                                <section class="product-detail__rating" onmouseout="CRateSelect()">
+                                    <span onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star" id="span5"></span>
+                                    <span onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star" id="span4"></span>
+                                    <span onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star" id="span3"></span>
+                                    <span onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star" id="span2"></span>
+                                    <span onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star" id="span1"></span>
+                                    <br />
+                                    <button type="submit" class="button">
+                                        <span class="button-text">ارسال رای</span>
+                                    </button>
+                                </section>
+                            </form>
+                        </div>
+                    }
                     <div class="product-actions">
                         <div class="product-actions__info">
-                            <select class="product-actions__pagesize">
+                            <select class="product-actions__pagesize" @*name="pageNumber"*@>
                                 <option value="20">20</option>
                                 <option value="40">40</option>
-                                <option value="80">60</option>
+                                <option value="60">60</option>
                             </select>
-                            <span class="product-actions__total">230 product</span>
+                            <span class="product-actions__total">@Model.comments.Count</span>
                         </div>
-
-                        <div class="product-actions__pager">
-                            <a class="product-actions__pager-button">1</a>
-                            <span class="product-actions__pager-seperator">...</span>
-                            <a class="product-actions__pager-button">7</a>
-                            <a class="product-actions__pager-button product-actions__pager-button--selected">8</a>
-                            <a class="product-actions__pager-button">9</a>
-                            <span class="product-actions__pager-seperator">...</span>
-                            <a class="product-actions__pager-button">20</a>
-                        </div>
+                        @{
+                            var prevDisabled = !Model.comments.HasPreviousPage ? "product-actions__pager-button__disabled" : "product-actions__pager-button";
+                            var nextDisabled = !Model.comments.HasNextPage ? "product-actions__pager-button__disabled" : "product-actions__pager-button";
+                            int next = Model.comments.PageIndex + 1;
+                            int pre = Model.comments.PageIndex - 1;
+                        }    
+                            <div class="product-actions__pager">
+                                <a asp-action="Index"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-pageNumber="@(Model.comments.PageIndex - 1)"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                   asp-route-gid="@Model.Id"
+                                   class="@prevDisabled">
+                                    @pre
+                                </a>
+                                <a class="product-actions__pager-button product-actions__pager-button--selected">@Model.comments.PageIndex</a>
+                                <a asp-action="Index"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-pageNumber="@(Model.comments.PageIndex + 1)"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                   asp-route-gid="@Model.Id"
+                                   class="@nextDisabled">
+                                    @next
+                                </a>
+                            </div>
                     </div>
-
                     <ul class="product-comments__list">
-                        <li class="product-comments__item">
-                            <div class="product-comments__header">
-                                <span class="product-comments__sender">من</span>
-                                <span class="product-comments__date">1379/07/08 سه شنبه</span>
-                            </div>
-                            <p class="product-comments__text">
-                                kjfisodjfisofj ifjosifjisd iojs dfisjfios sijsois sh uih fhfhuisdh ihudf fdshufi  fhusihfsuhsuifhfuish uifhushfushdfusih uh sdfuhsuihdfs ihihdsu
-                            </p>
-                        </li>
-                        <li class="product-comments__item">
-                            <div class="product-comments__header">
-                                <span class="product-comments__sender">من و تو</span>
-                                <span class="product-comments__date">1379/07/19 سه شنبه</span>
-                            </div>
-                            <p class="product-comments__text">
-                                kjfisodjfisofj ifjosifjisd iojs dfisjfios sijsois sh uihkjنتسینتست تنبعیسها تا ابهسع ابعسیهاب سعهابعهسیاب ب اعبیا fhfhuisdh ihudf fdshufi  fhusihfsuhsuifhfuish uifhushfushdfusih uh sdfuhsuihdfs ihihdsu
-                            </p>
-                        </li>
+                        @foreach (var item in Model.comments)
+                        {
+                            var name = $"{item.user.name} {item.user.lastname}";
+                            <li class="product-comments__item">
+                                <div class="product-comments__header">
+                                    <span class="product-comments__sender">@name </span>
+                                    <span class="product-comments__date">@item.createdate</span>
+                                </div>
+                                <p class="product-comments__text">
+                                    @item.text
+                                </p>
+                            </li>
+                        }
                     </ul>
-                    <div class="product-actions">
-                        <div class="product-actions__info">
-                            <select class="product-actions__pagesize">
-                                <option value="20">20</option>
-                                <option value="40">40</option>
-                                <option value="80">60</option>
-                            </select>
-                            <span class="product-actions__total">230 product</span>
-                        </div>
-
-                        <div class="product-actions__pager">
-                            <a class="product-actions__pager-button">1</a>
-                            <span class="product-actions__pager-seperator">...</span>
-                            <a class="product-actions__pager-button">7</a>
-                            <a class="product-actions__pager-button product-actions__pager-button--selected">8</a>
-                            <a class="product-actions__pager-button">9</a>
-                            <span class="product-actions__pager-seperator">...</span>
-                            <a class="product-actions__pager-button">20</a>
-                        </div>
-                    </div>
-
                     @*<p class="emptylist-message">هیچ موردی یافت نشد  </p>*@
-
-
+                    @*<p class="emptylist-message">هیچ موردی یافت نشد  </p>*@
                 </div>
-            </div>
+                </div>
         </section>
     </div>
 }

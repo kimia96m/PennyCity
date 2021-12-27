@@ -11,6 +11,7 @@ namespace WebApplication2.Models.Products.SpecialProduct
         void Update(SpecialProducts specials);
         Task<IEnumerable<SpecialProducts>> Search(int? id);
         Task<SpecialProducts> Find(int id);
+        Task<SpecialProducts> FindbyTitle(string title);
         Task Save();
         Task Delete(SpecialProducts specials);
 

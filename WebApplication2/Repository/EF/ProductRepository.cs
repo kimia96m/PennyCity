@@ -79,7 +79,7 @@ namespace WebApplication2.Repository.EF
         }
         public async Task<Product> DetailProduct(int id)
         {
-            var query = await Context.product.Include(x => x.Brands).Include(x => x.Groups).ThenInclude(x => x.specificationgroups).ThenInclude(x => x.specification).ThenInclude(x => x.specificationvalues).Include(x => x.productitem).ThenInclude(x => x.itemtagvalue).ThenInclude(x => x.tagvalues).ThenInclude(x => x.tags).Include(x => x.Keypoints).SingleOrDefaultAsync(p=>p.Id==id);
+            var query = await Context.product.Include(r=>r.ratings).Include(x => x.Brands).Include(x => x.Groups).ThenInclude(x => x.specificationgroups).ThenInclude(x => x.specification).ThenInclude(x => x.specificationvalues).Include(x => x.productitem).ThenInclude(x => x.itemtagvalue).ThenInclude(x => x.tagvalues).ThenInclude(x => x.tags).Include(x => x.Keypoints).Include(x => x.comments).ThenInclude(x=>x.user).SingleOrDefaultAsync(p=>p.Id==id);
             return query;
                 
         }

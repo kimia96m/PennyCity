@@ -88,7 +88,7 @@ namespace WebApplication2.Models
 
             }
 
-
+            UserManager<Operator> usermanager = ServiceProvider.GetRequiredService<UserManager<Operator>>();
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {

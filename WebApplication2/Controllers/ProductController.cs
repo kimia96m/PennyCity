@@ -30,9 +30,32 @@ namespace WebApplication2.Controllers
             this.signin = signin;
             this.ratingrepo = ratingrepo;
         }
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int id, int? pageNumber)
         {
             var product = await productrepos.DetailProduct(id);
+            var rates = await ratingrepo.SearchProductItem(id);
+            var comments = await commentrepo.Searchbypid(id);
+            var list = new PaginatedList<Comment>();
+            foreach (var item in comments)
+            {
+                list.Add(item);
+            }
+            int pageSize = 3;
+            product.comments = await PaginatedList<Comment>.CreateAsync(list, pageNumber ?? 1, pageSize);
+            if (rates.Count()!=0)
+            {
+                int x = 0;
+                for (int i = 0; i < rates.Count(); i++)
+                {
+                    x += rates.ElementAt(i).Rate;
+                }
+                double y = x / rates.Count();
+                ViewBag.rate = Math.Round(y);
+            }
+            else
+            {
+                ViewBag.rate = 0;
+            }
             return View(product);
         }
         public async Task<ActionResult> List(string keyword,int? fromprice, int? toprice, int? brands,int[] specs, int? pageNumber)
@@ -99,7 +122,7 @@ namespace WebApplication2.Controllers
                 };
                 await commentrepo.Add(comments);
                 await commentrepo.Save();
-                return new RedirectResult("/Product/Index" + pid);
+                return new RedirectResult("/Product/Index/" + pid);
             }
            
         }

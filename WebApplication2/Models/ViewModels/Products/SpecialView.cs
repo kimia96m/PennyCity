@@ -17,6 +17,7 @@ namespace WebApplication2.Models.ViewModels.Products
         public int productnumb { get; set; }
         public string discount { get; set; }
         public string date { get; set; }
+        public string daydate { get; set; }
         public string imgurl { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
     }

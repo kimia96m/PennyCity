@@ -6,11 +6,10 @@
     ViewData["Title"] = "ثبت سفارش";
     var addres = ViewBag.address;
 }
-
 @section Styles{
     <link href="~/css/Order/Index.css" rel="stylesheet" />
 }
-@if (Model != null)
+@if (Model.Count() != 0)
 {
     <div class="panel wide-wrap">
         <h1 class="panel__title">ثبت سفارش</h1>
@@ -23,14 +22,12 @@
                 <section class="order-form__section">
                     <h2 class="order-form__header">اطلاعات تماس</h2>
                     <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline">برای اصلاح آدرس به پروفایل خود مراجعه کنید</span>
-
                     <h2 class="order-form__header">آدرس :</h2>
                     @foreach (var item in Model)
                     {
                         <div class="order-form-radio">
-                            <input type="radio" class="order-form-radio__input"  name="Address" value=" @item.province  @item.city @item.location @item.tel"  />
+                            <input type="radio" class="order-form-radio__input" name="Address" value=" @item.province  @item.city @item.location @item.tel" />
                             <div class="order-form__group">
-
                                 <span class="order-form-radio__content">
                                     <textarea type="text" class="order-form__input order-form__input--multiple" id="txtAddress" cols="30" rows="1" @*name="address"*@>
                                         @item.province  @item.city @item.location @item.tel
@@ -41,17 +38,15 @@
                             </div>
                         </div>
                     }
-
                 </section>
                 <section class="order-form__section">
                     <h2 class="order-form__header">روش ارسال</h2>
                     <div class="order-form__content">
                         @foreach (var item in EnumDescription.GetDescriptions(typeof(ShippingType)))
-                        {<div class="order-form__group">
+                        {
+                            <div class="order-form__group">
                                 <span class="order-form__label"></span>
                                 <div class="order-form-field">
-
-
                                     <label class="order-form-radio">
                                         @switch (item)
                                         {
@@ -75,18 +70,11 @@
                                                     <span class="order-form-radio__text"> حداقل تا 24 ساعت بعد به دستت میرسه</span>
                                                 </span>
                                                 break;
-
                                         }
-
                                     </label>
                                 </div>
-
                             </div>
-
                         }
-
-
-
                     </div>
                 </section>
                 <section class="order-form__section">
@@ -98,7 +86,6 @@
                                 <span class="order-form__label"></span>
                                 <div class="order-form-field">
                                     <label class="order-form-radio">
-
                                         @switch (item)
                                         {
                                             case "کارت به کارت":
@@ -126,9 +113,6 @@
                                                 </span>
                                                 break;
                                         }
-
-
-
                                     </label>
                                 </div>
                             </div>
@@ -147,7 +131,13 @@
 }
 else
 {
-    <p> برو آدرس بزن اینجا<a asp-action="SignIn" asp-controller="Acount">صفحه پروفایل</a></p>
+    <div class="panel wide-wrap" style="justify-content:center;">
+        <div class="panel-table" style="border:none;">
+            <section class="order-form__section" >
+                <span class="orderform_validation orderform_validation--show mdi mdi-alert-circle-outline" style="padding-right:5rem;">برای افزودن آدرس به پروفایل خود مراجعه کنید:  <a asp-action="SignIn" asp-controller="Acount" style="text-decoration:none; padding-right:1rem;">صفحه پروفایل</a></span>
+            </section>
+        </div>
+    </div>
 }
 
 
