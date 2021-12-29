@@ -8,8 +8,8 @@ namespace WebApplication2.Models.Sellers
    public interface ISellerRepository
     {
         Task Add(Seller seller);
-        Task Delete(Seller seller);
-        Task Update(Seller seller);
+        void Delete(Seller seller);
+        void Update(Seller seller);
         Task Save();
         Task<Seller> Find(int id);
         Task<IEnumerable<Seller>> Search(int? id, string title, string producttitle);

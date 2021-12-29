@@ -111,19 +111,18 @@
                 <div class="home-promo-wrap clearfix">
                     @foreach (var item in Model.bannergroup)
                     {
-                    <div class="home-promo-item">
-                        <div class="home-promo-item-con">
-                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
-                                <span class="home-promo-item-text-wrap">
-                                    <span class="home-promo-item-text">@item.title</span>
-                                    <span class="home-promo-item-text-icon mdi mdi-animation"></span>
-                                </span>
-                                <span class="home-promo-item-img" style="background-image: url('../../wwwroot/images/groups/2.jpg');">
-"></span>
-                            </a>
+                        <div class="home-promo-item">
+                            <div class="home-promo-item-con">
+                                <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
+                                    <span class="home-promo-item-text-wrap">
+                                        <span class="home-promo-item-text">@item.title</span>
+                                        <span class="home-promo-item-text-icon mdi mdi-animation"></span>
+                                    </span>
+                                    <span class="home-promo-item-img" style="background-image: url(/Images/Groups/@item.imgurl);"></span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    }                 
+                    }
                 </div>
             </div>
             <div class="home-showcase-wrap home-section home-section-shadow home-rounded-section">

@@ -20,7 +20,7 @@ namespace WebApplication2.Repository.EF
             await _context.sellers.AddAsync(seller);
         }
 
-        public async Task Delete(Seller seller)
+        public void Delete(Seller seller)
         {
              _context.sellers.Remove(seller);
         }
@@ -50,18 +50,13 @@ namespace WebApplication2.Repository.EF
                 ).ToAsyncEnumerable().ToList();
             return q;
         }
-     
-
-        public async Task Update(Seller seller)
+        public void Update(Seller seller)
         {
             var sellr= _context.sellers.Find(seller.id);
             sellr.id = seller.id;
             sellr.paid = seller.paid;
             sellr.description = seller.description;
             sellr.title = seller.title;
-
-            
-
         }
     }
 }

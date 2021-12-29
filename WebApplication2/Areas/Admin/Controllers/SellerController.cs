@@ -161,7 +161,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                         description = description,
                         paid = seller.paid != null ? seller.paid + todaypayment : todaypayment
                     };
-                   await sellerrepo.Update(sellers);
+                    sellerrepo.Update(sellers);
                    await sellerrepo.Save();
                     return RedirectToAction("List");
                 }
@@ -191,7 +191,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                 else
                 {
 
-                    await sellerrepo.Delete(seller);
+                     sellerrepo.Delete(seller);
                     await sellerrepo.Save();
                     TempData["massage"] = $"حذف {seller.title} با موفقیت انجام شد";
                 }

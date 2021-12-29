@@ -16,11 +16,11 @@ namespace WebApplication2.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProfileController : BaseController
     {
-        private IHostingEnvironment eNv;
+        //private IHostingEnvironment eNv;
       
         public ProfileController(UserManager<Operator> userManager, /*IHostingEnvironment env,*/ IGroupRepository groupRepository) : base(userManager)
         {
-            this.usermanager = userManager;
+            usermanager = userManager;
             
             //this.eNv = env;
         }

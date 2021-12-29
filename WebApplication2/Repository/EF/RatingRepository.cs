@@ -20,7 +20,7 @@ namespace WebApplication2.Repository.EF
            await _context.ratings.AddAsync(rating);
         }
 
-        public async Task Delete(Rating rating)
+        public void Delete(Rating rating)
         {
             _context.ratings.Remove(rating);
         }
