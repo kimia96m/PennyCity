@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication2.Models;
 using WebApplication2.Models.Banners;
+using WebApplication2.Models.Products.Groups;
 using WebApplication2.Models.Products.ProductItems;
 using WebApplication2.Models.Products.SpecialProduct;
+using WebApplication2.Models.ViewModels.Groups;
 using WebApplication2.Models.ViewModels.Home;
 using WebApplication2.Models.ViewModels.Products;
 
@@ -17,16 +20,18 @@ namespace WebApplication2.Controllers
     {
         private IBannerRepository bannerrepo;
         private ISpecialProductsRepository specialrepo;
-        private IProductItemRepository productitemrepo; 
+        private IProductItemRepository productitemrepo;
+        private IGroupRepository grouprepo;
        
-        public HomeController(IBannerRepository bannerrepo, ISpecialProductsRepository specialrepo, IProductItemRepository productitemrepo)
+        public HomeController(IBannerRepository bannerrepo, ISpecialProductsRepository specialrepo, IProductItemRepository productitemrepo, IGroupRepository grouprepo)
         {
             this.bannerrepo = bannerrepo;
             this.specialrepo = specialrepo;
             this.productitemrepo = productitemrepo;
+            this.grouprepo = grouprepo;
         }
         // GET: /<controller>/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( int? pageNumber)
         {
             var homeview = new HomeView();
             homeview.banners = new List<Banner>();
@@ -55,6 +60,20 @@ namespace WebApplication2.Controllers
                     productnumb=productitem.product.Id,
                 });
             }
+            var bannergroups = await grouprepo.SearchBannerAsync(null, null);
+            var bannergrouplist = new List<BannerGroupsView>();
+            foreach (var item in bannergroups)
+            {
+                bannergrouplist.Add(new BannerGroupsView
+                {
+                    id = item.id,
+                    imgurl=item.id+item.ext,
+                    groupnumber=item.groupnumber,
+                    title=item.title
+            });
+            }
+            int pageSize = 5;
+            homeview.bannergroup = await PaginatedList<BannerGroupsView>.CreateAsync(bannergrouplist, pageNumber ?? 1, pageSize);
             return View(homeview);
         }
      

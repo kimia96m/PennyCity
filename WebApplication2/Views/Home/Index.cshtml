@@ -109,41 +109,21 @@
             </div>
             <div class="home-section">
                 <div class="home-promo-wrap clearfix">
+                    @foreach (var item in Model.bannergroup)
+                    {
                     <div class="home-promo-item">
                         <div class="home-promo-item-con">
                             <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
                                 <span class="home-promo-item-text-wrap">
-                                    <span class="home-promo-item-text">هدفون و هدست</span>
+                                    <span class="home-promo-item-text">@item.title</span>
                                     <span class="home-promo-item-text-icon mdi mdi-animation"></span>
                                 </span>
-                                <span class="home-promo-item-img" style="background-image: url(resources/banners/01.jpg)"></span>
+                                <span class="home-promo-item-img" style="background-image: url('../../wwwroot/images/groups/2.jpg');">
+"></span>
                             </a>
                         </div>
                     </div>
-                    <div class="home-promo-item">
-                        <div class="home-promo-item-con">
-                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
-                                <span class="home-promo-item-img" style="background-image: url(resources/banners/02.jpg)"></span>
-                                <span class="home-promo-item-hover">عنوان 1</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="home-promo-item">
-                        <div class="home-promo-item-con">
-                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
-                                <span class="home-promo-item-img" style="background-image: url(resources/banners/03.jpg)"></span>
-                                <span class="home-promo-item-hover">عنوان 2</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="home-promo-item">
-                        <div class="home-promo-item-con">
-                            <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
-                                <span class="home-promo-item-img" style="background-image: url(resources/banners/04.jpg)"></span>
-                                <span class="home-promo-item-hover">عنوان 3</span>
-                            </a>
-                        </div>
-                    </div>
+                    }                 
                 </div>
             </div>
             <div class="home-showcase-wrap home-section home-section-shadow home-rounded-section">
