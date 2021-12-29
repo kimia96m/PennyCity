@@ -269,7 +269,7 @@
     }
 
     .home-spec-offer-side-button.selected {
-        background-color: orangered;
+        background-color: #cb2d6f;
         color: #fff;
     }
 
@@ -383,7 +383,7 @@
 .home-spec-offer-item-price-discount {
     display: inline-block;
     vertical-align: bottom;
-    background-color: #f1175b;
+    background-color :#cb2d6f;
     color: #fff;
     font-size: 1.6em;
     line-height: 4rem;
@@ -495,7 +495,7 @@
     display: inline-block;
     font-size: 2em;
     line-height: 4rem;
-    background-color: #f1175b;
+    background: linear-gradient(90deg,#cb2d6f,#501f3a);
     color: #fff;
     padding-right: 3rem;
     padding-left: 3rem;
