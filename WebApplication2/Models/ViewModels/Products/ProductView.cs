@@ -21,6 +21,7 @@ namespace WebApplication2.Models.ViewModels.Products
         public string CreatDate { get; set; }
         public string LastModifier { get; set; }
         public string LastModifyDate { get; set; }
+        public string price { get; set; }
  
     }
 }

@@ -131,73 +131,36 @@
                         <h3 class="home-showcase-header-text">تجهیزات نظم دهنده داخل خودرو</h3>
                     </div>
                 </div>
+                @{
+                    var prevDisabled = !Model.products.HasPreviousPage ? "home-showcase-gallery-button disabled" : "home-showcase-gallery-button";
+                    var nextDisabled = !Model.products.HasNextPage ? "home-showcase-gallery-button disabled" : "home-showcase-gallery-button";
+                }
                 <div class="home-showcase-content">
                     <div class="home-showcase-gallery">
-                        <a class="home-showcase-gallery-button mdi mdi-chevron-right right-btn disabled"></a>
-                        <a class="home-showcase-gallery-button mdi mdi-chevron-left left-btn"></a>
+                        <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.products.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@prevDisabled mdi mdi-chevron-right right-btn"></a>
+                        <a asp-action="ProductListByGroup"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.products.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@nextDisabled mdi mdi-chevron-left left-btn"></a>
                         <div class="home-showcase-gallery-layout">
                             <div class="home-showcase-gallery-content">
-                                <a class="home-showcase-gallery-item">
-                                    <span class="home-showcase-gallery-item-inner">
-                                        <span class="home-showcase-gallery-item-img-cont">
-                                            <span class="home-showcase-gallery-item-img-lay">
-                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                @foreach (var item in Model.products)
+                                {
+                                    <a class="home-showcase-gallery-item">
+                                        <span class="home-showcase-gallery-item-inner">
+                                            <span class="home-showcase-gallery-item-img-cont">
+                                                <span class="home-showcase-gallery-item-img-lay">
+                                                    <img class="home-showcase-gallery-item-img" src="/Images/Products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                                </span>
                                             </span>
+                                            <span class="home-showcase-gallery-item-title">@item.PrimaryTitle</span>
+                                            <span class="home-showcase-gallery-item-price"><span class="number">@item.price</span> تومان</span>
                                         </span>
-                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
-                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
-                                    </span>
-                                </a><a class="home-showcase-gallery-item">
-                                    <span class="home-showcase-gallery-item-inner">
-                                        <span class="home-showcase-gallery-item-img-cont">
-                                            <span class="home-showcase-gallery-item-img-lay">
-                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
-                                            </span>
-                                        </span>
-                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
-                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
-                                    </span>
-                                </a><a class="home-showcase-gallery-item">
-                                    <span class="home-showcase-gallery-item-inner">
-                                        <span class="home-showcase-gallery-item-img-cont">
-                                            <span class="home-showcase-gallery-item-img-lay">
-                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
-                                            </span>
-                                        </span>
-                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
-                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
-                                    </span>
-                                </a><a class="home-showcase-gallery-item">
-                                    <span class="home-showcase-gallery-item-inner">
-                                        <span class="home-showcase-gallery-item-img-cont">
-                                            <span class="home-showcase-gallery-item-img-lay">
-                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
-                                            </span>
-                                        </span>
-                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
-                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
-                                    </span>
-                                </a><a class="home-showcase-gallery-item">
-                                    <span class="home-showcase-gallery-item-inner">
-                                        <span class="home-showcase-gallery-item-img-cont">
-                                            <span class="home-showcase-gallery-item-img-lay">
-                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
-                                            </span>
-                                        </span>
-                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
-                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
-                                    </span>
-                                </a><a class="home-showcase-gallery-item">
-                                    <span class="home-showcase-gallery-item-inner">
-                                        <span class="home-showcase-gallery-item-img-cont">
-                                            <span class="home-showcase-gallery-item-img-lay">
-                                                <img class="home-showcase-gallery-item-img" src="resources/products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
-                                            </span>
-                                        </span>
-                                        <span class="home-showcase-gallery-item-title">جعبه نظم دهنده صندوق خودرو ام پی مدل</span>
-                                        <span class="home-showcase-gallery-item-price"><span class="number">53,000</span> تومان</span>
-                                    </span>
-                                </a>
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>

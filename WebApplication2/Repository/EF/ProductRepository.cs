@@ -90,5 +90,17 @@ namespace WebApplication2.Repository.EF
             Context.Entry(product).Property(p => p.CreatDate).IsModified = false;
 
         }
+
+        public async Task<IEnumerable<Product>> SearchAsync(int id, string keyword, int? fromprice, int? toprice, int? brands, int[] specs)
+        {
+            var query = await Context.product.Include(b => b.Brands).Include(c => c.Groups).Include(i => i.productitem).Include(s => s.specificationvalues).ThenInclude(v => v.specification).ThenInclude(m => m.specificationgroups)
+            .Where(p =>(p.Groupid==id)&&
+            ((p.PrimaryTitle.Contains(keyword) || p.SecondaryTitle.Contains(keyword) || p.Brands.title.Contains(keyword) || p.Groups.title.Contains(keyword))
+            && (p.productitem.Any(a => (fromprice == null || a.price >= fromprice) && (toprice == null || a.price <= toprice)))
+            && (brands == null || p.Brands.id == brands)
+            && (specs.Length == 0 || p.specificationvalues.Any(s => specs.Contains(s.specification.id))))
+            ).ToAsyncEnumerable().ToList();
+            return query;
+        }
     }
 }

@@ -79,9 +79,9 @@ namespace WebApplication2.Controllers
             var list = await PaginatedList<ProductListView>.CreateAsync(productlist, pageNumber ?? 1, pageSize);
             return View(list);
         }
-        public async Task<ActionResult> ProductListByGroup(int gid, int? pageNumber)
+        public async Task<ActionResult> ProductListByGroup(int gid, string keyword, int? fromprice, int? toprice, int? brands, int[] specs, int? pageNumber)
         {
-            var plist = await productrepos.SearchAsync(gid);
+            var plist = await productrepos.SearchAsync(gid, string.IsNullOrEmpty(keyword) ? "" : keyword, fromprice, toprice, brands, specs);
             var productlist = new List<ProductListView>();
             foreach (var item in plist)
             {

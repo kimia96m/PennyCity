@@ -83,12 +83,14 @@ namespace WebApplication2.Controllers
             var prlist = new PaginatedList<ProductView>();
             foreach (var item in products)
             {
-                if (item.state == States.Enabled)
+                if (item.state == States.Enabled && item.productitem!=null)
                 {
                     prlist.Add(new ProductView
                     {
                         Id = item.Id,
                         PrimaryTitle = item.PrimaryTitle,
+                        price = item.productitem.FirstOrDefault().price.ToString("N0"),
+                       
                     });
                 }
             }
