@@ -7,7 +7,6 @@
     var user = await userManager.FindByNameAsync(User.Identity.Name);
     name = user.name + " " + user.lastname;
 }
-
 <html>
 <head>
     <meta charset="utf-8" />
@@ -24,14 +23,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/Admin/Home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         محصولات
@@ -39,8 +31,6 @@
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Product")">لیست محصولات</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Product")">افزودن کالا</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -50,8 +40,6 @@
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Brand")">لیست برند ها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Brand")">افزودن برند</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -62,9 +50,7 @@
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Group")">لیست گروه ها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Group")">افزودن گروه</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("ListBanner","Group")">لیست گروه ها</a></li>
-                        <li><a class="dropdown-item text-right" href="@Url.Action("AddBanner","Group")">افزودن گروه</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item text-right" href="@Url.Action("AddBanner","Group")">افزودن گروه</a></li>                  
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -74,8 +60,6 @@
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Tag")">لیست برچسب ها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Tag")">افزودن برچسب ها</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -85,8 +69,6 @@
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Banner")">لیست بنرها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Banner")">افزودن بنرها</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -97,8 +79,6 @@
                         <li><a class="dropdown-item text-right" href="@Url.Action("Choose","SpecialProduct")">انتخاب محصولات</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Aproove","SpecialProduct")">تایید نهایی</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Index","SpecialProduct")">لیست محصولات ویژه</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -109,8 +89,6 @@
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Seller")">افزودن فروشنده</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Seller")">لیست فروشندگان</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Index","Seller")">جزییات</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -120,13 +98,13 @@
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("ReviewList","Order")">در انتظار تایید</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("ConfirmedList","Order")">تایید شده ها</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-right" href="#">Something else here</a></li>
+                        @*<li><hr class="dropdown-divider"></li>*@
+                        @*<li><a class="dropdown-item text-right" href="#">Something else here</a></li>*@
                     </ul>
                 </li>
             </ul>
             <form class="d-flex nav-item dropdown mt-3">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2" type="search" name="searchedtext" placeholder="جستجو کنید" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <span class=" dropdown mr-5 align-items-center mb-2">
@@ -137,11 +115,8 @@
             </span>
             <span class="navbar-text d-inline-flex align-items-center">
                 <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn "> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
-
             </span>
-        </div>
-
-        
+        </div>        
     </nav>
     <div class="container-fluid darkmode-bgcolor">
         @RenderSection("Breadcrump", required: false)
@@ -174,13 +149,6 @@
                 $('.dropdown-toggle').dropdown()
             });
         </script>
-
-        @*<script>
-                var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
-                var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-                    return new bootstrap.Dropdown(dropdownToggleEl)
-                })
-            </script>*@
         @RenderSection("Scripts", required: false)
 </body>
 </html>

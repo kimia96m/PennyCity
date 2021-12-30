@@ -13,5 +13,6 @@ namespace WebApplication2.Models.Sellers
         Task Save();
         Task<Seller> Find(int id);
         Task<IEnumerable<Seller>> Search(int? id, string title, string producttitle);
+        Task<IEnumerable<Seller>> Search(string title);
     }
 }

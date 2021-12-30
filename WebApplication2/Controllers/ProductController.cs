@@ -58,7 +58,7 @@ namespace WebApplication2.Controllers
             }
             return View(product);
         }
-        public async Task<ActionResult> List(string keyword,int? fromprice, int? toprice, int? brands,int[] specs, int? pageNumber)
+        public async Task<ActionResult> List(string keyword,int? fromprice, int? toprice, int? brands,int[] specs, int? pageNumber, int? pagesize)
         {
             var plist = await productrepos.SearchAsync(string.IsNullOrEmpty(keyword)?"":keyword, fromprice, toprice,  brands, specs);
             var productlist = new List<ProductListView>();
@@ -75,8 +75,7 @@ namespace WebApplication2.Controllers
                     brand=item.Brands,group=item.Groups
                 });
             }
-            int pageSize = 10;
-            var list = await PaginatedList<ProductListView>.CreateAsync(productlist, pageNumber ?? 1, pageSize);
+            var list = await PaginatedList<ProductListView>.CreateAsync(productlist, pageNumber ?? 1, pagesize??10);
             return View(list);
         }
         public async Task<ActionResult> ProductListByGroup(int gid, string keyword, int? fromprice, int? toprice, int? brands, int[] specs, int? pageNumber)

@@ -44,9 +44,14 @@ namespace WebApplication2.Repository.EF
 
         public async Task<IEnumerable<Brand>> SearchAsync(string primaryTitle, int? id, States? state)
         {
-            //var brands = await Context.Brand.ToAsyncEnumerable().ToList();
-            var q = await Context.Brand.Include(o => o.creator).Include(p => p.lastmodifier).ToAsyncEnumerable().ToList();
-            var brands = await q.Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle)) && (b.id == id || id == null) && (b.State == state || state == null)).ToAsyncEnumerable().ToList();
+            var q = await Context.Brand.Include(o => o.creator).Include(p => p.lastmodifier)
+            .Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle)) && (b.id == id || id == null) && (b.State == state || state == null)).ToAsyncEnumerable().ToList();
+            return q;
+        }
+        public async Task<IEnumerable<Brand>> SearchAsync(string primaryTitle)
+        {
+            var q = await Context.Brand.ToAsyncEnumerable().ToList();
+            var brands = await q.Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle))).ToAsyncEnumerable().ToList();
             return brands;
         }
 

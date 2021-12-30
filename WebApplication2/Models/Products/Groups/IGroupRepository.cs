@@ -19,5 +19,6 @@ namespace WebApplication2.Models.Products.Groups
         Task<BannerGroups> FindBannerAsync(int id);
         Task UpdateBanner(BannerGroups bannergroup);
         Task<BannerGroups> FindBannernumberAsync(int gid);
+        Task<IEnumerable<Group>> SearchAsync(string primaryTitle);
     }
 }

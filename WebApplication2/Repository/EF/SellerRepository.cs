@@ -50,6 +50,14 @@ namespace WebApplication2.Repository.EF
                 ).ToAsyncEnumerable().ToList();
             return q;
         }
+        public async Task<IEnumerable<Seller>> Search( string title)
+        {
+            var q = await _context.sellers.Include(x=>x.sold)
+                .Where(
+                p =>((p.title==p.title)||string.IsNullOrEmpty(title))
+                ).ToAsyncEnumerable().ToList();
+            return q;
+        }
         public void Update(Seller seller)
         {
             var sellr= _context.sellers.Find(seller.id);

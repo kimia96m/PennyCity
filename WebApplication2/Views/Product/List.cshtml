@@ -124,11 +124,16 @@
             </div>
             <div class="product-list-actions">
                 <div class="product-list-actions__info">
-                    <select class="product-list-actions__pagesize" @*name="pageNumber"*@>
+                    <select class="product-list-actions__pagesize" name="pagesize">
                         <option value="20">20</option>
                         <option value="40">40</option>
                         <option value="60">60</option>
                     </select>
+                    @*<button type="submit">
+                        <span class="">
+                            <span class="">تایید</span>
+                        </span>
+                    </button>*@
                     <span class="product-list-actions__total">@Model.Count</span>
                 </div>
                 @{
@@ -247,19 +252,7 @@
                     }
 
                 }
-
-
             </ul>
-            <div class="product-list-actions">
-                <div class="product-list-actions__info">
-                    <select class="product-list-actions__pagesize">
-                        <option value="20">20</option>
-                        <option value="20">40</option>
-                        <option value="20">60</option>
-                    </select>
-                    <span class="product-list-actions__total">@Model.Count</span>
-                </div>
-            </div>
         </div>
     </form>
 }

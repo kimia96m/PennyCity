@@ -64,10 +64,14 @@ namespace WebApplication2.Repository.EF
 
         public async Task<IEnumerable<Group>> SearchAsync(string primaryTitle, int? id, States? state)
         {
-            //الان این دقیقا داره بر چه اساسی سرچ میکنه 
-            return await Context.group.ToAsyncEnumerable().ToList();
+            var q = await Context.group.Include(l=>l.lastmodifier).Include(c=>c.creator).Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle)) && (b.id == id || id == null) && (b.State == state || state == null)).ToAsyncEnumerable().ToList();
+            return q;
         }
-
+        public async Task<IEnumerable<Group>> SearchAsync(string primaryTitle)
+        {
+            var q = await Context.group.Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle))).ToAsyncEnumerable().ToList();
+            return q;
+        }
         public async Task<IEnumerable<BannerGroups>> SearchBannerAsync(string title, int? id)
         {
             return await Context.bannergroup.Where(x=> string.IsNullOrEmpty(title) && (id==null)).ToAsyncEnumerable().ToList();

@@ -16,6 +16,7 @@ namespace WebApplication2.Models.Products
         Task<IEnumerable<Product>> SearchAsync(string keyword, int? fromprice, int? toprice, int? brands, int[] specs);
         Task<IEnumerable<Product>> SearchAsync(int id, string keyword, int? fromprice, int? toprice, int? brands, int[] specs);
         Task<IEnumerable<Product>> SearchAsync(int gid);
+        Task<IEnumerable<Product>> SearchAsync(string keyword);
         Task<Product> DetailProduct(int id);
         Task<IEnumerable<Product>> FindbrAsync(int brid);
 
