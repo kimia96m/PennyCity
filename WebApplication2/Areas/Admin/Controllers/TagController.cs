@@ -48,7 +48,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
         }
         [Authorize]
-        public async Task<IActionResult> List( string title, States state)
+        public async Task<IActionResult> List( string title, States state, int? pagenumber)
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
             var claims = await usermanager.GetClaimsAsync(iuser);
@@ -80,7 +80,9 @@ namespace WebApplication2.Areas.Admin.Controllers
                         });
                     }
                 }
-                return View(tagviewlist);
+                int pagesize = 10;
+                var list = await PaginatedList<TagView>.CreateAsync(tagviewlist, pagenumber ?? 1, pagesize);
+                return View(list);
             }
         }
         [Authorize]

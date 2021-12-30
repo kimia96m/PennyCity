@@ -1,7 +1,7 @@
-﻿@model List<GroupView>
+﻿@model WebApplication2.Models.PaginatedList<GroupView>
 @{
     ViewData["Title"] = "لیست گروه ها";
-    var massage = TempData["massage"] ;
+    var massage = TempData["massage"];
 }
 
 
@@ -13,6 +13,12 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
+@{
+        var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
+        var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
+        int next = Model.PageIndex + 1;
+        int pre = Model.PageIndex - 1;
+}
 <div class="card text-right border-primary">
     <div class="card-header d-flex align-items-center justify-content-between ">
         <h3>لیست گروه ها</h3>
@@ -67,20 +73,29 @@
                 </div>
             </div>
         </div>
-
         <p>@massage</p>
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+                <li class="@prevDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Next</a>
                 </li>
             </ul>
         </nav>
@@ -88,7 +103,7 @@
             <thead>
                 <tr class="bg-light">
                     <th scope="col">#</th>
-                    <th scope="col" style="width:20%">نام گروه</th>                  
+                    <th scope="col" style="width:20%">نام گروه</th>
                     <th scope="col" style="width:10%">نام خارجی</th>
                     <th scope="col" style="width:10%">وضعیت</th>
                     <th scope="col" style="width:20%">ایجاد کننده</th>
@@ -129,17 +144,17 @@
                         else
                         {
                             <td> --- </td>}
-       
+
                         <td class="align-middle ">
 
                             @*<div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                        <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Brand" asp-area="Admin">جزییات</a></li>
-                            <li><a class="dropdown-item" asp-action="Edit" asp-controller="Brand" asp-area="Admin"> ویرایش</a></li>
-                            <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin"> حذف</a></li>
-                        </ul>
-                    </div>*@
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Brand" asp-area="Admin">جزییات</a></li>
+                                        <li><a class="dropdown-item" asp-action="Edit" asp-controller="Brand" asp-area="Admin"> ویرایش</a></li>
+                                        <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin"> حذف</a></li>
+                                    </ul>
+                                </div>*@
                             <div class="dropdown1">
                                 <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
                                 <ul id="myDropdown" class=" dropdown1-content text-right">
@@ -156,16 +171,26 @@
         </table>
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+                <li class="@prevDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Next</a>
                 </li>
             </ul>
         </nav>

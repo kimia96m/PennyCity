@@ -12,6 +12,7 @@ namespace WebApplication2.Models.Banners
         Task<Banner> Find(int id);
         Task Save();
         Task<IEnumerable<Banner>> Search(int? id);
+        Task<IEnumerable<Banner>> SearchByIsSpecial(int? id);
        
     }
 }

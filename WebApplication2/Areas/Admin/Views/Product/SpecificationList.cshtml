@@ -13,7 +13,12 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
-
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
+    var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
+    int next = Model.PageIndex + 1;
+    int pre = Model.PageIndex - 1;
+}
 <div class="card text-right border-primary">
     <div class="card-header d-flex align-items-center justify-content-between ">
         <h3>لیست کالا</h3>
@@ -23,7 +28,6 @@
             </a>
             <a asp-action="Add" asp-controller="Product" asp-area="Admin" class="btn btn-outline-success btn-sm">افزودن کالا</a>
         </div>
-
     </div>
     <div class="card-body">
         <div class="row justify-content-around">
@@ -90,17 +94,28 @@
         </div>
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <span class="page-link"> <a asp-action="SpecificationList" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a></span>
+                <li class="@prevDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item">
-                    First Name
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item">
-                    <span class="page-link"> <a asp-action="SpecificationList" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Enrollment Date</a></span>
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Next</a>
                 </li>
             </ul>
-
         </nav>
         <table class="table caption-top">
             <thead>
@@ -117,56 +132,49 @@
             <tbody>
 
                 @foreach (var item in Model)
-{
-                <tr>
-                    <th scope="row">@count</th>
-                    <td>
-                        <strong class="h5"><a href="#">@item.title</a></strong><br />
-                        <span class="text-muted">@item.id</span>
-                    </td>
-                    <td scope="row">@item.specification.title</td>
-                    <td scope="row">@item.product.PrimaryTitle</td>
-                    <td scope="row">@item.creator</td>
-                    <td scope="row">@item.product.state</td>
-                    <td class=" align-middle">
-                        <a class="dropdown-item" asp-action="DeleteSpecification" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> حذف</a>
-                    </td>            
-                </tr>
+                {
+                    <tr>
+                        <th scope="row">@count</th>
+                        <td>
+                            <strong class="h5"><a href="#">@item.title</a></strong><br />
+                            <span class="text-muted">@item.id</span>
+                        </td>
+                        <td scope="row">@item.specification.title</td>
+                        <td scope="row">@item.product.PrimaryTitle</td>
+                        <td scope="row">@item.creator</td>
+                        <td scope="row">@item.product.state</td>
+                        <td class=" align-middle">
+                            <a class="dropdown-item" asp-action="DeleteSpecification" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> حذف</a>
+                        </td>
+                    </tr>
 
-                { count++; }
-            }
+                    { count++; }
+                }
 
             </tbody>
         </table>
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        }
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item ">
-                        <a asp-action="SpecificationList"
-                           asp-route-sortOrder="@ViewData["CurrentSort"]"
-                           asp-route-pageNumber="@(Model.PageIndex - 1)"
-                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="page-link btn btn-default @prevDisabled">
-                            صفحه قبلی
-                        </a>
-                   
+                <li class="@prevDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a asp-action="SpecificationList"
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
+                    <a asp-action="List"
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
                        asp-route-pageNumber="@(Model.PageIndex + 1)"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link btn btn-default @nextDisabled">
-                        صفحه بعدی
-                    </a>
+                       class="page-link">Next</a>
                 </li>
             </ul>
         </nav>

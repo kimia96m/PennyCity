@@ -63,7 +63,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                         });
                     }
                 }
-                int pagesize = 8;
+                int pagesize = 10;
                 var list = await PaginatedList<SellerView>.CreateAsync(sellerslist, pageNumber ?? 1, pagesize);
                 return View(list);
             }

@@ -35,7 +35,7 @@ namespace WebApplication2.Areas.Admin.Controllers
         }
         // GET: /<controller>/
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pagenumber)
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
             var claims = await usermanager.GetClaimsAsync(iuser);
@@ -63,7 +63,9 @@ namespace WebApplication2.Areas.Admin.Controllers
                         
                     });
                 }
-                return View(special);
+                int pagesize = 10;
+                var list = await PaginatedList<SpecialView>.CreateAsync(special, pagenumber ?? 1, pagesize);
+                return View(list);
             }
         }
         [Authorize]

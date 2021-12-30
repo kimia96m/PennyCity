@@ -71,7 +71,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
         }
         [Authorize]
-        public async Task<IActionResult> List(string title,int? id, States? state)
+        public async Task<IActionResult> List(string title,int? id, States? state, int? pageNumber)
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
             var claims = await usermanager.GetClaimsAsync(iuser);
@@ -105,8 +105,9 @@ namespace WebApplication2.Areas.Admin.Controllers
                         });
                     }
                 }
-
-                return View(brandlist);
+                int pageSize = 10;
+                var list = await PaginatedList<BrandView>.CreateAsync(brandlist, pageNumber ?? 1, pageSize);
+                return View(list);
             }
         }       
         

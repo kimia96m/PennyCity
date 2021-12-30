@@ -42,5 +42,11 @@ namespace WebApplication2.Repository.EF
             var banner = await _context.banners.Where(b=>b.id==id ||id==null).ToAsyncEnumerable().ToList();
             return banner;
         }
+
+        public async Task<IEnumerable<Banner>> SearchByIsSpecial(int? id)
+        {
+            var banner = await _context.banners.Where(b => (b.id == id || id == null)&& b.ispecial==true).ToAsyncEnumerable().ToList();
+            return banner;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model List<BrandView>
+﻿
+@model WebApplication2.Models.PaginatedList<BrandView>
 @{
     ViewData["Title"] = "لیست برندها";
     var message = TempData["message"];
@@ -13,6 +14,12 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
+    var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
+    int next = Model.PageIndex + 1;
+    int pre = Model.PageIndex - 1;
+}
 <div class="card text-right border-primary">
     <div class="card-header d-flex align-items-center justify-content-between ">
         <h3>لیست برندها</h3>
@@ -36,8 +43,6 @@
                                 <div class="mb-3 form-group ">
                                     <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
                                     <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
-
-
                                 </div>
                                 <div class="mb-3 form-group ">
 
@@ -45,14 +50,14 @@
                                     <div class="col-md-8"><input class="form-control" id="exampleInputPassword1" autocomplete="off"></div>
 
                                 </div>
-                                <div class="mb-3 form-group ">                           
+                                <div class="mb-3 form-group ">
                                     <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
                                     <div class="mb-3">
                                         <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
                                             <option selected>انتخاب کنید...</option>
                                             <option value="1">فعال</option>
                                             <option value="2">غیر فعال</option>
-                                        
+
                                         </select>
 
                                     </div>
@@ -69,16 +74,26 @@
         </div>
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+                <li class="@prevDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Next</a>
                 </li>
             </ul>
         </nav>
@@ -89,7 +104,7 @@
                     <th scope="col">#</th>
                     <th scope="col" style="width:20%">
                         نام برند
-                    </th>                    
+                    </th>
                     <th scope="col" style="width:10%">نام خارجی</th>
                     <th scope="col" style="width:10%">وضعیت</th>
                     <th scope="col" style="width:20%">ایجاد کننده</th>
@@ -100,73 +115,83 @@
             <tbody>
                 @foreach (var brand in Model)
                 {
-                <tr>
-                    <th scope="row">1</th>
-                    <td>
-                        <strong class="h5"><a asp-action="Index" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id"> @brand.title </a></strong><br />
-                        <span></span><br />
-                        <span class="text-muted">شناسه: @brand.id</span>
-                    </td>
-                    <td>@brand.slug</td>
-                    @if (brand.State == WebApplication2.Models.Products.States.Enabled)
-                    {
-                        <td>فعال</td>}
-                    else
-                    {
-                        <td>غیرفعال</td>}
-                    <td>
-                        @brand.creator
-                        <br />
-                        <span class="text-muted">@brand.createdatetime</span>
-                    </td>
-                    @if (!string.IsNullOrEmpty(brand.lastmodifydate))
-                    {
+                    <tr>
+                        <th scope="row">1</th>
                         <td>
-                            @brand.lastmodifier
-                            <br />
-                            <span class="text-muted">@brand.lastmodifydate</span>
+                            <strong class="h5"><a asp-action="Index" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id"> @brand.title </a></strong><br />
+                            <span></span><br />
+                            <span class="text-muted">شناسه: @brand.id</span>
                         </td>
-                    }
-                    else
-                    {
-                        <td> --- </td>}
-                    <td class="align-middle ">
+                        <td>@brand.slug</td>
+                        @if (brand.State == WebApplication2.Models.Products.States.Enabled)
+                        {
+                            <td>فعال</td>}
+                        else
+                        {
+                            <td>غیرفعال</td>}
+                        <td>
+                            @brand.creator
+                            <br />
+                            <span class="text-muted">@brand.createdatetime</span>
+                        </td>
+                        @if (!string.IsNullOrEmpty(brand.lastmodifydate))
+                        {
+                            <td>
+                                @brand.lastmodifier
+                                <br />
+                                <span class="text-muted">@brand.lastmodifydate</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td> --- </td>}
+                        <td class="align-middle ">
 
-                        @*<div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Brand" asp-area="Admin">جزییات</a></li>
-                    <li><a class="dropdown-item" asp-action="Edit" asp-controller="Brand" asp-area="Admin"> ویرایش</a></li>
-                    <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin"> حذف</a></li>
-                </ul>
-            </div>*@
-                        <div class="dropdown1">
-                            <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                            <ul id="myDropdown" class=" dropdown1-content text-right">
-                                <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id">جزییات</a></li>
-                                <li class=" dropdown1-content"><a asp-action="Edit" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id"> ویرایش</a></li>
-                                <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id"> حذف</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                            @*<div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Brand" asp-area="Admin">جزییات</a></li>
+                                        <li><a class="dropdown-item" asp-action="Edit" asp-controller="Brand" asp-area="Admin"> ویرایش</a></li>
+                                        <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin"> حذف</a></li>
+                                    </ul>
+                                </div>*@
+                            <div class="dropdown1">
+                                <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                                <ul id="myDropdown" class=" dropdown1-content text-right">
+                                    <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id">جزییات</a></li>
+                                    <li class=" dropdown1-content"><a asp-action="Edit" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id"> ویرایش</a></li>
+                                    <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin" asp-route-id="@brand.id"> حذف</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                 }
-                
-                
+
+
             </tbody>
         </table>
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+                <li class="@prevDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
+                    <a asp-action="List"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">Next</a>
                 </li>
             </ul>
         </nav>

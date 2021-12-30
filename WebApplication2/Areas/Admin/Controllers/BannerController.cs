@@ -115,37 +115,45 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
             else
             {
-                var banner = new Banner
+                var ispecial = await bannerrepo.SearchByIsSpecial(null);
+                if (ispecial.Count()==0)
                 {
-                    link = link,
-                    ext = Path.GetExtension(photo.FileName),
-                    ispecial = isspecial=="on"?true:false
-                   
-                };
-                await bannerrepo.Add(banner);
-                await bannerrepo.Save();
-
-                var bannerid = banner.id;
-                var ext = Path.GetExtension(photo.FileName);
-                if (banner.ispecial == true)
-                {
-                    var path = Path.Combine(env.WebRootPath + "\\Images\\banners\\top-banner.png");
-                    using (var filestream = new FileStream(path, FileMode.Create))
+                    var banner = new Banner
                     {
-                        await photo.CopyToAsync(filestream);
+                        link = link,
+                        ext = Path.GetExtension(photo.FileName),
+                        ispecial = isspecial == "on" ? true : false
 
-                        filestream.Close();
+                    };
+                    await bannerrepo.Add(banner);
+                    await bannerrepo.Save();
+
+                    var bannerid = banner.id;
+                    var ext = Path.GetExtension(photo.FileName);
+                    if (banner.ispecial == true)
+                    {
+                        var path = Path.Combine(env.WebRootPath + "\\Images\\banners\\top-banner.png");
+                        using (var filestream = new FileStream(path, FileMode.Create))
+                        {
+                            await photo.CopyToAsync(filestream);
+
+                            filestream.Close();
+                        }
+                    }
+                    else
+                    {
+                        var path = Path.Combine(env.WebRootPath + "\\Images\\banners", bannerid + ext);
+                        using (var filestream = new FileStream(path, FileMode.Create))
+                        {
+                            await photo.CopyToAsync(filestream);
+
+                            filestream.Close();
+                        }
                     }
                 }
                 else
                 {
-                    var path = Path.Combine(env.WebRootPath + "\\Images\\banners", bannerid + ext);
-                    using (var filestream = new FileStream(path, FileMode.Create))
-                    {
-                        await photo.CopyToAsync(filestream);
-
-                        filestream.Close();
-                    }
+                    TempData["message"] = "بنر تاپ قبلی را حذف کنید";
                 }
               
                 return RedirectToAction("List");

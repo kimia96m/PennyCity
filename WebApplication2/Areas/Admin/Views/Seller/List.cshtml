@@ -15,7 +15,12 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
-
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
+    var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
+    int next = Model.PageIndex + 1;
+    int pre = Model.PageIndex - 1;
+}
 <div class="card text-right border-primary">
     <div class="card-header d-flex align-items-center justify-content-between ">
         <h3>لیست کالا</h3>
@@ -29,89 +34,89 @@
     </div>
     <div class="card-body">
         @*<div class="row justify-content-around">
-            <div class="col-md-6">
-                <div class="collapse" id="collapseExample">
-                    <div class="card mb-3 border-warning">
-                        <div class="card-header" id="collapseExample">فیلتر</div>
-                        <div class="card-body">
-                            <form class="form-horizontal" method="post" action="">
-                                <div class="mb-3 form-group ">
-                                    <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
-                                    <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
+                <div class="col-md-6">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card mb-3 border-warning">
+                            <div class="card-header" id="collapseExample">فیلتر</div>
+                            <div class="card-body">
+                                <form class="form-horizontal" method="post" action="">
+                                    <div class="mb-3 form-group ">
+                                        <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
+                                        <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
 
-
-                                </div>
-                                <div class="mb-3 form-group ">
-
-                                    <label for="exampleInputPassword1" class="form-label col-md-8 " name="id">شناسه</label>
-                                    <div class="col-md-8"><input class="form-control" id="exampleInputPassword1" autocomplete="off"></div>
-
-                                </div>
-                                <div class="mb-3 form-group ">
-
-                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">برند</label>
-                                    <div class="mb-3">
-                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="brand">
-                                            <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
 
                                     </div>
-                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">گروه</label>
-                                    <div class="mb-3">
-                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="group">
-                                            <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
+                                    <div class="mb-3 form-group ">
+
+                                        <label for="exampleInputPassword1" class="form-label col-md-8 " name="id">شناسه</label>
+                                        <div class="col-md-8"><input class="form-control" id="exampleInputPassword1" autocomplete="off"></div>
 
                                     </div>
-                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
-                                    <div class="mb-3">
-                                        <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
-                                            <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
+                                    <div class="mb-3 form-group ">
+
+                                        <label for="exampleInputPassword1" class="form-label col-md-4 ">برند</label>
+                                        <div class="mb-3">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="brand">
+                                                <option selected>انتخاب کنید...</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+
+                                        </div>
+                                        <label for="exampleInputPassword1" class="form-label col-md-4 ">گروه</label>
+                                        <div class="mb-3">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="group">
+                                                <option selected>انتخاب کنید...</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+
+                                        </div>
+                                        <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
+                                        <div class="mb-3">
+                                            <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
+                                                <option selected>انتخاب کنید...</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+
+                                        </div>
 
                                     </div>
 
-                                </div>
-
-                                <button type="submit" class="btn btn-primary">فیلتر</button>
-                            </form>
+                                    <button type="submit" class="btn btn-primary">فیلتر</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <nav aria-label="..." dir="ltr">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>*@
+            <nav aria-label="..." dir="ltr">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>*@
         <table class="table caption-top">
             <p>@message</p>
             <thead>
                 <tr class="bg-light">
                     <th scope="col">#</th>
                     <th class="text-md-center" scope="col" style="width:20%">نام فروشنده</th>
-                    <th class="text-md-center" scope="col" style="width:10%">پرداختی </th> 
+                    <th class="text-md-center" scope="col" style="width:10%">پرداختی </th>
                     <th scope="col" class="text-md-center" style="width:20%">ایجاد کننده</th>
                     <th class="text-md-center" scope="col" style="width:20%">آخرین تغییرات</th>
                     <th class="text-left" scope="col">تنظیمات</th>
@@ -160,35 +165,28 @@
 
             </tbody>
         </table>
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        }
         <nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
-                <li class="page-item ">
+                <li class="@prevDisabled">
                     <a asp-action="List"
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
                        asp-route-pageNumber="@(Model.PageIndex - 1)"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link btn btn-default @prevDisabled">
-                        صفحه قبلی
-                    </a>
-
+                       class="page-link">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                @if (pre != 0)
+                {
+                    <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+                    <span class="page-link">@Model.PageIndex</span>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
+                <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                <li class="@nextDisabled">
                     <a asp-action="List"
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
                        asp-route-pageNumber="@(Model.PageIndex + 1)"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link btn btn-default @nextDisabled">
-                        صفحه بعدی
-                    </a>
+                       class="page-link">Next</a>
                 </li>
             </ul>
         </nav>

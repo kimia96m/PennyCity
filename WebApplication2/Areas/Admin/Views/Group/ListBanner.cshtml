@@ -4,9 +4,6 @@
     var massage = TempData["massage"];
     int count = 1;
 }
-
-
-
 @section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">صفحه اصلی </a></li>
@@ -68,7 +65,6 @@
                 </div>
             </div>
         </div>*@
-
         <p>@massage</p>
         <table class="table caption-top">
             <thead>
@@ -84,80 +80,79 @@
             <tbody>
                 @foreach (var group in Model)
                 {
-                <tr>
-                    <th scope="row">@count</th>
-                    <td class="text-md-center align-middle">
-                        <strong class="h5"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> @group.title </a></strong><br />
-                        <span></span><br />
-                        <span class="text-muted">شناسه: @group.id</span>
-                        <span class="text-muted">شناسه گروه: @group.groupnumber</span>
-                    </td>
-                    <td class="text-md-center align-middle">
-                        <img src="~/Images/Groups/@group.imgurl" style="max-height:150px;max-width:150px;" />
-                    </td>
-                    <td class="text-md-center align-middle">
-                        @group.creator
-                        <br />
-                        <span class="text-muted">@group.createdatetime</span>
-                    </td>
-                    @if (!string.IsNullOrEmpty(group.lastmodifydate))
-                    {
+                    <tr>
+                        <th scope="row">@count</th>
                         <td class="text-md-center align-middle">
-                            @group.lastmodifier
-                            <br />
-                            <span class="text-muted">@group.lastmodifydate</span>
+                            <strong class="h5"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> @group.title </a></strong><br />
+                            <span></span><br />
+                            <span class="text-muted">شناسه: @group.id</span>
+                            <span class="text-muted">شناسه گروه: @group.groupnumber</span>
                         </td>
-                    }
-                    else
-                    {
-                        <td class="text-md-center align-middle"> --- </td>}
+                        <td class="text-md-center align-middle">
+                            <img src="~/Images/Groups/@group.imgurl" style="max-height:150px;max-width:150px;" />
+                        </td>
+                        <td class="text-md-center align-middle">
+                            @group.creator
+                            <br />
+                            <span class="text-muted">@group.createdatetime</span>
+                        </td>
+                        @if (!string.IsNullOrEmpty(group.lastmodifydate))
+                        {
+                            <td class="text-md-center align-middle">
+                                @group.lastmodifier
+                                <br />
+                                <span class="text-muted">@group.lastmodifydate</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-md-center align-middle"> --- </td>}
 
-                    <td class="align-middle text-md-center ">
-                        <div class="dropdown1">
-                            <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                            <ul id="myDropdown" class=" dropdown1-content text-right">
-                                <li class=" dropdown1-content"><a asp-action="EditBanner" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> ویرایش</a></li>
-                                <li class=" dropdown1-content"><a class=" text-danger" asp-action="DeleteBanner" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> حذف</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                        <td class="align-middle text-md-center ">
+                            <div class="dropdown1">
+                                <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
+                                <ul id="myDropdown" class=" dropdown1-content text-right">
+                                    <li class=" dropdown1-content"><a asp-action="EditBanner" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> ویرایش</a></li>
+                                    <li class=" dropdown1-content"><a class=" text-danger" asp-action="DeleteBanner" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> حذف</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                     count++;
                 }
             </tbody>
         </table>
         @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
+            var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
+            int next = Model.PageIndex + 1;
+            int pre = Model.PageIndex - 1;
         }
-        <nav aria-label="..." dir="ltr">
-            <ul class="pagination justify-content-center">
-                <li class="page-item ">
-                    <a asp-action="ListBanner"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@(Model.PageIndex - 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link btn btn-default @prevDisabled">
-                        صفحه قبلی
-                    </a>
-
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a asp-action="ListBanner"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@(Model.PageIndex + 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link btn btn-default @nextDisabled">
-                        صفحه بعدی
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <nav aria-label="..." dir="ltr">
+        <ul class="pagination justify-content-center">
+            <li class="@prevDisabled">
+                <a asp-action="List"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">Previous</a>
+            </li>
+            @if (pre != 0)
+            {
+                <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">@Model.PageIndex</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">@next</a></li>
+            <li class="@nextDisabled">
+                <a asp-action="List"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">Next</a>
+            </li>
+        </ul>
+    </nav>
     </div>
 </div>
 

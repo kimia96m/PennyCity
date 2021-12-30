@@ -462,7 +462,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
         }
         [Authorize]
-        public async Task<IActionResult> Item(int id, States? state, int[] tagvalue)
+        public async Task<IActionResult> Item(int id, States? state, int[] tagvalue,int? pagenumber)
         {
             var user = await usermanager.FindByNameAsync(User.Identity.Name);
             var claims = await usermanager.GetClaimsAsync(user);
@@ -514,8 +514,9 @@ namespace WebApplication2.Areas.Admin.Controllers
                     }
                     counter++;
                 }
-
-                return View(pitemtv);
+                int pagesize = 10;
+                var list = await PaginatedList<ProductItemView>.CreateAsync(pitemtv, pagenumber ?? 1, pagesize);
+                return View(list);
             }
         }
         [Authorize]

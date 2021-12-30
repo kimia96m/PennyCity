@@ -13,6 +13,12 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
+    var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
+    int next = Model.PageIndex + 1;
+    int pre = Model.PageIndex - 1;
+}
 <div class="card text-right border-primary">
     <form class="order-form" method="post" asp-action="Save" asp-controller="Order" asp-area="Admin">
         <div class="card-body">
@@ -64,35 +70,28 @@
 
                 </tbody>
             </table>
-            @{
-                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-            }
             <nav aria-label="..." dir="ltr">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item ">
+                    <li class="@prevDisabled">
                         <a asp-action="List"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-pageNumber="@(Model.PageIndex - 1)"
                            asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="page-link btn btn-default @prevDisabled">
-                            صفحه قبلی
-                        </a>
-
+                           class="page-link">Previous</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    @if (pre != 0)
+                    {
+                        <li class="page-item"><a class="page-link" href="#">@pre</a></li>}
                     <li class="page-item active" aria-current="page">
-                        <span class="page-link">2</span>
+                        <span class="page-link">@Model.PageIndex</span>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
+                    <li class="page-item"><a class="page-link" href="#">@next</a></li>
+                    <li class="@nextDisabled">
                         <a asp-action="List"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-pageNumber="@(Model.PageIndex + 1)"
                            asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="page-link btn btn-default @nextDisabled">
-                            صفحه بعدی
-                        </a>
+                           class="page-link">Next</a>
                     </li>
                 </ul>
             </nav>
