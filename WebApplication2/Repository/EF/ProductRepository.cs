@@ -70,6 +70,13 @@ namespace WebApplication2.Repository.EF
              ).ToAsyncEnumerable().ToList();
             return query;
         }
+        public async Task<IEnumerable<Product>> SearchAsync(int? id, string primaryTitle, int? group, int? brand, States states)
+        {
+            var q = await Context.product.Include(b => b.Brands).Include(g => g.Groups)
+                .Where(p => (p.Id==id ||p.PrimaryTitle.Contains(primaryTitle)||p.SecondaryTitle.Contains(primaryTitle)||p.Groups.id==group||p.Brands.id==brand)&& p.state==states)
+                .ToAsyncEnumerable().ToList();
+            return q;
+        }
         public async Task<Product> DetailProduct(int id)
         {
             var query = await Context.product.Include(r=>r.ratings).Include(x => x.Brands).Include(x => x.Groups).ThenInclude(x => x.specificationgroups).ThenInclude(x => x.specification).ThenInclude(x => x.specificationvalues).Include(x => x.productitem).ThenInclude(x => x.itemtagvalue).ThenInclude(x => x.tagvalues).ThenInclude(x => x.tags).Include(x => x.Keypoints).Include(x => x.comments).ThenInclude(x=>x.user).SingleOrDefaultAsync(p=>p.Id==id);

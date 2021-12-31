@@ -67,6 +67,11 @@ namespace WebApplication2.Repository.EF
             var q = await Context.group.Include(l=>l.lastmodifier).Include(c=>c.creator).Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle)) && (b.id == id || id == null) && (b.State == state || state == null)).ToAsyncEnumerable().ToList();
             return q;
         }
+        public async Task<IEnumerable<Group>> SearchAdvancedAsync(string primaryTitle, int? id, States? state)
+        {
+            var q = await Context.group.Include(l => l.lastmodifier).Include(c => c.creator).Where(b => (b.title == primaryTitle ||b.slug==primaryTitle || b.id == id) && (b.State == state)).ToAsyncEnumerable().ToList();
+            return q;
+        }
         public async Task<IEnumerable<Group>> SearchAsync(string primaryTitle)
         {
             var q = await Context.group.Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle))).ToAsyncEnumerable().ToList();

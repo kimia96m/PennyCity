@@ -11,7 +11,7 @@ namespace WebApplication2.Models.Products.Brands
         Task Update(Brand brand);
         Task DeleteAsync(Brand brand);
         Task<IEnumerable<Brand>> SearchAsync(string primaryTitle, int? id, States? state);
-        
+        Task<IEnumerable<Brand>> SearchAdvancedAsync(string primaryTitle, int? id, States? state);
         Task<Brand> FindAsync(int id);
         Task SaveAsync();
     }

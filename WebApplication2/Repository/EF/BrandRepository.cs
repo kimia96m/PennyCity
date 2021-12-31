@@ -48,6 +48,12 @@ namespace WebApplication2.Repository.EF
             .Where(b => (b.title == primaryTitle || string.IsNullOrEmpty(primaryTitle)) && (b.id == id || id == null) && (b.State == state || state == null)).ToAsyncEnumerable().ToList();
             return q;
         }
+        public async Task<IEnumerable<Brand>> SearchAdvancedAsync(string primaryTitle, int? id, States? state)
+        {
+            var q = await Context.Brand.Include(o => o.creator).Include(p => p.lastmodifier)
+            .Where(b => ((b.title == primaryTitle)||(b.slug==primaryTitle) || (b.id == id)) && (b.State == state)).ToAsyncEnumerable().ToList();
+            return q;
+        }
         public async Task<IEnumerable<Brand>> SearchAsync(string primaryTitle)
         {
             var q = await Context.Brand.ToAsyncEnumerable().ToList();

@@ -105,6 +105,43 @@ namespace WebApplication2.Areas.Admin.Controllers
                 return View(paging);
             }
         }
+        [Authorize]
+        public async Task<IActionResult> SearchedList(string title, int? id, States? state, int? pageNumber)
+        {
+            var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(iuser);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                var group = await grouprepos.SearchAdvancedAsync(title, id, state);
+                var grouplist = new List<GroupView>();
+                PersianCalendar p = new PersianCalendar();
+                if (group != null)
+                {
+                    foreach (var item in group)
+                    {
+                        grouplist.Add(new GroupView
+                        {
+                            id = item.id,
+                            slug = item.slug,
+                            title = item.title,
+                            State = item.State,
+                            createdatetime = p.persiandate(item.createdatetime),
+                            creator = item.creator?.name + " " + item.creator?.lastname,
+                            lastmodifydate = item.lastmodifydate != null ? p.persiandate((DateTime)item.lastmodifydate) : null,
+                            lastmodifier = item.lastmodifier?.name + " " + item.lastmodifier?.lastname,
+                        });
+                    }
+                }
+                int pageSize = 10;
+                var paging = await PaginatedList<GroupView>.CreateAsync(grouplist, pageNumber ?? 1, pageSize);
+                return View("List",paging);
+            }
+        }
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Edit(int id)

@@ -109,8 +109,45 @@ namespace WebApplication2.Areas.Admin.Controllers
                 var list = await PaginatedList<BrandView>.CreateAsync(brandlist, pageNumber ?? 1, pageSize);
                 return View(list);
             }
-        }       
-        
+        }
+        [Authorize]
+        public async Task<IActionResult> SearchedList(string title, int? id, States? state, int? pageNumber)
+        {
+            var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(iuser);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                var brand = await brandRepository.SearchAdvancedAsync(title, id, state);
+                var brandlist = new List<BrandView>();
+                PersianCalendar p = new PersianCalendar();
+
+                if (brand != null)
+                {
+                    foreach (var item in brand)
+                    {
+                        brandlist.Add(new BrandView
+                        {
+                            id = item.id,
+                            slug = item.slug,
+                            title = item.title,
+                            State = item.State,
+                            createdatetime = p.persiandate(item.createdatetime),
+                            creator = item.creator.name + " " + item.creator.lastname,
+                            lastmodifydate = item.lastmodifydate != null ? p.persiandate((DateTime)item.lastmodifydate) : null,
+                            lastmodifier = item.lastmodifier?.name + " " + item.lastmodifier?.lastname,
+                        });
+                    }
+                }
+                int pageSize = 10;
+                var list = await PaginatedList<BrandView>.CreateAsync(brandlist, pageNumber ?? 1, pageSize);
+                return View("List", list);
+            }
+        }
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Edit(int id)

@@ -126,10 +126,44 @@ namespace WebApplication2.Areas.Admin.Controllers
                 int pageSize = 10;
                 var list = await PaginatedList<ProductView>.CreateAsync(prlist, pageNumber ?? 1, pageSize);
                 return View(list);
+            }                  
+        }
+        [Authorize]
+        public async Task<IActionResult> SearchedList(int? id, string primaryTitle,int? group,int? brand,States states, int? pageNumber)
+        {
+            var user = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(user);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
             }
-          
-
-           
+            else
+            {
+                var list = new List<ProductView>();
+                var prlist = await productrepo.SearchAsync(id, primaryTitle, group, brand, states);
+                var persian = new PersianCalendar();
+                foreach (var item in prlist)
+                {
+                    list.Add(new ProductView
+                    {
+                        Brands = new Brand { id = item.Brands.id, title = item.Brands.title },
+                        Groups = new Group { id = item.Groups.id, title = item.Groups.title },
+                        CreatDate = persian.persiandate(item.CreatDate),
+                        Creator = item.Creator.name + " " + item.Creator.lastname,
+                        LastModifyDate = item.LastModifyDate != null ? persian.persiandate((DateTime)item.LastModifyDate) : null,
+                        LastModifier = item.LastModifier?.name + " " + item.LastModifier?.lastname,
+                        Description = item.Description,
+                        PrimaryTitle = item.PrimaryTitle,
+                        SecondaryTitle = item.SecondaryTitle,
+                        state = item.state,
+                        Id = item.Id
+                    });
+                }
+                int pageSize = 10;
+                var prolist = await PaginatedList<ProductView>.CreateAsync(list, pageNumber ?? 1, pageSize);
+                return View("List", prolist);
+            }
         }
         [Authorize]
         public async Task<IActionResult> Add()

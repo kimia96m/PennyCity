@@ -1,5 +1,7 @@
 ﻿@using WebApplication2.Models.Products.KeyPoints
 @using WebApplication2.Models.ViewModels.Products
+@using WebApplication2.Models.Products.Groups
+@using WebApplication2.Models.Products.Brands
 @model WebApplication2.Models.PaginatedList<ProductView>
 @{
 
@@ -7,7 +9,14 @@
     int count = 1;
     var message = TempData["message"];
 }
-
+@inject IGroupRepository grouprepo
+@{
+    var groups = await grouprepo.SearchAsync(null, null, WebApplication2.Models.Products.States.Enabled);
+}
+@inject IBrandRepository brandrepo
+@{
+    var brands = await brandrepo.SearchAsync(null, null, WebApplication2.Models.Products.States.Enabled);
+}
 
 @section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
@@ -27,7 +36,7 @@
         <h3>لیست کالا</h3>
         <div>
             <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
-                سرچ بعدا درست کن
+                جستجو 
             </a>
             <a asp-action="Add" asp-controller="Product" asp-area="Admin" class="btn btn-outline-success btn-sm">افزودن کالا</a>
         </div>
@@ -40,54 +49,44 @@
                     <div class="card mb-3 border-warning">
                         <div class="card-header" id="collapseExample">فیلتر</div>
                         <div class="card-body">
-                            <form class="form-horizontal" method="post" action="">
+                            <form class="form-horizontal" method="post" asp-action="SearchedList" asp-controller="Product" asp-area="Admin">
                                 <div class="mb-3 form-group ">
                                     <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
-                                    <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
-
-
+                                    <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="primaryTitle"></div>
                                 </div>
                                 <div class="mb-3 form-group ">
-
                                     <label for="exampleInputPassword1" class="form-label col-md-8 " name="id">شناسه</label>
                                     <div class="col-md-8"><input class="form-control" id="exampleInputPassword1" autocomplete="off"></div>
-
                                 </div>
                                 <div class="mb-3 form-group ">
-
                                     <label for="exampleInputPassword1" class="form-label col-md-4 ">برند</label>
                                     <div class="mb-3">
                                         <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="brand">
                                             <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            @foreach (var item in brands)
+                                            {
+                                                <option value="@item.id">@item.title</option>
+                                            }
                                         </select>
-
                                     </div>
                                     <label for="exampleInputPassword1" class="form-label col-md-4 ">گروه</label>
                                     <div class="mb-3">
                                         <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="group">
                                             <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            @foreach (var item in groups)
+                                            {
+                                                <option value="@item.id">@item.title</option>
+                                            }
                                         </select>
-
                                     </div>
                                     <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
                                     <div class="mb-3">
-                                        <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
-                                            <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <select class="form-select form-select-lg mb-3" name="states" aria-label=".form-select-lg example">
+                                            <option value="1" selected>فعال</option>
+                                            <option value="2">غیرفعال</option>
                                         </select>
-
                                     </div>
-
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">فیلتر</button>
                             </form>
                         </div>

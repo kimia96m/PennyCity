@@ -16,6 +16,7 @@ namespace WebApplication2.Models.Products.Groups
         Task AddbannerAsync(BannerGroups bannergroup);
         Task DeleteBannerAsync(BannerGroups bannergroup);
         Task<IEnumerable<BannerGroups>> SearchBannerAsync(string title, int? id);
+        Task<IEnumerable<Group>> SearchAdvancedAsync(string primaryTitle, int? id, States? state);
         Task<BannerGroups> FindBannerAsync(int id);
         Task UpdateBanner(BannerGroups bannergroup);
         Task<BannerGroups> FindBannernumberAsync(int gid);
