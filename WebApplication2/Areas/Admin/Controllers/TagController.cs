@@ -86,6 +86,42 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
         }
         [Authorize]
+        public async Task<IActionResult> SearchedList(string title, States state, int? pagenumber)
+        {
+            var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(iuser);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                var taglist = await tagrepo.SearchAdvanced(title,state );
+                var tagviewlist = new List<TagView>();
+                var persian = new PersianCalendar();
+                if (taglist != null)
+                {
+                    foreach (var item in taglist)
+                    {
+                        tagviewlist.Add(new TagView
+                        {
+                            id = item.id,
+                            title = item.title,
+                            createdate = persian.persiandate(item.createdate),
+                            creator = item.creator.name + " " + item.creator.lastname,
+                            lastmodifydate = item.lastmodifydate != null ? persian.persiandate((DateTime)item.lastmodifydate) : null,
+                            lastmodifier = item.lastmodifier?.name + " " + item.lastmodifier?.lastname,
+                            state = item.state
+                        });
+                    }
+                }
+                int pagesize = 10;
+                var list = await PaginatedList<TagView>.CreateAsync(tagviewlist, pagenumber ?? 1, pagesize);
+                return View("List",list);
+            }
+        }
+        [Authorize]
         public async Task<IActionResult> Add()
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
@@ -221,6 +257,47 @@ namespace WebApplication2.Areas.Admin.Controllers
 
                 }
                 return View(tagvaluelist);
+            }
+        }
+        [Authorize]
+        public async Task<IActionResult> SearchedValue(int id,string title, States state)
+        {
+            var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(iuser);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                ViewBag.id = id;
+                PersianCalendar persian = new PersianCalendar();
+                var tagvaluelist = new List<TagValueView>();
+                var tagvalue = await tagvaluerepo.SearchAdvance(state, title);
+                if (tagvalue != null)
+                {
+                    foreach (var item in tagvalue)
+                    {
+                        tagvaluelist.Add(new TagValueView
+                        {
+                            id = item.id,
+                            title = item.title,
+                            createdate = persian.persiandate(item.createdate),
+                            creator = item.creator.name + " " + item.creator.lastname,
+                            lastmodifydate = item.lastmodifydate != null ? persian.persiandate((DateTime)item.lastmodifydate) : null,
+                            lastmodifier = item.lastmodifier?.name + " " + item.lastmodifier?.lastname,
+                            state = item.state,
+                            tagviews = new TagView
+                            {
+                                id = item.tags.id,
+                                title = item.tags.title
+
+                            }
+                        });
+                    }
+                }
+                return View("Value", tagvaluelist);
             }
         }
         [Authorize]

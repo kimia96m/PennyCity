@@ -15,5 +15,6 @@ namespace WebApplication2.Models.Products.Tags
         Task<Tag> Find(int id);
         Task<IEnumerable<Tag>> Search(int? id, string title);
         Task<IEnumerable<Tag>> Search(string title);
+        Task<IEnumerable<Tag>> SearchAdvanced(string title, States state);
     }
 }

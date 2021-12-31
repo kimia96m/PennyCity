@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Models;
+using WebApplication2.Models.Products;
 using WebApplication2.Models.Products.Tags;
 
 namespace WebApplication2.Repository.EF
@@ -41,6 +42,11 @@ namespace WebApplication2.Repository.EF
         {
             return await context.tags.Where(p => (p.id == id || id == null)
             && (p.title == title || string.IsNullOrEmpty(title)))
+          .Include(o => o.creator).Include(l => l.lastmodifier).Include(x => x.tagValues).ToAsyncEnumerable().ToList();
+        }
+        public async Task<IEnumerable<Tag>> SearchAdvanced( string title, States state)
+        {
+            return await context.tags.Where(p => (p.title.Contains(title) && p.state==state)|| (title==null && p.state == state))
           .Include(o => o.creator).Include(l => l.lastmodifier).Include(x => x.tagValues).ToAsyncEnumerable().ToList();
         }
         public async Task<IEnumerable<Tag>> Search(string title)

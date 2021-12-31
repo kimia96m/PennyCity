@@ -33,6 +33,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             this.env = env;
         }
         // GET: /<controller>/
+        [Authorize]
         public async Task<IActionResult> List(int? id, string title, int? pageNumber, string producttitle)
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
@@ -68,6 +69,43 @@ namespace WebApplication2.Areas.Admin.Controllers
                 return View(list);
             }
             
+        }
+        [Authorize]
+        public async Task<IActionResult> SearchedList(int? id, string title, int? pageNumber)
+        {
+            var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(iuser);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                var p = new PersianCalendar();
+                var sellers = await sellerrepo.Search(id, title);
+                var sellerslist = new List<SellerView>();
+                if (sellers != null)
+                {
+                    foreach (var item in sellers)
+                    {
+                        sellerslist.Add(new SellerView
+                        {
+                            id = item.id,
+                            title = item.title,
+                            creator = item.creator.name + " " + item.creator.lastname,
+                            createdate = p.persiandate(item.createdate),
+                            paid = item.paid == null ? "0" : Convert.ToString(item.paid),
+                            lastmodifier = item.lastmodifier?.name + " " + item.lastmodifier?.lastname,
+                            lastmodifydate = item.lastmodifydate != null ? p.persiandate((DateTime)item.lastmodifydate) : null
+                        });
+                    }
+                }
+                int pagesize = 10;
+                var list = await PaginatedList<SellerView>.CreateAsync(sellerslist, pageNumber ?? 1, pagesize);
+                return View("List",list);
+            }
+
         }
         [Authorize]
         public async Task<IActionResult> Add()

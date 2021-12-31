@@ -1,4 +1,5 @@
 ﻿@using WebApplication2.Models.ViewModels.Products
+@using WebApplication2.Models.Products.Brands
 @model WebApplication2.Models.PaginatedList<SpecialView>
 @{
     ViewData["Title"] = "Index";
@@ -11,6 +12,10 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
+@inject IBrandRepository brandrepo
+@{ 
+    var brands = await brandrepo.SearchAsync(null, null, null);
+}
 @{
     var prevDisabled = !Model.HasPreviousPage ? "page-item disabled" : "page-item";
     var nextDisabled = !Model.HasNextPage ? "page-item disabled" : "page-item";
@@ -18,7 +23,58 @@
     int pre = Model.PageIndex - 1;
 }
 <div class="card text-right border-primary">
+    <div class="card-header d-flex align-items-center justify-content-between ">
+        <h3>لیست کالا</h3>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button">
+                جستجو
+            </a>
+            <a asp-action="Choose" asp-controller="SpecialProduct" asp-area="Admin" class="btn btn-outline-success btn-sm">افزودن کالا</a>
+        </div>
+
+    </div>  
     <div class="card-body">
+        <div class="row justify-content-around">
+            <div class="col-md-6">
+                <div class="collapse" id="collapseExample">
+                    <div class="card mb-3 border-warning">
+                        <div class="card-header" id="collapseExample">فیلتر</div>
+                        <div class="card-body">
+                            <form class="form-horizontal" method="post" asp-action="SearchedList" asp-controller="SpecialProduct" asp-area="Admin">
+                                <div class="mb-3 form-group ">
+                                    <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
+                                    <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="name"></div>
+                                </div>
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword1" class="form-label col-md-8 ">شناسه</label>
+                                    <div class="col-md-8"><input class="form-control" id="exampleInputPassword1" name="id" autocomplete="off"></div>
+                                </div>
+                                <div class="mb-3 form-group ">
+                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">برند</label>
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="bid">
+                                            <option selected>انتخاب کنید...</option>
+                                            @foreach (var item in brands)
+                                            {
+                                                <option value="@item.id">@item.title</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
+                                            <option value="1" selected>فعال</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">فیلتر</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <table class="table caption-top">
             <thead>
                 <tr class="bg-light">
@@ -31,7 +87,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>

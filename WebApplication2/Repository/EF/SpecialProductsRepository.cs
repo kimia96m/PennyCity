@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Models;
+using WebApplication2.Models.Products;
 using WebApplication2.Models.Products.SpecialProduct;
 
 namespace WebApplication2.Repository.EF
@@ -53,9 +54,15 @@ namespace WebApplication2.Repository.EF
                  .Include(b => b.brand).ToAsyncEnumerable().ToList();
             return query;
         }
+        public async Task<IEnumerable<SpecialProducts>> SearchAsync( string primaryTitle,int? id, int? brand, States states)
+        {
+            var q = await context.specialprodcut.Include(b => b.brand)
+                .Where(p => ((p.id == id || p.title.Contains(primaryTitle) || p.brand.id == brand) && p.state == states)/*|| ((id==null || string.IsNullOrEmpty(primaryTitle) || brand==null) && p.state == states)*/)
+                .ToAsyncEnumerable().ToList();
+            return q;
+        }
 
-      
-       public void Update(SpecialProducts specials)
+        public void Update(SpecialProducts specials)
         {
             context.specialprodcut.UpdateRange(specials);
             context.Entry(specials).Reference(p => p.brand).IsModified = false;

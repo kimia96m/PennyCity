@@ -69,6 +69,40 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
         }
         [Authorize]
+        public async Task<IActionResult> SearchedList(int? pagenumber,string name,int? id, int? bid, States state)
+        {
+            var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
+            var claims = await usermanager.GetClaimsAsync(iuser);
+            if (claims.Any(c => c.Value != "Operator"))
+            {
+                await signin.SignOutAsync();
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                var specials = await specialrepo.SearchAsync(name,id,bid, state);
+                var special = new List<SpecialView>();
+                foreach (var item in specials)
+                {
+                    special.Add(new SpecialView
+                    {
+                        id = item.id,
+                        title = item.title,
+                        brand = item.brand.title,
+                        price = Convert.ToString(item.price),
+                        prnumb = item.pnumb,
+                        discount = Convert.ToString(item.discount),
+                        date = Convert.ToString(item.leftedtime),
+                        daydate = Convert.ToString(item.lefteddays)
+
+                    });
+                }
+                int pagesize = 10;
+                var list = await PaginatedList<SpecialView>.CreateAsync(special, pagenumber ?? 1, pagesize);
+                return View("Index",list);
+            }
+        }
+        [Authorize]
         public async Task<IActionResult> Choose()
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);

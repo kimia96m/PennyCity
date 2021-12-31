@@ -39,28 +39,20 @@
                     <div class="card mb-3 border-warning">
                         <div class="card-header" id="collapseExample">فیلتر</div>
                         <div class="card-body">
-                            <form class="form-horizontal" method="get">
-
+                            <form class="form-horizontal" method="get" asp-area="Admin" asp-controller="Tag" asp-action="SearchedList">
                                 <div class="mb-3 form-group ">
                                     <label class=" col-md-4 " for="exampleInputEmail1">عنوان</label>
                                     <div class="col-md-8"><input class="form-control" id="exampleInputEmail1" name="title"></div>
-
-
                                 </div>
                                 <div class="mb-3 form-group ">
                                     <label for="exampleInputPassword1" class="form-label col-md-4 ">وضعیت</label>
                                     <div class="mb-3">
                                         <select class="form-select form-select-lg mb-3" name="state" aria-label=".form-select-lg example">
-                                            <option selected>انتخاب کنید...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="1">فعال</option>
+                                            <option value="2">غیرفعال</option>
                                         </select>
-
                                     </div>
-
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">فیلتر</button>
                             </form>
                         </div>

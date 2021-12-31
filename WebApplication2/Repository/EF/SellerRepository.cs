@@ -43,11 +43,20 @@ namespace WebApplication2.Repository.EF
                 p => 
                 (
                 (p.id == id) ||id==null)
-                && ((p.title==p.title)||string.IsNullOrEmpty(title))
+                && ((p.title==title)||string.IsNullOrEmpty(title))
                 &&
                 p.sold.Any(
                     x=>x.product.PrimaryTitle==producttitle||x.product.SecondaryTitle==producttitle) || string.IsNullOrEmpty(producttitle)
                 ).ToAsyncEnumerable().ToList();
+            return q;
+        }
+        public async Task<IEnumerable<Seller>> Search(int? id, string title)
+        {
+            var q = await _context.sellers.Include(x=>x.sold)
+                .Where(
+                p => 
+                (
+                (p.id == id) || (p.title.Contains(title)))).ToAsyncEnumerable().ToList();
             return q;
         }
         public async Task<IEnumerable<Seller>> Search(string title)

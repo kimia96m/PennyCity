@@ -51,7 +51,7 @@ namespace WebApplication2.Repository.EF
         public async Task<IEnumerable<Brand>> SearchAdvancedAsync(string primaryTitle, int? id, States? state)
         {
             var q = await Context.Brand.Include(o => o.creator).Include(p => p.lastmodifier)
-            .Where(b => ((b.title == primaryTitle)||(b.slug==primaryTitle) || (b.id == id)) && (b.State == state)).ToAsyncEnumerable().ToList();
+            .Where(b => ((b.title.Contains(primaryTitle))||(b.slug.Contains(primaryTitle)) || (b.id == id)) && (b.State == state)).ToAsyncEnumerable().ToList();
             return q;
         }
         public async Task<IEnumerable<Brand>> SearchAsync(string primaryTitle)
