@@ -46,6 +46,13 @@ namespace WebApplication2.Repository.EF
             return specificationgroup;
 
         }
+        public async Task<IEnumerable<SpecificationGroups>> SearchAsync(string title)
+        {
+            var specificationgroup = await context.specificationgroups.Where(s => s.title == title|| string.IsNullOrWhiteSpace(title)
+           ).Include(g=>g.group).ToAsyncEnumerable().ToList();
+            return specificationgroup;
+
+        }
         public async Task<List<SpecificationGroups>> SearchAsync(int? gid)
         {
             var specificationgroup = await context.specificationgroups.Where( x=>x.group.id==gid ).Include(g => g.group).Include(s=>s.specification).Include(s => s.creator).Include(s => s.lastmodifier).ToAsyncEnumerable().ToList();

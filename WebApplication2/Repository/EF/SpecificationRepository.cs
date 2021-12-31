@@ -43,6 +43,11 @@ namespace WebApplication2.Repository.EF
             var specifications = await context.specifications.Where(s => s.title == title||string.IsNullOrEmpty(title) && s.specificationgroups.id == specificationgid).Include(s => s.specificationgroups).Include(s=>s.creator).Include(s=>s.lastmodifier).ToAsyncEnumerable().ToList();
             return specifications;
         }
+        public async Task<IEnumerable<Specification>> SearchAsync(string title)
+        {
+            var specifications = await context.specifications.Where(s => s.title == title||string.IsNullOrEmpty(title)).Include(s => s.specificationgroups).ToAsyncEnumerable().ToList();
+            return specifications;
+        }
 
         public async Task UpdateAsync(Specification specification)
         {

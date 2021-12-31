@@ -13,6 +13,7 @@ namespace WebApplication2.Models.Products.Specification
         Task<SpecificationGroups> FindAsync(int id);
         Task<IEnumerable<SpecificationGroups>> SearchAsync(string title, int gid);
         Task<List<SpecificationGroups>> SearchAsync(int? gid);
+        Task<IEnumerable<SpecificationGroups>> SearchAsync(string title);
         Task Delete(int id);
         Task SaveAsync();
 

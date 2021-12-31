@@ -14,5 +14,6 @@ namespace WebApplication2.Models.Products.Tags
         Task Save();
         Task<Tag> Find(int id);
         Task<IEnumerable<Tag>> Search(int? id, string title);
+        Task<IEnumerable<Tag>> Search(string title);
     }
 }

@@ -26,9 +26,6 @@ namespace WebApplication2.Repository.EF
             var pr = await Context.product.FindAsync(product.Id);
             Context.product.Remove(pr);
         }
-
-      
-      
         public async Task<Product> FindAsync(int id)
         {
             var product = await Context.product.Include(r=>r.ratings).Include(p => p.Groups).Include(p => p.Brands).Include(p=>p.productitem).Include(p=>p.specificationvalues).ThenInclude(s=>s.specification).ThenInclude(s=>s.specificationgroups).Include(p=>p.Keypoints).Where(p => p.Id == id).ToAsyncEnumerable().SingleOrDefault();
@@ -43,26 +40,14 @@ namespace WebApplication2.Repository.EF
         {
             await Context.SaveChangesAsync();
         }
-
-        //public async Task<IEnumerable<Product>> SearchAsync(int? id, string PrimaryTitle)
-        //{
-        //    var query = await Context.Products.Include(b => b.brand).ToAsyncEnumerable().ToList();
-        //    return query;
-        //}
-
-    
-
-    
         public async Task<IEnumerable<Product>> SearchAsync(int? id, string primaryTitle)
         {
-            var query = await Context.product.Include(b => b.Brands).Include(o => o.Creator).Include(o => o.Groups).Include(l => l.LastModifier).ToAsyncEnumerable().ToList();
-            var productlist = query.Where(p => (p.Id == id || id == null) && (p.PrimaryTitle == primaryTitle || string.IsNullOrEmpty(primaryTitle))).ToList();
+            var productlist = await Context.product.Include(b => b.Brands).Include(o => o.Creator).Include(o => o.Groups).Include(l => l.LastModifier).Where(p => (p.Id == id || id == null) && (p.PrimaryTitle == primaryTitle || string.IsNullOrEmpty(primaryTitle))).ToAsyncEnumerable().ToList();
             return productlist;
         }
         public async Task<IEnumerable<Product>> SearchAsync(int gid)
         {
-            var query = await Context.product.Include(b => b.Brands).Include(c => c.Groups).ThenInclude(s => s.specificationgroups).Include(i => i.productitem).ToAsyncEnumerable().ToList();
-            var productlist = query.Where(p => p.Groupid == gid).ToList();
+            var productlist = await Context.product.Include(b => b.Brands).Include(c => c.Groups).ThenInclude(s => s.specificationgroups).Include(i => i.productitem).Where(p => p.Groupid == gid).ToAsyncEnumerable().ToList();
             return productlist;
         }
 
@@ -79,7 +64,7 @@ namespace WebApplication2.Repository.EF
         }
         public async Task<IEnumerable<Product>> SearchAsync(string keyword)
         {
-            var query = await Context.product
+            var query = await Context.product.Include(b=>b.Brands)
              .Where(p => 
              ( p.PrimaryTitle.Contains(keyword) || p.SecondaryTitle.Contains(keyword))
              ).ToAsyncEnumerable().ToList();

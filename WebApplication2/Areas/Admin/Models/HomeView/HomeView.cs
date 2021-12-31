@@ -9,6 +9,7 @@ namespace WebApplication2.Areas.Admin.Models.HomeView
     {
         public int id { get; set; }
         public string name { get; set; }
+        public string type { get; set; }
         public string uppercategoryname { get; set; }
         public string link { get; set; }
     }

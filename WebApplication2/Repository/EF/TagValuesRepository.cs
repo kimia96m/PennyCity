@@ -43,6 +43,11 @@ namespace WebApplication2.Repository.EF
             && (p.title == title || string.IsNullOrEmpty(title)))
           .Include(t => t.tags).Include(o => o.creator).Include(l => l.lastmodifier).ToAsyncEnumerable().ToList();
         }
+        public async Task<IEnumerable<TagValeus>> Search( string title)
+        {
+            return await context.tagvalues.Where(p => (p.title == title || string.IsNullOrEmpty(title)))
+          .Include(t => t.tags).ToAsyncEnumerable().ToList();
+        }
 
         public async Task Update(TagValeus tags)
         {
