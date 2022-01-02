@@ -7,8 +7,6 @@
     int count = 1;
 
 }
-
-
 @section Breadcrump{<nav aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/Admin">صفحه اصلی </a></li>
@@ -17,7 +15,6 @@
             <li class="breadcrumb-item active" aria-current="page"><=شما اینجا هستید</li>
         </ol>
     </nav> }
-
 <div class="card text-right border-primary">
     <div class="card-header d-flex align-items-center justify-content-between ">
         <h3>لیست زیرشاخه ها </h3>
@@ -28,7 +25,6 @@
             </a>
             <a href="@Url.Action("Addvalue", new { tagid=id})" class="btn btn-outline-success btn-sm"> افزودن زیر شاخه ها</a>
         </div>
-
     </div>
     <div class="card-body">
         <div class="row justify-content-around">
@@ -56,11 +52,10 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-        <nav aria-label="..." dir="ltr">
+        @*<nav aria-label="..." dir="ltr">
             <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
                     <span class="page-link">Previous</span>
@@ -74,7 +69,7 @@
                     <a class="page-link" href="#">Next</a>
                 </li>
             </ul>
-        </nav>
+        </nav>*@
         <table class="table caption-top">
             <thead>
                 <tr class="bg-light">
@@ -120,27 +115,15 @@
 
                     }
                     <td class="align-middle text-left">
-
-                        @*<div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
-                    <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin"> ویرایش</a></li>
-                   <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Positive*@ @*id=1,type =KeyPointsTypes.negative})"> مدیریت نقاط منفی  </a></li>*@
-                @*<li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Negative*@ @*id=2,type =KeyPointsTypes.positive})"> مدیریت نقاط مثبت  </a></li>*@
-                @*<li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin"> حذف</a></li>
-            </ul>
-        </div>*@
-                <div class="dropdown1 ">
-                    <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                    <ul id="myDropdown" class=" dropdown1-content text-right">
-                        <li><a class="dropdown-item" asp-action="Editvalue" asp-controller="Tag" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>     
-                        <li><a class="dropdown-item text-danger" asp-action="Deletevalue" asp-controller="Tag" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
-                    </ul>
-                </div>
-
-            </td>
-            </tr>
+                        <div class="dropdown1 btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                                <li class="dropdown-item"><a asp-action="Editvalue" asp-controller="Tag" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                                <li class="dropdown-item"><a class="text-danger" asp-action="Deletevalue" asp-controller="Tag" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
         }
             </tbody>
             </table>

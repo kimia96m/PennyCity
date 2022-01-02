@@ -108,50 +108,38 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <th scope="row">@counter</th>
-                        <td>
-                            <strong class="h5"><a href="#"> @item.id</a></strong><br />
-                        </td>
-                        <td>@item.state</td>
-                        <td>@item.quantity</td>
-                        <td>@item.seller.title</td>
-                        <td>
-                            <span> شناسه</span> @item.id<br />
-                            @foreach (var x in item.itemtagvalue)
-                            {
-                                <span>@x.tagviews.title </span>@x.title <br />
-                            }
+                <tr>
+                    <th scope="row">@counter</th>
+                    <td>
+                        <strong class="h5"><a href="#"> @item.id</a></strong><br />
+                    </td>
+                    <td>@item.state</td>
+                    <td>@item.quantity</td>
+                    <td>@item.seller.title</td>
+                    <td>
+                        <span> شناسه</span> @item.id<br />
+                        @foreach (var x in item.itemtagvalue)
+                        {
+                            <span>@x.tagviews.title </span>@x.title <br />
+                        }
 
-                        </td>
-                        <td>
-                            @item.price
-                        </td>
-                        <td>
-                            @item.discount
-                        </td>
-                        <td class="align-middle text-left">
-
-                            @*<div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
-                                    <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin"> ویرایش</a></li>
-                                   <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Positive*@ @*id=1,type =KeyPointsTypes.negative})"> مدیریت نقاط منفی  </a></li>*@
-                                @*<li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Negative*@ @*id=2,type =KeyPointsTypes.positive})"> مدیریت نقاط مثبت  </a></li>*@
-                                @*<li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin"> حذف</a></li>
-                                        </ul>
-                                    </div>*@
-                                <div class="dropdown1 ">
-                                    <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                                    <ul id="myDropdown" class=" dropdown1-content text-right">
-                                        <li><a class="dropdown-item" asp-action="Edititem" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
-                                        <li><a class="dropdown-item text-danger" asp-action="Deleteitem" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
-                                    </ul>
-                                </div>
-
-                            </td>
-                        </tr>
+                    </td>
+                    <td>
+                        @item.price
+                    </td>
+                    <td>
+                        @item.discount
+                    </td>
+                    <td class="align-middle text-left">
+                        <div class="dropdown1 btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                                <li class="dropdown-item"><a asp-action="Edititem" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                                <li class="dropdown-item"><a class="text-danger" asp-action="Deleteitem" asp-controller="Product" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
                         counter++;
                     }
             </tbody>
@@ -183,14 +171,6 @@
         </nav>
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown()
-        });
-    </script>
-}
 
 
 

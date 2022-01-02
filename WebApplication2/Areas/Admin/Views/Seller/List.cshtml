@@ -30,7 +30,6 @@
             </a>
             <a asp-action="Add" asp-controller="Seller" asp-area="Admin" class="btn btn-outline-success btn-sm">افزودن فروشنده</a>
         </div>
-
     </div>
     <div class="card-body">
         <div class="row justify-content-around">
@@ -97,39 +96,39 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <th scope="row">@count</th>
-                        <td class="text-md-center">
-                            <strong class="h5"><a href="#">@item.title</a></strong><br />
-                            <span class="text-muted">@item.id</span>
-                        </td>
-                        <td class="text-md-center">@item.paid</td>
-                        <td class="text-md-center">
-                            @item.creator
-                            <br />
-                            <span class="text-muted">تاریخ: @item.createdate </span>
-                        </td>
-                        @if (!string.IsNullOrEmpty(item.lastmodifydate))
-                        {
-                            <td class="text-md-center">@item.lastmodifier<br /><span class="text-muted">تاریخ : @item.lastmodifier</span></td>
+                <tr>
+                    <th scope="row">@count</th>
+                    <td class="text-md-center">
+                        <strong class="h5"><a href="#">@item.title</a></strong><br />
+                        <span class="text-muted">@item.id</span>
+                    </td>
+                    <td class="text-md-center">@item.paid</td>
+                    <td class="text-md-center">
+                        @item.creator
+                        <br />
+                        <span class="text-muted">تاریخ: @item.createdate </span>
+                    </td>
+                    @if (!string.IsNullOrEmpty(item.lastmodifydate))
+                    {
+                        <td class="text-md-center">@item.lastmodifier<br /><span class="text-muted">تاریخ : @item.lastmodifier</span></td>
 
-                        }
-                        else
-                        {
-                            <td class="text-md-center">---</td>
+                    }
+                    else
+                    {
+                        <td class="text-md-center">---</td>
 
-                        }
-                        <td class="align-middle text-left">
-                            <div class="dropdown1">
-                                <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                                <ul id="myDropdown" class=" dropdown1-content text-right">
-                                    <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Index" asp-controller="Seller" asp-area="Admin">جزییات</a></li>
-                                    <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Edit" asp-controller="Seller" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
-                                    <li class=" dropdown1-content"><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Seller" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    }
+                    <td class="align-middle text-left">
+                        <div class="dropdown1 btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                                <li class="dropdown-item"><a asp-action="Index" asp-controller="Seller" asp-area="Admin">جزییات</a></li>
+                                <li class="dropdown-item"><a asp-action="Edit" asp-controller="Seller" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                                <li class="dropdown-item"><a class="text-danger" asp-action="Delete" asp-controller="Seller" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
 
                     { count++; }
                 }
@@ -163,12 +162,4 @@
         </nav>
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown()
-        });
-    </script>
-}
 

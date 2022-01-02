@@ -36,12 +36,12 @@
         <table class="table caption-top">
             <thead>
                 <tr class="bg-light">
-                    <th scope="col">#</th>
-                    <th scope="col" style="width:20%">عنوان </th>
-                    <th scope="col" style="width:20%">وضعیت</th>
-                    <th scope="col" style="width:20%">ایجاد کننده</th>
-                    <th scope="col" style="width:20%">آخرین تغییرات</th>
-                    <th @*class="text-left"*@ scope="col">تنظیمات</th>
+                    <th scope="col" class="align-middle text-md-center">#</th>
+                    <th scope="col" class="align-middle text-md-center">عنوان </th>
+                    <th scope="col" class="align-middle text-md-center">وضعیت</th>
+                    <th scope="col" class="align-middle text-md-center">ایجاد کننده</th>
+                    <th scope="col" class="align-middle text-md-center">آخرین تغییرات</th>
+                    <th class="align-middle text-md-center" scope="col">تنظیمات</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,56 +50,43 @@
                 {
                 <tr>
                     <th scope="row">@count</th>
-                    <td>
+                    <td class="align-middle text-md-center">
                         <strong class="h5">@item.title</strong><br />
 
                         <span class="text-muted">@item.id</span>
                     </td>
                     @if (item.state == WebApplication2.Models.Products.States.Enabled)
                     {
-                        <td>فعال</td>
+                        <td class="align-middle text-md-center">فعال</td>
                     }
                     else
                     {
-                        <td>غیر فعال</td>
+                        <td class="align-middle text-md-center">غیر فعال</td>
                     }
-                    <td>
+                    <td class="align-middle text-md-center">
                         @item.creator
                         <br />
                         <span class="text-muted">تاریخ: @item.createDate </span>
                     </td>
                     @if (!string.IsNullOrEmpty(item.lastModifyDate))
                     {
-                        <td>@item.lastModifier<br /><span class="text-muted">تاریخ : @item.lastModifyDate</span></td>
+                        <td class="align-middle text-md-center">@item.lastModifier<br /><span class="text-muted">تاریخ : @item.lastModifyDate</span></td>
 
                     }
                     else
                     {
-                        <td>---</td>
+                        <td class="align-middle text-md-center">---</td>
 
                     }
-                    <td class="align-middle">
-
-                        @*<div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">جزییات</a></li>
-                <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin"> ویرایش</a></li>
-               <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Positive*@ @*id=1,type =KeyPointsTypes.negative})"> مدیریت نقاط منفی  </a></li>*@
-                @*<li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { @*productId = item.Id, type = (byte)KeyPointTypes.Negative*@ @*id=2,type =KeyPointsTypes.positive})"> مدیریت نقاط مثبت  </a></li>*@
-                @*<li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin"> حذف</a></li>
-        </ul>
-    </div>*@
-                <div class="dropdown1">
-                    <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                    <ul id="myDropdown" class=" dropdown1-content text-right">
-
-                        <li><a class="dropdown-item" @*href="@Url.Action("Edit",new { productid=productid, type=type})"*@ asp-action="Edit" asp-controller="KeyPoint" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
-                        <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="KeyPoint" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
-                    </ul>
-                </div>
-
-                </td>
+                    <td class="align-middle text-md-center">
+                        <div class="dropdown1 btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                                <li class="dropdown-item"><a asp-action="Edit" asp-controller="KeyPoint" asp-area="Admin" asp-route-id="@item.id"> ویرایش</a></li>
+                                <li class="dropdown-item"><a class="text-danger" asp-action="Delete" asp-controller="KeyPoint" asp-area="Admin" asp-route-id="@item.id"> حذف</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                     { count++; }
                 }
@@ -107,12 +94,4 @@
             </table>
         </div>
     </div>
-
-    @section Scripts{
-        <script>
-            $(document).ready(function () {
-                $('.dropdown-toggle').dropdown()
-            });
-        </script>
-    }
 

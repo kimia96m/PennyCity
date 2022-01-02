@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "لیست گروه ها";
     var massage = TempData["massage"];
+    int count = 1;
 }
 
 
@@ -29,7 +30,6 @@
             </a>
             <a asp-action="Add" asp-controller="Group" asp-area="Admin" class="btn btn-outline-success btn-sm">افزودن گروه</a>
         </div>
-
     </div>
     <div class="card-body">
         <div class="row justify-content-around">
@@ -54,16 +54,12 @@
                                             <option value="1" selected>فعال</option>
                                             <option value="2">غیرفعال</option>
                                         </select>
-
                                     </div>
-
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">فیلتر</button>
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -96,70 +92,62 @@
         <table class="table caption-top">
             <thead>
                 <tr class="bg-light">
-                    <th scope="col">#</th>
-                    <th scope="col" style="width:20%">نام گروه</th>
-                    <th scope="col" style="width:10%">نام خارجی</th>
-                    <th scope="col" style="width:10%">وضعیت</th>
-                    <th scope="col" style="width:20%">ایجاد کننده</th>
-                    <th scope="col" style="width:20%">آخرین تغییرات</th>
-                    <th @*class="text-left"*@ scope="col">تنظیمات</th>
+                    <th class="align-middle text-center" scope="col" style="width:4%">#</th>
+                    <th class="align-middle text-center" scope="col" style="width:24%">نام گروه</th>
+                    <th class="align-middle text-center" scope="col">نام خارجی</th>
+                    <th class="align-middle text-center" scope="col">وضعیت</th>
+                    <th class="align-middle text-center" scope="col">ایجاد کننده</th>
+                    <th class="align-middle text-center" scope="col">آخرین تغییرات</th>
+                    <th class="align-middle text-center" scope="col">تنظیمات</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var group in Model)
                 {
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>
-                            <strong class="h5"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> @group.title </a></strong><br />
-                            <span></span><br />
-                            <span class="text-muted">شناسه: @group.id</span>
-                        </td>
-                        <td>@group.slug</td>
-                        @if (group.State == WebApplication2.Models.Products.States.Enabled)
-                        {
-                            <td>فعال</td>}
-                        else
-                        {
-                            <td>غیرفعال</td>}
-                        <td>
-                            @group.creator
+                <tr>
+                    <th scope="row" class="align-middle text-center">@count</th>
+                    <td class="align-middle text-center">
+                        <strong class="h5"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> @group.title </a></strong><br />
+                        <br />
+                        <span class="text-muted">شناسه: @group.id</span>
+                    </td>
+                    <td class="align-middle text-center">@group.slug</td>
+                    @if (group.State == WebApplication2.Models.Products.States.Enabled)
+                    {
+                        <td class="align-middle text-center">فعال</td>}
+                    else
+                    {
+                        <td class="align-middle text-center">غیرفعال</td>}
+                    <td class="align-middle text-center">
+                        @group.creator
+                        <br />
+                        <span class="text-muted">@group.createdatetime</span>
+                    </td>
+                    @if (!string.IsNullOrEmpty(group.lastmodifydate))
+                    {
+                        <td class="align-middle text-center">
+                            @group.lastmodifier
                             <br />
-                            <span class="text-muted">@group.createdatetime</span>
+                            <span class="text-muted">@group.lastmodifydate</span>
                         </td>
-                        @if (!string.IsNullOrEmpty(group.lastmodifydate))
-                        {
-                            <td>
-                                @group.lastmodifier
-                                <br />
-                                <span class="text-muted">@group.lastmodifydate</span>
-                            </td>
-                        }
-                        else
-                        {
-                            <td> --- </td>}
-
-                        <td class="align-middle ">
-
-                            @*<div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                    <ul class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Brand" asp-area="Admin">جزییات</a></li>
-                                        <li><a class="dropdown-item" asp-action="Edit" asp-controller="Brand" asp-area="Admin"> ویرایش</a></li>
-                                        <li><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Brand" asp-area="Admin"> حذف</a></li>
-                                    </ul>
-                                </div>*@
-                            <div class="dropdown1">
-                                <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                                <ul id="myDropdown" class=" dropdown1-content text-right">
-                                    <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id">جزییات</a></li>
-                                    <li class=" dropdown1-content"><a asp-action="Edit" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> ویرایش</a></li>
-                                    <li class=" dropdown1-content"><a asp-action="Groups" asp-controller="Specification" asp-area="Admin" asp-route-id="@group.id"> لیست مشخصات فنی</a></li>
-                                    <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> حذف</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    }
+                    else
+                    {
+                        <td class="align-middle text-center"> --- </td>
+                    }
+                    <td class="align-middle text-center">
+                        <div class="dropdown1 btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                                <li class="dropdown-item"><a asp-action="Index" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id">جزییات</a></li>
+                                <li class="dropdown-item"><a asp-action="Edit" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> ویرایش</a></li>
+                                <li class="dropdown-item"><a asp-action="Groups" asp-controller="Specification" asp-area="Admin" asp-route-id="@group.id"> لیست مشخصات فنی</a></li>
+                                <li class="dropdown-item"><a class=" text-danger" asp-action="Delete" asp-controller="Group" asp-area="Admin" asp-route-id="@group.id"> حذف</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                    count++;
                 }
             </tbody>
         </table>

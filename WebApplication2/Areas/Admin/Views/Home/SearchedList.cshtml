@@ -67,25 +67,25 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <th scope="row">@count</th>
-                            <td>
-                                <strong class="h5"><a href="#">@item.name</a></strong><br />
-                            </td>
-                            <td>@item.id</td>
-                            <td>@item.type</td>
-                            <td>
-                                @item.uppercategoryname
-                            </td>
-                            <td class="align-middle text-left">
-                                <div class="dropdown1">
-                                    <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                                    <ul id="myDropdown" class=" dropdown1-content text-right">
-                                        <li class=" dropdown1-content"><a class="dropdown-item" href="@item.link">جزییات</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th scope="row">@count</th>
+                        <td>
+                            <strong class="h5"><a href="#">@item.name</a></strong><br />
+                        </td>
+                        <td>@item.id</td>
+                        <td>@item.type</td>
+                        <td>
+                            @item.uppercategoryname
+                        </td>
+                        <td class="align-middle text-left">
+                            <div class="dropdown1 btn-group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                                    <li  class="dropdown-item"><a href="@item.link">جزییات</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                         { count++; }
                     }
                 </tbody>

@@ -169,18 +169,18 @@
                             <td>---</td>
 
                         }
-                        <td class="align-middle ">
-                            <div class="dropdown1">
-                                <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                                <ul id="myDropdown" class=" dropdown1-content text-right">
-                                    <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id">جزییات</a></li>
-                                    <li><a class="dropdown-item" asp-action="Edit" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> ویرایش</a></li>
-                                    <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Item" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> مدیریت اقلام کالا</a></li>
-                                    <li class=" dropdown1-content"><a class="dropdown-item" asp-action="Specifications" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> مدیریت مشخصات فنی</a></li>
-                                    <li class=" dropdown1-content"><a class="dropdown-item" asp-action="SpecificationList" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> لیست مشخصات فنی</a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { productid = item.Id, type = (byte)KeyPointsTypes.negative @*pid=1,type =(byte)KeyPointsTypes.negative*@})"> مدیریت نقاط منفی  </a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("List","KeyPoint",new { productid = item.Id, type = (byte)KeyPointsTypes.positive @*pid=2,type =(byte)KeyPointsTypes.positive*@})"> مدیریت نقاط مثبت  </a></li>
-                                    <li class=" dropdown1-content"><a class="dropdown-item text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> حذف</a></li>
+                        <td class="align-middle">
+                            <div class="dropdown1 btn-group">
+                                <button  id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" dir="ltr">
+                                    <li class="dropdown-item"><a class="text-dark" asp-action="Index" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id">جزییات</a></li>
+                                    <li class="dropdown-item"><a class="text-dark" asp-action="Edit" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> ویرایش</a></li>
+                                    <li class="dropdown-item"><a class="text-dark" asp-action="Item" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> مدیریت اقلام کالا</a></li>
+                                    <li class="dropdown-item"><a class="text-dark" asp-action="Specifications" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> مدیریت مشخصات فنی</a></li>
+                                    <li class="dropdown-item"><a class="text-dark" asp-action="SpecificationList" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> لیست مشخصات فنی</a></li>
+                                    <li class="dropdown-item"><a class="text-dark"  href="@Url.Action("List","KeyPoint",new { productid = item.Id, type = (byte)KeyPointsTypes.negative @*pid=1,type =(byte)KeyPointsTypes.negative*@})"> مدیریت نقاط منفی  </a></li>
+                                    <li class="dropdown-item"><a  class="text-dark" href="@Url.Action("List","KeyPoint",new { productid = item.Id, type = (byte)KeyPointsTypes.positive @*pid=2,type =(byte)KeyPointsTypes.positive*@})"> مدیریت نقاط مثبت  </a></li>
+                                    <li class="dropdown-item"><a class="text-danger" asp-action="Delete" asp-controller="Product" asp-area="Admin" asp-route-id="@item.Id"> حذف</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -217,12 +217,3 @@
         </nav>
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown()
-        });
-    </script>
-}
-

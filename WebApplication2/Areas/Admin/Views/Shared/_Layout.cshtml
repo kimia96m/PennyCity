@@ -12,12 +12,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/Admin/Shared/Layout.css" rel="stylesheet" />
 </head>
 <body dir="rtl" class="darkmode-bgcolor">
     <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light darkmode-bgcolor">
-
         <a class="navbar-brand" href="/Admin/Home">صفحه اصلی</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -25,77 +25,77 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         محصولات
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Product")">لیست محصولات</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Product")">افزودن کالا</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         برند
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Brand")">لیست برند ها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Brand")">افزودن برند</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         گروه
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Group")">لیست گروه ها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Group")">افزودن گروه</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("ListBanner","Group")">لیست گروه ها</a></li>
-                        <li><a class="dropdown-item text-right" href="@Url.Action("AddBanner","Group")">افزودن گروه</a></li>                  
+                        <li><a class="dropdown-item text-right" href="@Url.Action("AddBanner","Group")">افزودن گروه</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         برچسب
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Tag")">لیست برچسب ها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Tag")">افزودن برچسب ها</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         بنر
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Banner")">لیست بنرها</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Banner")">افزودن بنرها</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         شگفت انگیزها
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("Choose","SpecialProduct")">انتخاب محصولات</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Aproove","SpecialProduct")">تایید نهایی</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Index","SpecialProduct")">لیست محصولات ویژه</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       فروشندگان
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        فروشندگان
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("Add","Seller")">افزودن فروشنده</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("List","Seller")">لیست فروشندگان</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("Index","Seller")">جزییات</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       سفارشات
+                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        سفارشات
                     </a>
-                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="navbarDropdown" style="left:auto;right:0">
+                    <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
                         <li><a class="dropdown-item text-right" href="@Url.Action("ReviewList","Order")">در انتظار تایید</a></li>
                         <li><a class="dropdown-item text-right" href="@Url.Action("ConfirmedList","Order")">تایید شده ها</a></li>
                         @*<li><hr class="dropdown-divider"></li>*@
@@ -116,39 +116,21 @@
             <span class="navbar-text d-inline-flex align-items-center">
                 <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn "> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
             </span>
-        </div>        
+        </div>
     </nav>
     <div class="container-fluid darkmode-bgcolor">
         @RenderSection("Breadcrump", required: false)
         @RenderBody()
     </div>
-     <script>
-            function myFunction() {
-                document.getElementById("myDropdown").classList.toggle("show");
-            }
-            window.onclick = function (event) {
-                if
-                    (!event.target.matches('.dropdown1')) {
-                    var dropdown = document.getElementsByClassName("dropdown1-content");
-                    var i;
-                    for (i = 0; i < dropdown.length; i++) {
-                        var openDropdown = dropdown[i];
-                        if (openDropdown.classList.contains('show')) {
-                            openDropdown.classList.remove('show');
-                        }
-                    }
-                }
-
-            }
-        </script>
-        <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/lib/popper/popper.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/popper/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    @RenderSection("Scripts", required: false);
+    <script>
             $(document).ready(function () {
                 $('.dropdown-toggle').dropdown()
             });
-        </script>
-        @RenderSection("Scripts", required: false)
+    </script>
 </body>
 </html>

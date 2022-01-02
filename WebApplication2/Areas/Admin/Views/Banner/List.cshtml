@@ -16,66 +16,55 @@
         <table class="table caption-top">
             <thead>
                 <tr class="bg-light">
-                    <th scope="col" style="width:10%">#</th>
-                    <th scope="col" style="width:30%">
+                    <th class="text-center" scope="col">#</th>
+                    <th class="text-center" scope="col">
                         شناسه بنر
                     </th>
-                    <th scope="col" style="width:30%">تصویر</th>
-                    <th scope="col" style="width:30%">نوع</th>
-
-                    <th scope="col" style="width:30%">تنظیمات</th>
+                    <th class="text-center" scope="col">تصویر</th>
+                    <th class="text-center" scope="col">نوع</th>
+                    <th class="text-center" scope="col">تنظیمات</th>
                 </tr>
             </thead>
             <tbody>
                 <p class="text-danger text-xl-right">@massage</p>
                 @foreach (var banner in Model)
                 {
-                    <tr>
-                        <td scope="row">@count</td>
-                        <td>
-                            <strong class="h5"><a asp-action="List" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> @banner.link </a></strong><br />
-                            <span></span><br />
-                            <span class="text-muted">شناسه: @banner.id</span>
-                        </td>
-                        <td>
-                            @if (banner.isspesial == "True")
-                            {
-                                <img src="~/Images/banners/top-banner.png" style="max-height:150px;max-width:150px;" alt="@banner.link" />
-                            }
-                            else
-                            {
-                                <img src="~/Images/banners/@banner.Imagename" style="max-height:150px;max-width:150px;" alt="@banner.link" />
+            <tr>
+                <td scope="row" class="align-middle text-center">@count</td>
+                <td class="align-middle text-center">
+                    <strong class="h5"><a asp-action="List" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> @banner.link </a></strong><br />
+                    <span></span><br />
+                    <span class="text-muted">شناسه: @banner.id</span>
+                </td>
+                <td class="align-middle text-center">
+                    @if (banner.isspesial == "True")
+                    {
+                        <img src="~/Images/banners/top-banner.png" style="max-height:150px;max-width:150px;" alt="@banner.link" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/banners/@banner.Imagename" style="max-height:150px;max-width:150px;" alt="@banner.link" />
 
-                            }
-                        </td>
-                        @if (banner.isspesial == "True")
-                        {
-                            <td scope="row">بنر تاپ</td>
-                        }
-                        else
-                        {
-                            <td scope="row">بنر اسلایدی</td>
-                        }
-                        <td class="align-middle ">
-                            <div class="dropdown1 text-left">
-                                <button onclick="myFunction()" class="dropbtn1 btn btn-secondary" aria-expanded="false"></button>
-                                <ul id="myDropdown" class=" dropdown1-content text-right">
-                                    <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id">جزییات</a></li>
-                                    <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> حذف</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                        <td class="align-middle">
-                            <div class="btn-group">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"></button>
-                                <ul id="myDropdown" class="dropdown1-content text-right">
-                                    <li class=" dropdown1-content"><a asp-action="Index" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id">جزییات</a></li>
-                                    <li class=" dropdown1-content"><a class=" text-danger" asp-action="Delete" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> حذف</a></li>
-                                </ul>
-                            </div>
-                        </td>
-
-                    </tr>
+                    }
+                </td>
+                @if (banner.isspesial == "True")
+                {
+                    <td class="align-middle text-center" scope="row">بنر تاپ</td>
+                }
+                else
+                {
+                    <td class="align-middle text-center" scope="row">بنر اسلایدی</td>
+                }
+                <td class="align-middle text-center">
+                    <div class="dropdown1 btn-group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <ul class="dropdown-menu" style="text-align:center;" aria-labelledby="btnGroupDrop1">
+                            <li class="dropdown-item"><a asp-action="Index" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id">جزییات</a></li>
+                            <li class="dropdown-item"><a class=" text-danger" asp-action="Delete" asp-controller="Banner" asp-area="Admin" asp-route-id="@banner.id"> حذف</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
                     count++;
                 }
             </tbody>
