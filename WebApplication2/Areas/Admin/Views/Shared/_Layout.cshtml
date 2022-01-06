@@ -15,6 +15,7 @@
 
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/Admin/Shared/Layout.css" rel="stylesheet" />
+    <link href="~/css/Admin/Shared/dark-mode.css" rel="stylesheet" />
 </head>
 <body dir="rtl" class="darkmode-bgcolor">
     <nav class="navbar mt-3 navbar-expand-lg navbar-light bg-light darkmode-bgcolor">
@@ -109,14 +110,15 @@
             </form>
             <span class=" dropdown mr-5 align-items-center mb-2">
                 <label class="darkmode">
-                    <input type="checkbox" class="drkmodeinput"> <br />
+                    <input type="checkbox" class="drkmodeinput" id="darkSwitch"> <br />
                     <span class="checkdrkmode"></span>
+                    <script src="~/JavaScript/Admins/Shared/dark-mode-switch.js"></script>
                 </label>
             </span>
-            <span class="navbar-text d-inline-flex align-items-center">
-                <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn "> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
-            </span>
-        </div>
+    <span class="navbar-text d-inline-flex align-items-center">
+        <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn "> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
+    </span>
+    </div>
     </nav>
     <div class="container-fluid darkmode-bgcolor">
         @RenderSection("Breadcrump", required: false)
@@ -128,9 +130,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     @RenderSection("Scripts", required: false);
     <script>
-            $(document).ready(function () {
-                $('.dropdown-toggle').dropdown()
-            });
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown()
+        });
     </script>
 </body>
 </html>
