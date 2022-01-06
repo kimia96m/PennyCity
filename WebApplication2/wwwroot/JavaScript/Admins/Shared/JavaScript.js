@@ -31,3 +31,18 @@ function togglePW() {
  
     }
 }
+
+
+$(document).ready(function () {
+    $(".navbar-toggler").click(function (event) {
+        $(".navbar-collapse").collapse('show');
+    });
+});
+$(document).ready(function () {
+    $(".navbar-toggler").click(function (event) {
+        $(".navbar-collapse").collapse('hide');
+    });
+});
+$(document).ready(function () {
+    $('.dropdown-toggle').dropdown()
+});

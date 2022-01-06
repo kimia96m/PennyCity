@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         محصولات
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -35,7 +35,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         برند
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -44,7 +44,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         گروه
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -55,7 +55,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         برچسب
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -64,7 +64,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         بنر
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -73,7 +73,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         شگفت انگیزها
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -83,7 +83,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         فروشندگان
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -93,7 +93,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <a class="nav-link dropdown-toggle text-right" id="btnGroupDrop1" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                         سفارشات
                     </a>
                     <ul class="dropdown-menu" role="menu" href="#" aria-labelledby="btnGroupDrop1" style="left:auto;right:0">
@@ -115,10 +115,10 @@
                     <script src="~/JavaScript/Admins/Shared/dark-mode-switch.js"></script>
                 </label>
             </span>
-    <span class="navbar-text d-inline-flex align-items-center">
-        <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn "> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
-    </span>
-    </div>
+            <span class="navbar-text d-inline-flex align-items-center">
+                <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="btn"> @name </a> | <a asp-area="Admin" asp-controller="Account" asp-action="SignOut" class="btn btn-link btn-sm">خروج</a>
+            </span>
+        </div>
     </nav>
     <div class="container-fluid darkmode-bgcolor">
         @RenderSection("Breadcrump", required: false)
@@ -128,11 +128,7 @@
     <script src="~/lib/popper/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/JavaScript/Admins/Shared/JavaScript.js"></script>
     @RenderSection("Scripts", required: false);
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown()
-        });
-    </script>
 </body>
 </html>
