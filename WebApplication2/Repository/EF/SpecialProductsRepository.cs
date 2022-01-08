@@ -29,7 +29,7 @@ namespace WebApplication2.Repository.EF
 
         public async Task<SpecialProducts> Find(int id)
         {
-            var special = await context.specialprodcut.Where(s => s.pnumb == id)
+            var special = await context.specialprodcut.Where(s => s.id == id)
                 .Include(b=>b.brand)
                 .ToAsyncEnumerable().SingleOrDefault();
             return special;
@@ -51,7 +51,7 @@ namespace WebApplication2.Repository.EF
         public async Task<IEnumerable<SpecialProducts>> Search(int? id)
         {
             var query = await context.specialprodcut.Where(c => c.id == id||id==null)
-                 .Include(b => b.brand).ToAsyncEnumerable().ToList();
+                 .Include(b => b.brand).Include(V=>V.specificationvalues).ToAsyncEnumerable().ToList();
             return query;
         }
         public async Task<IEnumerable<SpecialProducts>> SearchAsync( string primaryTitle,int? id, int? brand, States states)

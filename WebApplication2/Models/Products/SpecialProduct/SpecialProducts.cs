@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Models.Products.Brands;
+using WebApplication2.Models.Products.Specification;
 
 namespace WebApplication2.Models.Products.SpecialProduct
 {
@@ -17,5 +18,6 @@ namespace WebApplication2.Models.Products.SpecialProduct
         public TimeSpan? leftedtime { get; set; }
         public String lefteddays { get; set; }
         public int? discount { get; set; }
+        public List<SpecificationValues> specificationvalues { get; set; }
     }
 }

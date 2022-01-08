@@ -12,6 +12,7 @@ using WebApplication2.Models.Products.SpecialProduct;
 using WebApplication2.Models.ViewModels.Groups;
 using WebApplication2.Models.ViewModels.Home;
 using WebApplication2.Models.ViewModels.Products;
+using WebApplication2.Models.ViewModels.Specifications;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,6 +47,7 @@ namespace WebApplication2.Controllers
             }
             homeview.specialproduct = new List<SpecialView>();
             var specials = await specialrepo.Search(null);
+            var v = 0;
             foreach (var item in specials)
             {
                 var productitem = await productitemrepo.FindAsync(item.pnumb);
@@ -60,9 +62,19 @@ namespace WebApplication2.Controllers
                     price = Convert.ToString(item.price),
                     title = item.title,
                     imgurl = $"{productitem.product.Id}.jpg",
-                    Tags=tags,
+                    specificationvalue=new List<SpecificationValuesView>(),
                     productnumb=productitem.product.Id,
+
                 });
+                foreach (var a in item.specificationvalues)
+                {
+                    homeview.specialproduct[v].specificationvalue.Add(new SpecificationValuesView
+                    {
+                        title = a.valuetitle,
+                        specificationtitle = a.specification.title
+                    });
+                }
+                v++;
             }
             var bannergroups = await grouprepo.SearchBannerAsync(null, null);
             int i = 1;

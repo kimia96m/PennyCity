@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Models.Products;
+using WebApplication2.Models.ViewModels.Specifications;
+
 namespace WebApplication2.Models.ViewModels.Products
 {
     public class SpecialView
@@ -19,6 +21,6 @@ namespace WebApplication2.Models.ViewModels.Products
         public string date { get; set; }
         public string daydate { get; set; }
         public string imgurl { get; set; }
-        public IEnumerable<Tag> Tags { get; set; }
+        public List<SpecificationValuesView> specificationvalue { get; set; }
     }
 }

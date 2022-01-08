@@ -178,27 +178,34 @@ namespace WebApplication2.Areas.Admin.Controllers
                     var sproduct = await productitemrepo.FindAsync(id[i]);
                     var m = await specialrepo.Find(id[i]);
                     //var t = await specialrepo.FindbyTitle(sproduct.product.PrimaryTitle);
-                    if ((sproduct.state == States.Enabled) && (m == null))
+                    if ((sproduct.state == States.Enabled) && (m == null) && (sproduct.product.specificationvalues!=null))
                     {
-                        var specialproduct = new SpecialProducts
+                        if(sproduct.product.specificationvalues?.Count() != 0)
                         {
-                            pnumb = sproduct.id,
-                            discount = (int)sproduct.discount,
-                            brand = sproduct.product.Brands,
-                            title = sproduct.product.PrimaryTitle,
-                            state = sproduct.state,
+                            var specialproduct = new SpecialProducts
+                            {
+                                pnumb = sproduct.id,
+                                discount = (int)sproduct.discount,
+                                brand = sproduct.product.Brands,
+                                title = sproduct.product.PrimaryTitle,
+                                state = sproduct.state,
 
-                            price = sproduct.price
-                        };
-                        await specialrepo.Add(specialproduct);
-                        await specialrepo.Save();
+                                price = sproduct.price,
+                                specificationvalues = sproduct.product.specificationvalues
+                            };
+                            await specialrepo.Add(specialproduct);
+                            await specialrepo.Save();
 
+                        }
+                        else
+                        {
+                            TempData["message"] = "مشخصات فنی محصول را کامل کنید";
+                        }
                     }
 
                     else
                     {
-                        //پیام بده باید وضعیت کالا فعال باشه
-
+                        TempData["message"] = "محصول قبلا اضافه شده یا فعال نیست یا مشخصات فنی محصول کامل نیست";
                     }
                     i++;
 

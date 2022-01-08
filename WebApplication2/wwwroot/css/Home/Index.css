@@ -748,6 +748,7 @@
         opacity: .4 !important;
         color: #bbb !important;
         cursor: default;
+        pointer-events:none;
     }
 
 .home-showcase-gallery-layout {

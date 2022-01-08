@@ -73,6 +73,7 @@
                         <ul class="home-spec-offer-item-list">
                             @foreach (var item in Model.specialproduct)
                             {
+                                int c = 1;
                                 var payable = Convert.ToInt32(item.price) - Convert.ToInt32(item.discount);
                                 var discount =Convert.ToInt32((Convert.ToDecimal(item.discount) / Convert.ToDecimal(item.price))*100);
                                 <li class="home-spec-offer-item clearfix selected" id="@item.id">
@@ -90,9 +91,14 @@
                                         </div>
                                         <strong class="home-spec-offer-item-title">@item.title</strong>
                                         <ul class="home-spec-offer-item-feature-list">
-                                            @foreach (var v in item.Tags.FirstOrDefault().tagValues)
+                                            @foreach (var v in item.specificationvalue)
                                             {
-                                                <li class="home-spec-offer-item-feature-item">@v.itemtagvalue.FirstOrDefault(). : @v.title </li>
+                                                <li class="home-spec-offer-item-feature-item">@v.specificationtitle : @v.title </li>
+                                                c++;
+                                                if (c == 5)
+                                                {
+                                                    break;
+                                                }
                                             }
                                         </ul>
                                         <div class="home-spec-offer-item-footer">
@@ -128,7 +134,7 @@
             <div class="home-showcase-wrap home-section home-section-shadow home-rounded-section">
                 <div class="home-showcase-header">
                     <div class="home-showcase-header-text-wrap">
-                        <h3 class="home-showcase-header-text">تجهیزات نظم دهنده داخل خودرو</h3>
+                        <h3 class="home-showcase-header-text">برخی از محصولات ما</h3>
                     </div>
                 </div>
                 @{
@@ -141,7 +147,7 @@
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
                        asp-route-pageNumber="@(Model.products.PageIndex - 1)"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@prevDisabled mdi mdi-chevron-right right-btn"></a>
-                        <a asp-action="ProductListByGroup"
+                        <a asp-action="Index"
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
                        asp-route-pageNumber="@(Model.products.PageIndex + 1)"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@nextDisabled mdi mdi-chevron-left left-btn"></a>

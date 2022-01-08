@@ -10,7 +10,7 @@ using WebApplication2.Models.ViewModels.Products;
 
 namespace WebApplication2.Models.ViewModels.Specifications
 {
-    public class SpecificationValuesView: IAsyncQueryProvider
+    public class SpecificationValuesView
     {
         public int id { get; set; }
         public string title { get; set; }
@@ -24,35 +24,36 @@ namespace WebApplication2.Models.ViewModels.Specifications
         public string createdate { get; set; }
         public string lastmodifier { get; set; }
         public string lastmodifydate { get; set; }
+        public string specificationtitle { get; set; }
 
-        public IQueryable CreateQuery(Expression expression)
-        {
-            throw new NotImplementedException();
-        }
+        //public IQueryable CreateQuery(Expression expression)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
-        {
-            throw new NotImplementedException();
-        }
+        //public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public object Execute(Expression expression)
-        {
-            throw new NotImplementedException();
-        }
+        //public object Execute(Expression expression)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public TResult Execute<TResult>(Expression expression)
-        {
-            throw new NotImplementedException();
-        }
+        //public TResult Execute<TResult>(Expression expression)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IAsyncEnumerable<TResult> ExecuteAsync<TResult>(Expression expression)
-        {
-            throw new NotImplementedException();
-        }
+        //public IAsyncEnumerable<TResult> ExecuteAsync<TResult>(Expression expression)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

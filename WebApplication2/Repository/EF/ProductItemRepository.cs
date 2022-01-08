@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Models;
 using WebApplication2.Models.Products.ProductItems;
+using WebApplication2.Models.Products.Specification;
+
 namespace WebApplication2.Repository.EF
 {
     public class ProductItemRepository : IProductItemRepository
@@ -33,7 +35,7 @@ namespace WebApplication2.Repository.EF
 
         public async Task<ProductItem> FindAsync(int id)
         {
-            var pitem = await context.productitems.Include(x => x.product).ThenInclude(b=>b.Brands).Include(t => t.itemtagvalue).ThenInclude((ItemTagValue i) => i.tagvalues).ThenInclude(t => t.tags).Where(x => x.id == id).FirstOrDefaultAsync();
+            var pitem = await context.productitems.Include(x => x.product).ThenInclude(b=>b.Brands).Include(x => x.product).ThenInclude(x=>x.specificationvalues).ThenInclude((SpecificationValues c)=>c.specification).Include(t => t.itemtagvalue).ThenInclude((ItemTagValue i) => i.tagvalues).ThenInclude(t => t.tags).Where(x => x.id == id).FirstOrDefaultAsync();
             return pitem;
         }
         //.
