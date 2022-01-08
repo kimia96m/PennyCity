@@ -14,6 +14,7 @@ namespace WebApplication2.Models.ViewModels.Products
         public string PrimaryTitle { get; set; }
         public string SecondaryTitle { get; set; }
         public string Description { get; set; }
+        public string Ext { get; set; }
         public Brand Brands { get; set; }
         public Group Groups { get; set; }
         public States? state { get; set; }

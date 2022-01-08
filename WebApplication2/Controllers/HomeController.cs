@@ -102,7 +102,7 @@ namespace WebApplication2.Controllers
                         Id = item.Id,
                         PrimaryTitle = item.PrimaryTitle,
                         price = item.productitem.FirstOrDefault().price.ToString("N0"),
-                       
+                        Ext=item.Ext
                     });
                 }
             }

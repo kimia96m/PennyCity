@@ -106,7 +106,7 @@
                                             <span class="home-spec-offer-item-footer-text">زمان باقی مانده تا پایان سفارش</span>
                                         </div>
                                     </div>
-                                    <a href="#" class="home-spec-offer-item-link"></a>
+                                    <a asp-controller="Product" asp-action="Index" asp-route-id="@item.productnumb" class="home-spec-offer-item-link"></a>
                                 </li>
                             }
                         </ul>
@@ -119,7 +119,7 @@
                     {
                         <div class="home-promo-item">
                             <div class="home-promo-item-con">
-                                <a href="#" class="home-promo-item-link home-section-shadow home-rounded-section">
+                                <a asp-controller="Product" asp-action="ProductListByGroup" asp-route-gid="@item.groupnumber" class="home-promo-item-link home-section-shadow home-rounded-section">
                                     <span class="home-promo-item-text-wrap">
                                         <span class="home-promo-item-text">@item.title</span>
                                         <span class="home-promo-item-text-icon mdi mdi-animation"></span>
@@ -155,11 +155,12 @@
                             <div class="home-showcase-gallery-content">
                                 @foreach (var item in Model.products)
                                 {
-                                    <a class="home-showcase-gallery-item">
+                                    var imgurl = $"{item.Id}{item.Ext}";
+                                    <a asp-controller="Product" asp-action="Index" asp-route-id="@item.Id" class="home-showcase-gallery-item">
                                         <span class="home-showcase-gallery-item-inner">
                                             <span class="home-showcase-gallery-item-img-cont">
                                                 <span class="home-showcase-gallery-item-img-lay">
-                                                    <img class="home-showcase-gallery-item-img" src="/Images/Products/3669277.jpg" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
+                                                    <img class="home-showcase-gallery-item-img" src="~/Images/Products/@imgurl" alt="جعبه نظم دهنده صندوق خودرو ام پی مدل">
                                                 </span>
                                             </span>
                                             <span class="home-showcase-gallery-item-title">@item.PrimaryTitle</span>

@@ -238,18 +238,18 @@ namespace WebApplication2.Areas.Admin.Controllers
             {
                 if (id == null)
                 {
-
                     var product = new Product
                     {
                         Brandid = Brand,
                         Groupid = Group,
                         CreatDate = DateTime.UtcNow,
-                        Creator = new Operator { Id = this.Operator.Id },
+                        Creator = new Operator { Id = Operator.Id },
                         SecondaryTitle = secondaryTitle,
                         state = State,
                         PrimaryTitle = primaryTitle,
-                        Description = description
-
+                        Description = description,
+                        Ext=Path.GetExtension(photo.FileName)
+                        
                     };
                     await productrepo.AddAsync(product);
                     await productrepo.SaveAsync();
