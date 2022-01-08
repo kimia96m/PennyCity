@@ -8,8 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
 using WebApplication2.Models.Products;
 using WebApplication2.Models.Products.Comments;
+using WebApplication2.Models.Products.ProductItems;
 using WebApplication2.Models.Products.Ratings;
+using WebApplication2.Models.Products.SpecialProduct;
 using WebApplication2.Models.ViewModels.ProductLists;
+using WebApplication2.Repository.EF;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,17 +21,21 @@ namespace WebApplication2.Controllers
     public class ProductController : Controller
     {
         private IProducRepository productrepos;
+        private IProductItemRepository productitemrepo;
         public UserManager<Operator> usermg;
         private ICommentRepository commentrepo;
         public SignInManager<Operator> signin;
         private IRatingRepository ratingrepo;
-        public ProductController(IProducRepository productrepo, UserManager<Operator> usermg, ICommentRepository commentrepo, SignInManager<Operator> signin,IRatingRepository ratingrepo)
+        private ISpecialProductsRepository specialrepo;
+        public ProductController(IProducRepository productrepo, UserManager<Operator> usermg, ICommentRepository commentrepo, SignInManager<Operator> signin,IRatingRepository ratingrepo, ISpecialProductsRepository specialrepo, IProductItemRepository productitemrepo)
         {
             productrepos = productrepo;
             this.usermg = usermg;
             this.commentrepo = commentrepo;
             this.signin = signin;
             this.ratingrepo = ratingrepo;
+            this.specialrepo = specialrepo;
+            this.productitemrepo = productitemrepo;
         }
         public async Task<IActionResult> Index(int id, int? pageNumber)
         {
@@ -99,6 +106,28 @@ namespace WebApplication2.Controllers
             int pageSize = 10;
             var list = await PaginatedList<ProductListView>.CreateAsync(productlist, pageNumber ?? 1, pageSize);
             return View("List", list);
+        }
+        public async Task<IActionResult> ProductListBySpecial( int? pageNumber)
+        {
+            var prlist = new List<ProductListView>();
+            var plist = await specialrepo.Search(null);
+            foreach (var item in plist)
+            {
+                var pr = await productitemrepo.FindAsync(item.pnumb);
+                prlist.Add(new ProductListView
+                {
+                    Id = item.id,
+                    Imagename =Convert.ToString(pr.product.Id)+pr.product.Ext,
+                    Price = item.price.ToString("N0"),
+                    Primarytitle = item.title,
+                    Secoundarytitle=item.title,
+                    brand=item.brand,
+                    group=pr.product.Groups
+                });
+            }
+            int pageSize = 10;
+            var list = await PaginatedList<ProductListView>.CreateAsync(prlist, pageNumber ?? 1, pageSize);
+            return View("List",list);
         }
         [Authorize]
         public async Task<IActionResult> SendComment(string comment, int pid)

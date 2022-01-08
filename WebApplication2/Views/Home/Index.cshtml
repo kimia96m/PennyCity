@@ -68,7 +68,7 @@
                             }
                         </ul>
                     </div>
-                    <a class="home-spec-offer-show-all-btn button type-1 mdi mdi-arrow-left"><span class="button-text">مشاهده همه شگفت‌انگیزها</span></a>
+                    <a asp-controller="Product" asp-action="ProductListBySpecial" class="home-spec-offer-show-all-btn button type-1 mdi mdi-arrow-left"><span class="button-text">مشاهده همه شگفت‌انگیزها</span></a>
                     <div class="home-spec-offer-content-col">
                         <ul class="home-spec-offer-item-list">
                             @foreach (var item in Model.specialproduct)

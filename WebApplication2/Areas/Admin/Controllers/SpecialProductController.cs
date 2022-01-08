@@ -189,7 +189,6 @@ namespace WebApplication2.Areas.Admin.Controllers
                                 brand = sproduct.product.Brands,
                                 title = sproduct.product.PrimaryTitle,
                                 state = sproduct.state,
-
                                 price = sproduct.price,
                                 specificationvalues = sproduct.product.specificationvalues
                             };
