@@ -100,7 +100,7 @@ namespace WebApplication2
 
 
                 //{ area = exists}/
-                ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, configuration).Wait();
+                //ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, configuration).Wait();
 
             });
 
