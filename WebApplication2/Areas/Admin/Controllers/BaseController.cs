@@ -29,17 +29,12 @@ namespace WebApplication2.Areas.Admin.Controllers
 
         private async Task<Operator> GetOperator()
         {
-            _operator = await usermanager.FindByNameAsync("digiadmin");
+            _operator = await usermanager.FindByNameAsync("pennycityadmin");
             if (await usermanager.CheckPasswordAsync(_operator, "Kimi@123")) { return _operator; }
             else { return null; }
         }
         public Operator Operator
         {
-
-            //get
-            //{
-            //    return GetOperator().GetAwaiter().GetResult();
-            //}
             get
             {
                 return GetOperator().GetAwaiter().GetResult();

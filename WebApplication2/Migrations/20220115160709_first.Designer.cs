@@ -10,8 +10,8 @@ using WebApplication2.Models;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211221125731_paginatedcommenttoproduct")]
-    partial class paginatedcommenttoproduct
+    [Migration("20220115160709_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -452,6 +452,8 @@ namespace WebApplication2.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Ext");
+
                     b.Property<int>("Groupid");
 
                     b.Property<string>("LastModifierId");
@@ -566,6 +568,8 @@ namespace WebApplication2.Migrations
 
                     b.Property<int?>("discount");
 
+                    b.Property<string>("lefteddays");
+
                     b.Property<TimeSpan?>("leftedtime");
 
                     b.Property<int>("pnumb");
@@ -651,6 +655,8 @@ namespace WebApplication2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("SpecialProductsid");
+
                     b.Property<DateTime>("createdate");
 
                     b.Property<string>("creatorId");
@@ -668,6 +674,8 @@ namespace WebApplication2.Migrations
                     b.Property<string>("valuetitle");
 
                     b.HasKey("id");
+
+                    b.HasIndex("SpecialProductsid");
 
                     b.HasIndex("creatorId");
 
@@ -1035,6 +1043,10 @@ namespace WebApplication2.Migrations
 
             modelBuilder.Entity("WebApplication2.Models.Products.Specification.SpecificationValues", b =>
                 {
+                    b.HasOne("WebApplication2.Models.Products.SpecialProduct.SpecialProducts")
+                        .WithMany("specificationvalues")
+                        .HasForeignKey("SpecialProductsid");
+
                     b.HasOne("WebApplication2.Models.Operator", "creator")
                         .WithMany()
                         .HasForeignKey("creatorId");

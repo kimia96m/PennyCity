@@ -175,6 +175,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                     lastmodifydate = brands.lastmodifydate != null ? p.persiandate((DateTime)brands.lastmodifydate) : null,
                     lastmodifier = brands.lastmodifier?.name + " " + brands.lastmodifier?.lastname
                 };
+                ViewBag.messege = "no photo";
                 return View("Add", brandFinal);
             }
         }

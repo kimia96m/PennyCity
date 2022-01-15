@@ -187,14 +187,15 @@ namespace WebApplication2.Areas.Admin.Controllers
             {
                 if (id == null)
                 {//add
-                    await grouprepos.AddAsync(new Group
+                    var group = new Group
                     {
                         createdatetime = DateTime.UtcNow,
-                        creator = this.Operator,
+                        creator = new Operator { Id = Operator.Id },
                         title = primaryTitle.stringisnull() ? null : primaryTitle,
                         slug = secondaryTitle.stringisnull() ? null : secondaryTitle,
                         State = State
-                    });
+                    };
+                    await grouprepos.AddAsync(group);
                     await grouprepos.SaveAsync();
                     return View("Add");
                 }
@@ -204,12 +205,10 @@ namespace WebApplication2.Areas.Admin.Controllers
                     await grouprepos.Update(new Group
                     {
                         id = (int)id,
-                        lastmodifier = this.Operator,
+                        lastmodifier = Operator,
                         slug = secondaryTitle,
                         State = State,
                         title = primaryTitle
-
-
                     });
                     await grouprepos.SaveAsync();
                     return RedirectToAction("List");
@@ -237,7 +236,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                 };
                 var y = await grouprepos.FindAsync(brand.id);
 
-                if (y.specificationgroups != null)
+                if (y.specificationgroups.Count()!=0)
                 {
                     TempData["massage"] = $" ابتدا لیست مشخصات فنی {y.title} را حذف کنید";
                 }

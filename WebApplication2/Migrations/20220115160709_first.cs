@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication2.Migrations
 {
-    public partial class addallagain : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -276,28 +276,6 @@ namespace WebApplication2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "comments",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    text = table.Column<string>(nullable: true),
-                    createdate = table.Column<DateTime>(nullable: false),
-                    userId = table.Column<string>(nullable: true),
-                    productid = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_comments", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_comments_AspNetUsers_userId",
-                        column: x => x.userId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "group",
                 columns: table => new
                 {
@@ -428,6 +406,7 @@ namespace WebApplication2.Migrations
                     state = table.Column<byte>(nullable: true),
                     price = table.Column<double>(nullable: false),
                     leftedtime = table.Column<TimeSpan>(nullable: true),
+                    lefteddays = table.Column<string>(nullable: true),
                     discount = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -450,6 +429,7 @@ namespace WebApplication2.Migrations
                     PrimaryTitle = table.Column<string>(nullable: true),
                     SecondaryTitle = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    Ext = table.Column<string>(nullable: true),
                     state = table.Column<byte>(nullable: true),
                     CreatorId = table.Column<string>(nullable: true),
                     CreatDate = table.Column<DateTime>(nullable: false),
@@ -558,6 +538,34 @@ namespace WebApplication2.Migrations
                         column: x => x.tagsid,
                         principalTable: "tags",
                         principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "comments",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    text = table.Column<string>(nullable: true),
+                    createdate = table.Column<DateTime>(nullable: false),
+                    userId = table.Column<string>(nullable: true),
+                    productid = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_comments", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_comments_product_productid",
+                        column: x => x.productid,
+                        principalTable: "product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_comments_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -803,11 +811,18 @@ namespace WebApplication2.Migrations
                     creatorId = table.Column<string>(nullable: true),
                     createdate = table.Column<DateTime>(nullable: false),
                     lastmodifierId = table.Column<string>(nullable: true),
-                    lastmodifydate = table.Column<DateTime>(nullable: true)
+                    lastmodifydate = table.Column<DateTime>(nullable: true),
+                    SpecialProductsid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_specificationvalues", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_specificationvalues_specialprodcut_SpecialProductsid",
+                        column: x => x.SpecialProductsid,
+                        principalTable: "specialprodcut",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_specificationvalues_AspNetUsers_creatorId",
                         column: x => x.creatorId,
@@ -912,6 +927,11 @@ namespace WebApplication2.Migrations
                 name: "IX_carts_customerId",
                 table: "carts",
                 column: "customerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_comments_productid",
+                table: "comments",
+                column: "productid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_comments_userId",
@@ -1061,6 +1081,11 @@ namespace WebApplication2.Migrations
                 column: "specificationgroupsid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_specificationvalues_SpecialProductsid",
+                table: "specificationvalues",
+                column: "SpecialProductsid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_specificationvalues_creatorId",
                 table: "specificationvalues",
                 column: "creatorId");
@@ -1151,9 +1176,6 @@ namespace WebApplication2.Migrations
                 name: "ratings");
 
             migrationBuilder.DropTable(
-                name: "specialprodcut");
-
-            migrationBuilder.DropTable(
                 name: "specificationvalues");
 
             migrationBuilder.DropTable(
@@ -1170,6 +1192,9 @@ namespace WebApplication2.Migrations
 
             migrationBuilder.DropTable(
                 name: "productitems");
+
+            migrationBuilder.DropTable(
+                name: "specialprodcut");
 
             migrationBuilder.DropTable(
                 name: "specifications");

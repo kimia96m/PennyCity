@@ -56,12 +56,12 @@ namespace WebApplication2
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddMvc();  
-            services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(configuration["Data:digikala:ConnectionString"]));
+            services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(configuration["Data:pennycity:ConnectionString"]));
             services.AddIdentity<Operator, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.EnableSensitiveDataLogging(true);
-                options.UseSqlServer(configuration["Data:digikala:ConnectionString"]);
+                options.UseSqlServer(configuration["Data:pennycity:ConnectionString"]);
 
             });            services.ConfigureApplicationCookie(options => options.LoginPath = "/Admin/Account/SignIn");            
 
@@ -100,7 +100,7 @@ namespace WebApplication2
 
 
                 //{ area = exists}/
-                //ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, configuration).Wait();
+                ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, configuration).Wait();
 
             });
 
