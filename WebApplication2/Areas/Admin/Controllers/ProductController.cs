@@ -64,7 +64,6 @@ namespace WebApplication2.Areas.Admin.Controllers
             this.signin = signin;
             this.sellerrepo = sellerrepo;
         }
-        // GET: /<controller>/
         [Authorize]
         public async Task<IActionResult> Index(int? id)
         {
@@ -326,7 +325,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             }
         }
         [Authorize]
-        public async Task<IActionResult> Specifications(int id, string title)
+        public async Task<IActionResult> Specifications(int id)
         {
             var user = await usermanager.FindByNameAsync(User.Identity.Name);
             var claims = await usermanager.GetClaimsAsync(user);
@@ -475,18 +474,20 @@ namespace WebApplication2.Areas.Admin.Controllers
                 {
                     var user = await usermanager.FindByIdAsync(this.Operator.Id);
                     var param = Request.Form["value_" + id];
-                    var specifis = await specificationrepo.FindAsync(id);
-                    var product = await productrepo.FindAsync(pid);
-                    values.Add(new SpecificationValues
+                    if (!string.IsNullOrEmpty(param))
                     {
-                        valuetitle = param,
-                        specification = specifis,
-                        createdate = DateTime.UtcNow,
-                        state = States.Enabled,
-                        product = product,
-                        creator=user
-
-                    });
+                        var specifis = await specificationrepo.FindAsync(id);
+                        var product = await productrepo.FindAsync(pid);
+                        values.Add(new SpecificationValues
+                        {
+                            valuetitle = param,
+                            specification = specifis,
+                            createdate = DateTime.UtcNow,
+                            state = States.Enabled,
+                            product = product,
+                            creator = user
+                        });
+                    }                   
                     //values.Add(!string.IsNullOrEmpty(param)&&string.IsNullOrWhiteSpace(param)?param:null);
                 }
 

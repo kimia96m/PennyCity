@@ -84,14 +84,12 @@ namespace WebApplication2.Areas.Admin.Controllers
 
                     });
 
-
                 }
-
                 return View(specificationlist);
             }
         }
         [Authorize]
-        public async Task<IActionResult> Groups(int id, string title, States state)
+        public async Task<IActionResult> Groups(int id, string title)
         {
             var iuser = await usermanager.FindByNameAsync(User.Identity.Name);
             var claims = await usermanager.GetClaimsAsync(iuser);
@@ -106,8 +104,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                 ViewBag.title = title;
                 var persian = new PersianCalendar();
                 var specificationgrouplist = new List<SpecificationGroupsView>();
-                var speicis = await specifigrouprepo.FindAsync((int)id);
-                //await speicis.group.id;
+                var speicis = await specifigrouprepo.FindAsync(id);
                 var specigroup = await specifigrouprepo.SearchAsync(title, id);
                 foreach (var item in specigroup)
                 {
@@ -129,8 +126,7 @@ namespace WebApplication2.Areas.Admin.Controllers
                 }
                 return View(specificationgrouplist);
 
-            }
-         
+            }        
         }
         [Authorize]
         public async Task<IActionResult> Addgroup(int? gid)
@@ -179,7 +175,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             else
             {
                 var specigroup = await specifigrouprepo.FindAsync(id);
-                if (/*specigroup.specification != null||*/ specigroup.specification.Count != 0)
+                if (specigroup.specification.Count != 0)
                 {
                     TempData["massage"] = "ابتدا زیر شاخه هایش زا پاک کنید";
                 }
@@ -331,9 +327,6 @@ namespace WebApplication2.Areas.Admin.Controllers
                         creator = user,
                         createdate = DateTime.UtcNow,
                         specificationgroups = groupspeci,
-
-
-
                     }
                         );
                     await specifirepo.SaveAsync();

@@ -148,22 +148,6 @@
             </div>
             <div class="product-tab__content" data-tab="1">
                 <ul class="product-specs">
-                    <li class="product-specs__group">
-                        <h4 class="product-specs__title">
-                            مشخصات کلی
-                        </h4>
-                        <ul class="product-specs__list">
-                            <li class="product-specs__item">
-                                <span class="product-specs__caption">حافظه داخلی</span>
-                                <strong class="product-specs__value">شش گیگابایت</strong>
-                            </li>
-                            <li class="product-specs__item">
-                                <span class="product-specs__caption">حافظه </span>
-                                <strong class="product-specs__value">55 گیگابایت</strong>
-                            </li>
-                        </ul>
-                    </li>
-
                     @foreach (var item in Model.Groups.specificationgroups)
                     {
                         <li class="product-specs__group">
@@ -280,14 +264,12 @@
                             </li>
                         }
                     </ul>
-                    @*<p class="emptylist-message">هیچ موردی یافت نشد  </p>*@
-                    @*<p class="emptylist-message">هیچ موردی یافت نشد  </p>*@
                 </div>
                 </div>
         </section>
     </div>
 }
 else
-{ <h2> ایتم نداره</h2>}
+{ <h2 style="color: black; font-family:inherit; text-align:center;"> محصول ناموجود میباشد</h2>}
 
 
