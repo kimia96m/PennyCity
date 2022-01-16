@@ -2,7 +2,7 @@
 @model Product
 @{
     ViewData["Title"] = "جزییات محصول";
-    string imgurl = $"{Model.Id}.jpg";
+    string imgurl = $"{Model.Id}{Model.Ext}";
     double z = ViewBag.rate;
     double c = z - 1;
     int? quantity = Model.productitem.FirstOrDefault().quantity;

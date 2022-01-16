@@ -61,7 +61,7 @@ namespace WebApplication2.Controllers
                     prnumb = item.pnumb,
                     price = Convert.ToString(item.price),
                     title = item.title,
-                    imgurl = $"{productitem.product.Id}.jpg",
+                    imgurl = $"{productitem.product.Id}{productitem.product.Ext}",
                     specificationvalue=new List<SpecificationValuesView>(),
                     productnumb=productitem.product.Id,
 
