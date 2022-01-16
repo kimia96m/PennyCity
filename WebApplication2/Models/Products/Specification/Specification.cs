@@ -11,9 +11,7 @@ namespace WebApplication2.Models.Products.Specification
         public string title { get; set; }
         public States state { get; set; }
         public SpecificationGroups specificationgroups
-        {
-            get;set;
-        }
+        {  get;set; }
         public Operator creator { get; set; }
         public DateTime createdate { get; set; }
         public Operator lastmodifier { get; set; }

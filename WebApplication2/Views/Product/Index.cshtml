@@ -146,89 +146,106 @@
                 <label class="product-tab__button" for="rdo_tab_1" data-tab="1">مشخصات فنی</label>
                 <label class="product-tab__button" for="rdo_tab_2" data-tab="2">نظرات خریداران</label>
             </div>
-            <div class="product-tab__content" data-tab="1">
-                <ul class="product-specs">
-                    @foreach (var item in Model.Groups.specificationgroups)
-                    {
-                        <li class="product-specs__group">
-                            <h4 class="product-specs__title">
-                                @item.title
-                            </h4>
-                            <ul class="product-specs__list">
-                                @foreach (var x in item.specification)
-                                {
-                                    if (item.id == x.specificationgroups.id)
+                <div class="product-tab__content" data-tab="1">
+                    <ul class="product-specs">
+                        @foreach (var item in Model.Groups.specificationgroups)
+                        {
+                            <li class="product-specs__group">
+                                <h4 class="product-specs__title">
+                                    @item.title
+                                </h4>
+                                <ul class="product-specs__list">
+                                    @foreach (var x in item.specification)
                                     {
-                                        <li class="product-specs__item">
-                                            <span class="product-specs__caption">@x.title</span>
-                                            <strong class="product-specs__value">@Model.specificationvalues.FirstOrDefault(v => (v.product.Id == Model.Id)@*&& (v.specification.id == x.id)*@).valuetitle</strong>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <div class="product-tab__content" data-tab="2">
-                <div class="product-comments">
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <div class="product-comments__actions">
-                            <div class="product-comments__massage-wrap">
-                                <p class="product-comments__massage">
-                                    برای ارسال نظر ابتدا وارد حساب کاربری خود شوید
-                                </p>
-                                <br />
-                                <a href="/Acount/SignIn" class="button"><span class="button-text"> ورود به سایت</span></a>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="product-comments__actions">
-                            <form class=" product-comments-form" action="/Product/SendComment" method="post">
-                                <input type="hidden" value="@Model.Id" name="pid" />
-                                <textarea placeholder="متن مورد نظر خود را تایپ کن" type="text" rows="5" cols="100" class="product-comments-form_textarea" name="comment"></textarea>
-                                <button type="submit" class="button">
-                                    <span class="button-text">ارسال نظر</span>
-                                </button>
+                                        if (item.id == x.specificationgroups.id)
+                                        {
+                                            <li class="product-specs__item">
+                                                <span class="product-specs__caption">@x.title</span>
 
-                            </form>
-                        </div>
-                        <div class="product-comments__actions">
-                            <form class=" product-comments-form" asp-action="SendRating" asp-controller="Product" onsubmit="return VerifyRating()" method="post">
-                                <input type="hidden" value="@Model.Id" name="pid" />
-                                <input type="hidden" id="lblRating" value="0" name="rate" />
-                                <section class="product-detail__rating" onmouseout="CRateSelect()">
-                                    <span onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star" id="span5"></span>
-                                    <span onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star" id="span4"></span>
-                                    <span onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star" id="span3"></span>
-                                    <span onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star" id="span2"></span>
-                                    <span onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star" id="span1"></span>
+                                                @if (Model.specificationvalues.FirstOrDefault(v => (v.product.Id == Model.Id && v.specification.id == x.id)) == null)
+                                                {
+                                                    <strong class="product-specs__value">
+                                                        ----
+                                                    </strong>
+
+                                                }
+                                                else
+                                                {
+                                                    <strong class="product-specs__value">
+                                                        @Model.specificationvalues.FirstOrDefault(v => (v.product.Id == Model.Id && v.specification.id == x.id)).valuetitle
+                                                    </strong>
+                                                }
+
+
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+
+                    </ul>
+                </div>
+                <div class="product-tab__content" data-tab="2">
+                    <div class="product-comments">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <div class="product-comments__actions">
+                                <div class="product-comments__massage-wrap">
+                                    <p class="product-comments__massage">
+                                        برای ارسال نظر ابتدا وارد حساب کاربری خود شوید
+                                    </p>
                                     <br />
+                                    <a href="/Acount/SignIn" class="button"><span class="button-text"> ورود به سایت</span></a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="product-comments__actions">
+                                <form class=" product-comments-form" action="/Product/SendComment" method="post">
+                                    <input type="hidden" value="@Model.Id" name="pid" />
+                                    <textarea placeholder="متن مورد نظر خود را تایپ کن" type="text" rows="5" cols="100" class="product-comments-form_textarea" name="comment"></textarea>
                                     <button type="submit" class="button">
-                                        <span class="button-text">ارسال رای</span>
+                                        <span class="button-text">ارسال نظر</span>
                                     </button>
-                                </section>
-                            </form>
-                        </div>
-                    }
-                    <div class="product-actions">
-                        <div class="product-actions__info">
-                            <select class="product-actions__pagesize" @*name="pageNumber"*@>
-                                <option value="20">20</option>
-                                <option value="40">40</option>
-                                <option value="60">60</option>
-                            </select>
-                            <span class="product-actions__total">@Model.comments.Count</span>
-                        </div>
-                        @{
-                            var prevDisabled = !Model.comments.HasPreviousPage ? "product-actions__pager-button__disabled" : "product-actions__pager-button";
-                            var nextDisabled = !Model.comments.HasNextPage ? "product-actions__pager-button__disabled" : "product-actions__pager-button";
-                            int next = Model.comments.PageIndex + 1;
-                            int pre = Model.comments.PageIndex - 1;
-                        }    
+
+                                </form>
+                            </div>
+                            <div class="product-comments__actions">
+                                <form class=" product-comments-form" asp-action="SendRating" asp-controller="Product" onsubmit="return VerifyRating()" method="post">
+                                    <input type="hidden" value="@Model.Id" name="pid" />
+                                    <input type="hidden" id="lblRating" value="0" name="rate" />
+                                    <section class="product-detail__rating" onmouseout="CRateSelect()">
+                                        <span onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star" id="span5"></span>
+                                        <span onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star" id="span4"></span>
+                                        <span onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star" id="span3"></span>
+                                        <span onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star" id="span2"></span>
+                                        <span onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star" id="span1"></span>
+                                        <br />
+                                        <button type="submit" class="button">
+                                            <span class="button-text">ارسال رای</span>
+                                        </button>
+                                    </section>
+                                </form>
+                            </div>
+                        }
+                        <div class="product-actions">
+                            <div class="product-actions__info">
+                                <select class="product-actions__pagesize" @*name="pageNumber"*@>
+                                    <option value="20">20</option>
+                                    <option value="40">40</option>
+                                    <option value="60">60</option>
+                                </select>
+                                <span class="product-actions__total">@Model.comments.Count</span>
+                            </div>
+                            @{
+                                var prevDisabled = !Model.comments.HasPreviousPage ? "product-actions__pager-button__disabled" : "product-actions__pager-button";
+                                var nextDisabled = !Model.comments.HasNextPage ? "product-actions__pager-button__disabled" : "product-actions__pager-button";
+                                int next = Model.comments.PageIndex + 1;
+                                int pre = Model.comments.PageIndex - 1;
+                            }
                             <div class="product-actions__pager">
                                 <a asp-action="Index"
                                    asp-route-sortOrder="@ViewData["CurrentSort"]"
@@ -248,23 +265,23 @@
                                     @next
                                 </a>
                             </div>
+                        </div>
+                        <ul class="product-comments__list">
+                            @foreach (var item in Model.comments)
+                            {
+                                var name = $"{item.user.name} {item.user.lastname}";
+                                <li class="product-comments__item">
+                                    <div class="product-comments__header">
+                                        <span class="product-comments__sender">@name </span>
+                                        <span class="product-comments__date">@item.createdate</span>
+                                    </div>
+                                    <p class="product-comments__text">
+                                        @item.text
+                                    </p>
+                                </li>
+                            }
+                        </ul>
                     </div>
-                    <ul class="product-comments__list">
-                        @foreach (var item in Model.comments)
-                        {
-                            var name = $"{item.user.name} {item.user.lastname}";
-                            <li class="product-comments__item">
-                                <div class="product-comments__header">
-                                    <span class="product-comments__sender">@name </span>
-                                    <span class="product-comments__date">@item.createdate</span>
-                                </div>
-                                <p class="product-comments__text">
-                                    @item.text
-                                </p>
-                            </li>
-                        }
-                    </ul>
-                </div>
                 </div>
         </section>
     </div>
