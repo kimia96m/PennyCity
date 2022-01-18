@@ -116,7 +116,7 @@ namespace WebApplication2.Areas.Admin.Controllers
             else
             {
                 var ispecial = await bannerrepo.SearchByIsSpecial(null);
-                if (ispecial.Count()==0)
+                if (ispecial.Count()==0|| string.IsNullOrEmpty(isspecial))
                 {
                     var banner = new Banner
                     {
