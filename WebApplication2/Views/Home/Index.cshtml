@@ -1,19 +1,19 @@
 ﻿@model HomeView
 @{
-    //int[] count = new int[Model.banners.Count];
+   
     int y = 0;
 }
 @section Styles{
     <link href="~/css/Home/Index.css" rel="stylesheet" />
-    <script src="~/JavaScript/Homes/JavaScript.js"></script>
     <script src="~/JavaScript/Shared/JavaScript.js"></script>
+   <script src="~/JavaScript/Homes/JavaScript.js"></script>
 }
 <div id="home" class="wide-wrap">
     @foreach (var item in Model.banners)
     {
         if (item.ispecial == true)
         {
-            <section class="home-section home-top-banner home-rounded-section home-section-shadow"></section>
+            <section class="home-section home-top-banner home-rounded-section home-section-shadow" onclick=""></section>
         }
     }
     <section class="home-section clearfix">
@@ -29,12 +29,9 @@
                                 var img = $"{item.id}.jpg";
                                 <a class="home-gallery-item slide_@y" href="@item.link" style="background-image: url('Images/banners/@item.imgagesrc')" for="@y"></a>
                             }
-                            //count[y] = item.id;
                         }
                     </div>
                     <div class="home-gallery-pager">
-                        @*<a class="home-gallery-pager-btn selected"></a>*@
-                        @*foreach (var item in count)*@
                         @for (int i = 1; i <= y; i++)
                         {
                             <a class="home-gallery-pager-btn selected" id="@i" onclick="currentSlide(@i)"></a>
@@ -49,20 +46,20 @@
                     <div class="home-spec-offer-side-col">
                         <ul class="home-spec-offer-side-item-list">
                             @foreach (var item in Model.specialproduct)
-                            {
+                            {                            
                                 var i = 0;
                                 @if (i == 0)
                                 {
-                                    var id = item.id;
-                                    <li class="home-spec-offer-side-item">
-                                        <a id="defaultOpen" class="home-spec-offer-side-button" onclick="openCity(event, '@id')" title="@item.title">@item.title</a>
+                                    var ids ="Side"+ item.id;
+                                    <li class="home-spec-offer-side-item" >
+                                        <a id="defaultOpen" class="home-spec-offer-side-button" onclick="openCity(event, '@ids')" title="@item.title">@item.title</a>
                                     </li>
                                 }
                                 else
                                 {
                                     var id = item.id;
                                     <li class="home-spec-offer-side-item">
-                                        <a class="home-spec-offer-side-button" onclick="openCity(event, '@id')" title="@item.title">@item.title</a>
+                                        <a class="home-spec-offer-side-button" onclick="openCity(event, 'id')" title="@item.title">@item.title</a>
                                     </li>
                                 }
                             }
@@ -73,10 +70,11 @@
                         <ul class="home-spec-offer-item-list">
                             @foreach (var item in Model.specialproduct)
                             {
+                                var x = "Side" + item.id;
                                 int c = 1;
                                 var payable = Convert.ToInt32(item.price) - Convert.ToInt32(item.discount);
-                                var discount =Convert.ToInt32((Convert.ToDecimal(item.discount) / Convert.ToDecimal(item.price))*100);
-                                <li class="home-spec-offer-item clearfix selected" id="@item.id">
+                                var discount = Convert.ToInt32((Convert.ToDecimal(item.discount) / Convert.ToDecimal(item.price)) * 100);
+                                <li class="home-spec-offer-item clearfix selected" id="@x">
                                     <span class="home-spec-offer-item-badge"><span class="home-spec-offer-item-badge-text">پیشنهاد شگفت انگیز</span></span>
                                     <div class="home-spec-offer-item-photo-wrap">
                                         <img class="home-spec-offer-item-photo" src="~/Images/Products/@item.imgurl" alt="@item.title">
@@ -144,13 +142,13 @@
                 <div class="home-showcase-content">
                     <div class="home-showcase-gallery">
                         <a asp-action="Index"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@(Model.products.PageIndex - 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@prevDisabled mdi mdi-chevron-right right-btn"></a>
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.products.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@prevDisabled mdi mdi-chevron-right right-btn"></a>
                         <a asp-action="Index"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@(Model.products.PageIndex + 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@nextDisabled mdi mdi-chevron-left left-btn"></a>
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.products.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]" class="@nextDisabled mdi mdi-chevron-left left-btn"></a>
                         <div class="home-showcase-gallery-layout">
                             <div class="home-showcase-gallery-content">
                                 @foreach (var item in Model.products)
@@ -174,6 +172,5 @@
                 </div>
             </div>
         </div>
-    </section>
-    <div style="height: 200px"></div>
+    </section>   
 </div>

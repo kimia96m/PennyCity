@@ -1,10 +1,10 @@
 ﻿function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("home-spec-offer-item");
+    tabcontent = document.getElementsByClassName('home-spec-offer-item');
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
-    tablinks = document.getElementsByClassName("home-spec-offer-side-button");
+    tablinks = document.getElementsByClassName('home-spec-offer-side-button');
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" selected", "");
     }
