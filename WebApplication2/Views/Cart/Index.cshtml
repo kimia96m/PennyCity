@@ -29,7 +29,7 @@
                 @foreach (var item in Model.cartitem)
                 {
                     totalprice = item.quantity * item.productitem.price;
-                    imgurl = $"{item.productitem.product.Id}.jpg";
+                    imgurl = $"{item.productitem.product.Id}{item.productitem.product.Ext}";
                     finalprice += totalprice;
 
                     <div class="cart-table__row">

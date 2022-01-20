@@ -32,16 +32,7 @@
                             <li class="product-list-group__item">
                                 <a asp-action="ProductListByGroup" asp-controller="Product" asp-route-gid="@item.id" class="product-list-group__item-link">@item.title</a>
                             </li>
-                        }
-                        @*<li class="product-list-group__item">
-                                <a href="#" class="product-list-group__item-link">کالای دیجیتال</a>
-                                <ul class="product-list-group"> برای زیرگروه هاست
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                </ul>
-                            </li>*@
+                        }          
                     </ul>
                 </div>
             </section>
@@ -101,15 +92,9 @@
             </section>
             <div class="product-list__actions">
                 <label class="button">
-
                     <input class="product-list__actions-input" type="submit" />
-
                     <span class="button-text">جستجو</span>
-
-                </label>
-                @*<label class="button">
-                        <span class="product-list__actions_btn">جستجو</span>
-                    </label>*@
+                </label>  
             </div>
         </div>
         <div class="product-list__content">
@@ -145,8 +130,6 @@
                 @if (gid != null)
                 {
                     <div class="product-list-actions__pager">
-                        @*<a class="product-list-actions__pager-button">1</a>
-                            <span class="product-list-actions__pager-seperator">...</span>*@
                         <a asp-action="ProductListByGroup"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-pageNumber="@(Model.PageIndex - 1)"
@@ -164,15 +147,11 @@
                            class="@nextDisabled">
                             @next
                         </a>
-                        @*<span class="product-list-actions__pager-seperator">...</span>
-                            <a class="product-list-actions__pager-button">20</a>*@
                     </div>
                 }
                 else
                 {
                     <div class="product-list-actions__pager">
-                        @*<a class="product-list-actions__pager-button">1</a>
-                            <span class="product-list-actions__pager-seperator">...</span>*@
                         <a asp-action="List"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-pageNumber="@(Model.PageIndex - 1)"
@@ -188,8 +167,6 @@
                            class="@nextDisabled">
                             @next
                         </a>
-                        @*<span class="product-list-actions__pager-seperator">...</span>
-                            <a class="product-list-actions__pager-button">20</a>*@
                     </div>
                 }
             </div>
@@ -270,15 +247,6 @@ else
                                 <a asp-action="ProductListByGroup" asp-controller="Product" asp-route-gid="@item.id" class="product-list-group__item-link">@item.title</a>
                             </li>
                         }
-                        @*<li class="product-list-group__item">
-                                <a href="#" class="product-list-group__item-link">کالای دیجیتال</a>
-                                <ul class="product-list-group"> برای زیرگروه هاست
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                    <li class="product-list-group__item"><a href="#" class="product-list-group__item-link"></a></li>
-                                </ul>
-                            </li>*@
                     </ul>
                 </div>
             </section>
@@ -308,8 +276,6 @@ else
                                 <span class="product-list-brands__bullet mdi mdi-check-circle mdi-18px"></span>
                             </label>
                         }
-
-
                     </div>
                 </div>
             </section>
@@ -344,9 +310,6 @@ else
                     <span class="button-text">جستجو</span>
 
                 </label>
-                @*<label class="button">
-                        <span class="product-list__actions_btn">جستجو</span>
-                    </label>*@
             </div>
         </div>
         <div class="product-list__content">
@@ -377,8 +340,6 @@ else
                 @if (gid != null)
                 {
                     <div class="product-list-actions__pager">
-                        @*<a class="product-list-actions__pager-button">1</a>
-                            <span class="product-list-actions__pager-seperator">...</span>*@
                         <a asp-action="ProductListByGroup"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-pageNumber="@(Model.PageIndex - 1)"
@@ -396,15 +357,11 @@ else
                            class="@nextDisabled">
                             @next
                         </a>
-                        @*<span class="product-list-actions__pager-seperator">...</span>
-                            <a class="product-list-actions__pager-button">20</a>*@
                     </div>
                 }
                 else
                 {
                     <div class="product-list-actions__pager">
-                        @*<a class="product-list-actions__pager-button">1</a>
-                            <span class="product-list-actions__pager-seperator">...</span>*@
                         <a asp-action="List"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-pageNumber="@(Model.PageIndex - 1)"
@@ -419,9 +376,7 @@ else
                            asp-route-currentFilter="@ViewData["CurrentFilter"]"
                            class="@nextDisabled">
                             @next
-                        </a>
-                        @*<span class="product-list-actions__pager-seperator">...</span>
-                            <a class="product-list-actions__pager-button">20</a>*@
+                        </a>      
                     </div>
                 }
             </div>

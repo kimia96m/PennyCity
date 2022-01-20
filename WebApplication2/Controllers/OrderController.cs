@@ -34,12 +34,20 @@ namespace WebApplication2.Controllers
         {
             var customer = await usermanager.FindByNameAsync(User.Identity.Name);
             var cart = await cartrepo.Find(customer.Id);
-            var totalpricecart = cart.cartitem.Sum(c => c.productitem.price * c.quantity).ToString("N0");
-            ViewBag.Totalpricecart = totalpricecart;
-            var addres = await addressrepo.Find(customer.Id);
-          
-            
-            return View(addres);
+            if (cart != null)
+            {
+                var totalpricecart = cart.cartitem.Sum(c => c.productitem.price * c.quantity).ToString("N0");
+                ViewBag.Totalpricecart = totalpricecart;
+                var addres = await addressrepo.Find(customer.Id);
+
+
+                return View(addres);
+            }
+            else
+            {
+                var address = new List<Address>().ToAsyncEnumerable();
+                return View(address);
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Save( ShippingType shipping, PaymentType payment,string Address)
@@ -122,7 +130,6 @@ namespace WebApplication2.Controllers
             {
             await orderrepo.Update(id, serial, date);
             await orderrepo.Save();
-            //return new RedirectResult("/Order/Detail/" + id);
             return new RedirectResult("/Order/Payment/" + id);
             }
        

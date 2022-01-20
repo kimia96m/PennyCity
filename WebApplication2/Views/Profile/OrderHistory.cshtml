@@ -6,7 +6,6 @@
 }
 
 @section Styles{
-    @*<link href="~/css/Product/List.css" rel="stylesheet" />*@
     <link href="~/css/Profile/OrderHistory.css" rel="stylesheet" />
 }
 <div class="order-list__wrapper">
@@ -17,7 +16,7 @@
                 <th class="order-list-header__items">تاریخ ثبت سفارش</th>
                 <th class="order-list-header__items"> مجموع قیمت</th>
                 <th class="order-list-header__items">وضعیت سفارش</th>
-                <th class="order-list-header__items"></th>
+                <th class="order-list-header__items">نحوه پرداخت</th>
             </tr>
         </thead>
         <tbody class="order-list-body">
@@ -29,7 +28,7 @@
                     <td class="order-list-body__items">@item.orderdate</td>
                     <td class="order-list-body__items">@item.totalprice</td>
                     <td class="order-list-body__items">@item.state</td>
-                    <td class="order-list-body__items"></td>
+                    <td class="order-list-body__items">@item.paymenttypes</td>
                 </tr>
                 count++;
             }

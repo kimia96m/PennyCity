@@ -76,7 +76,7 @@ namespace WebApplication2.Controllers
                     Id = item.Id,
                     Primarytitle = item.PrimaryTitle,
                     Secoundarytitle = item.SecondaryTitle,
-                    Imagename = $"{item.Id}.jpg",
+                    Imagename = $"{item.Id}{item.Ext}",
                     Price = /*item.productitem.LastOrDefault().quantity == 0 ? "0" : item.productitem.LastOrDefault().price.ToString("N0"), درس 151 این خط بهتره ولی قلم کالا نباشه خطای نال میده درستش کن*/
                     item.productitem.Select(p => p.price).LastOrDefault().ToString("N0"),
                     brand=item.Brands,group=item.Groups
@@ -96,7 +96,7 @@ namespace WebApplication2.Controllers
                     Id = item.Id,
                     Primarytitle = item.PrimaryTitle,
                     Secoundarytitle = item.SecondaryTitle,
-                    Imagename = $"{item.Id}.jpg",
+                    Imagename = $"{item.Id}{item.Ext}",
                     Price = item.productitem.Select(p => p.price).LastOrDefault().ToString("N0"),
                     brand = item.Brands,
                     group = item.Groups

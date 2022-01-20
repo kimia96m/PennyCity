@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication2.Models.Orders;
+using WebApplication2.Models.Products;
 
 namespace WebApplication2.InfraStructure
 {
@@ -23,6 +25,32 @@ namespace WebApplication2.InfraStructure
 
             }
             return descs;
+        }
+        public static string GetPaymentDescriptions(PaymentType type)
+        {
+            var descript = type.GetType().GetField(type.ToString());
+            var desti = descript.GetCustomAttributes(typeof(DescriptionAttribute), true);
+            var description = type.ToString();
+            if (desti != null && desti.Length > 0)
+            {
+                description = ((DescriptionAttribute)desti[0]).Description;
+            }
+
+
+            return description;
+        }
+        public static string GetStateDescriptions(OrderState type)
+        {
+            var descript = type.GetType().GetField(type.ToString());
+            var desti = descript.GetCustomAttributes(typeof(DescriptionAttribute), true);
+            var description = type.ToString();
+            if (desti != null && desti.Length > 0)
+            {
+                description = ((DescriptionAttribute)desti[0]).Description;
+            }
+
+
+            return description;
         }
     }
 }

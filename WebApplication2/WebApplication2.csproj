@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNet.ScriptManager.jQuery" Version="2.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
@@ -22,6 +23,7 @@
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.172" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameWorkCore.Tools.Dotnet" Version="1.0.0" />
   <PackageReference Include="Microsoft.EntityFrameWorkCore.Tools.Dotnet" Version="2.0.0" />
+  <PackageReference Include="PersianDatePicker" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

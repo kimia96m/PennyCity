@@ -78,7 +78,7 @@ namespace WebApplication2.Repository.EF
         {
             var order = await context.orders.FindAsync(orderid);
             order.fishnumber = serial;
-            order.registrationdate = DateConverter.ToMilady(registrationdate);
+            order.registrationdate = DateConverter.ToMiladi(registrationdate);
             order.state = OrderState.reviewing;
             context.Entry(order).Reference(c => c.customer).IsModified = false;
         }

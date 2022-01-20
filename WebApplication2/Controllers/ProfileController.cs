@@ -66,10 +66,10 @@ namespace WebApplication2.Controllers
                     fishnumber = item.fishnumber,
                     orderdate = Convert.ToString(p.persiandate(item.orderdate)),
                     orderitems = new List<OrderItemView>(),
-                    //paymenttypes=item.paymenttypes,
+                    paymenttypes= EnumDescription.GetPaymentDescriptions(item.paymenttypes),
                     registrationdate = Convert.ToString(item.registrationdate),
-                    //state = EnumDescription.GetDescriptions(item.state.GetType()).ToString(),
-                    totalprice = item.totalprice.ToString()
+                    state = EnumDescription.GetStateDescriptions(item.state),
+                    totalprice = item.totalprice.ToString("N0")
 
                 });
                 foreach (var x in item.orderitems)
